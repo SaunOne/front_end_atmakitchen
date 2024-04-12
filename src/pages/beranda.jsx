@@ -2,7 +2,7 @@
 
 const Beranda = () => {
     return <>
-        Beranda
+        Tampilan Beranda
     </>
 }
 
