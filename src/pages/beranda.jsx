@@ -2,6 +2,7 @@
 
 const Beranda = () => {
     return <>
+        Beranda
     </>
 }
 
