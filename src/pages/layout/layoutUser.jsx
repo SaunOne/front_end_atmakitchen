@@ -1,8 +1,6 @@
 import { Outlet } from "react-router-dom";
-
 import Footer from "../../components/layouts/footer";
 import TopNavbar from "../../components/layouts/topNavbar";
-
 import PropTypes from "prop-types";
 
 const LayoutUser = ({ children }) => {
@@ -17,10 +15,10 @@ const LayoutUser = ({ children }) => {
   );
 };
 
-
-// prop children harus ada dan berupa node (misalnya, elemen React atau teks) yang diperlukan. Dengan begitu, Anda akan menghindari pesan kesalahan yang menyatakan bahwa prop children hilang dalam validasi props.
+// Prop `children` harus ada dan berupa node (misalnya, elemen React atau teks) yang diperlukan.
+// Dengan menambahkan pengecekan, Anda akan menghindari pesan kesalahan yang menyatakan bahwa prop `children` hilang dalam validasi props.
 LayoutUser.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node // Hapus `.isRequired` untuk memungkinkan nilai `undefined`.
 };
 
-export default LayoutUser; 
+export default LayoutUser;

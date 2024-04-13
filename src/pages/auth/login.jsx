@@ -150,7 +150,7 @@ const Login = () => {
                             <div>
                                 Belum memiliki akun?
                                 <a
-                                    href="#"
+                                    href="/register"
                                     className="text-xs ml-2 text-neutral-700 hover:text-neutral-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
                                 >
                                     Daftar

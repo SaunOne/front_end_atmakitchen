@@ -11,23 +11,24 @@ import DetailBudaya from "../pages/detailBudaya";
 import DaftarPustaka from "../pages/daftarpustaka";
 import Beranda from "../pages/beranda";
 import Login from "../pages/auth/login";
+import Register from '../pages/auth/register';
 
 // Konfigurasi router
 const routes = [
   { path: "*", element: <div>Routes Not Found!</div> },
   {
-    path: "/",
     element: <LayoutUser />,
     children: [
-      { path: "List", element: <ListBudaya /> },
-      { path: "Detail-Budaya", element: <DetailBudaya /> },
-      { path: "Pencarian/Budaya", element: <Pencarian /> },
-      { path: "Tentang-Kami", element: <TentangKami /> },
-      { path: "Daftar-Pustaka", element: <DaftarPustaka /> },
       { path: "/", element: <Beranda /> },
+      { path: "/List", element: <ListBudaya /> },
+      { path: "/Detail-Budaya", element: <DetailBudaya /> },
+      { path: "/Pencarian/Budaya", element: <Pencarian /> },
+      { path: "/Tentang-Kami", element: <TentangKami /> },
+      { path: "/Daftar-Pustaka", element: <DaftarPustaka /> },
     ],
   },
   { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
 ];
 
 const router = createBrowserRouter(routes);
