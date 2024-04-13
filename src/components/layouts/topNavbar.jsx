@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 
