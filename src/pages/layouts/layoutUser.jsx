@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/layouts/footer";
-import TopNavbar from "../../components/layouts/topNavbar";
+import TopNavbar from "../../components/layouts/top-navbar";
 import PropTypes from "prop-types";
 
 const LayoutUser = ({ children }) => {
   return (
-    <div className="mt-4 pt-5">
+    <div className="">
       <TopNavbar />
-      <div className="a" style={{ minHeight: "800px" }}>
+      <div >
         {children ? children : <Outlet />}
       </div>
       <Footer />

@@ -1,73 +1,51 @@
-import { useState } from "react";
-import bgAuth from "../../assets/img/bg-authentication.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import ikon untuk eye toggle
+import { useState, useReducer } from "react";
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock  } from "react-icons/fa"; 
+import { userLogin } from "../../validations/validation";
 
-import { FaEnvelope } from "react-icons/fa"; // Import ikon email
-import { FaLock } from "react-icons/fa"; // Import ikon password
-
+const formReducer = (state, event) => {
+    return {
+        ...state,
+        [event.target.name]: event.target.value,
+    };
+};
 
 const Login = () => {
-
-    // ============= Initial State Start here =============
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useReducer(formReducer, {});
     const [showPassword, setShowPassword] = useState(false);
-    // ============= Initial State End here ===============
-    // ============= Error Msg Start here =================
-    const [errEmail, setErrEmail] = useState("");
-    const [errPassword, setErrPassword] = useState("");
+    const [formErrors, setFormErrors] = useState({});
 
-    const loginStyle = {
-        backgroundImage: `url(${bgAuth})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Mengubah latar belakang menjadi putih transparan
-        color: '#000000', // Mengubah warna teks menjadi hitam abu-abu
-
-    };
-
-    // ============= Event Handler Start here =============
-    const handleEmail = (e) => {
-        setEmail(e.target.value);
-        setErrEmail("");
-    };
-    const handlePassword = (e) => {
-        setPassword(e.target.value);
-        setErrPassword("");
-    };
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
     };
-    // ============= Event Handler End here ===============
-    const handleLogin = (e) => {
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        if (!email) {
-            setErrEmail("Masukkan email Anda");
+        console.log("formData", formData);
+        const parsedUser = userLogin.safeParse(formData);
+        if (!parsedUser.success) {
+            const error = parsedUser.error;
+            let newErrors = {};
+            for (const issue of error.issues) {
+                newErrors = {
+                    ...newErrors,
+                    [issue.path[0]]: issue.message,
+                };
+            }
+            return setFormErrors(newErrors);
         }
-
-        if (!password) {
-            setErrPassword("Masukkan password Anda");
-        }
-        
-        // ============== Getting the value ==============
-        if (email && password) {
-            
-            setEmail("");
-            setPassword("");
-        }
+        setFormErrors({});
+        // TODO: Kirim data ke server
     };
 
     return (
         <>
-
-            <div style={loginStyle} className=" min-h-screen flex items-center justify-center w-full">
+            <div className="bg-authPage min-h-screen flex items-center justify-center w-full">
                 <div className="bg-white bg-opacity-[38%]  shadow-md rounded-lg px-8 py-6 w-[300px] md:w-[400px] backdrop-blur-md">
                     <h1 className="text-[45px] font-bold text-center mb-6" >
                         Login
                     </h1>
 
-                    <form  action="#">
+                    <form onSubmit={handleSubmit}>
                         <div className="mb-4">
                             <label
                                 htmlFor="email"
@@ -78,17 +56,17 @@ const Login = () => {
                             <div className="flex items-center border-b-[1px] border-black">
                                 <FaEnvelope className="mr-2 text-gray-800" />
                                 <input
-                                    onChange={handleEmail}
-                                    value={email}
+                                    name="email"
+                                    onChange={setFormData}
                                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
                                     type="email"
                                     placeholder="Masukkan alamat email"
                                 />
                             </div>
-                            {errEmail && (
+                            {formErrors.email && (
                                 <p className="text-sm text-red-500 font-titleFont px-4 max-w-screen-md mb-[-10px]">
                                     <span className="font-bold italic mr-1">!</span>
-                                    {errEmail}
+                                    {formErrors.email}
                                 </p>
                             )}
 
@@ -103,22 +81,22 @@ const Login = () => {
                             <div className="flex items-center border-b-[1px] border-black">
                                 <FaLock className="mr-2 text-gray-800" />
                                 <input
-                                    onChange={handlePassword}
-                                    value={password}
+                                    name="password"
+                                    onChange={setFormData}
                                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
                                     type={showPassword ? "text" : "password"}
                                     placeholder="Masukkan password Anda"
                                 />
                             </div>
 
-                            <a href="#" onClick={toggleShowPassword} className={`absolute inset-y-0 right-0 flex items-center text-sm leading-5 bg-transparent text-black no-underline hover:text-neutral-950 ${errPassword ? "mb-[-10px]" : "mb-[-35px]"}`}>
+                            <a href="#" onClick={toggleShowPassword} className={`absolute inset-y-0 right-0 flex items-center text-sm leading-5 bg-transparent text-black no-underline hover:text-neutral-950 ${formErrors.password ? "mb-[-10px]" : "mb-[-35px]"}`}>
                                 {showPassword ? <FaEyeSlash /> : <FaEye />}
                             </a>
 
-                            {errPassword && (
+                            {formErrors.password && (
                                 <p className="text-sm text-red-500 font-titleFont  px-4">
                                     <span className="font-bold italic mr-1">!</span>
-                                    {errPassword}
+                                    {formErrors.password}
                                 </p>
                             )}
 
@@ -160,7 +138,6 @@ const Login = () => {
                         </div>
 
                         <button
-                            onClick={handleLogin}
                             type="submit"
                             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-[30px] shadow-sm text-sm font-medium text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
                         >

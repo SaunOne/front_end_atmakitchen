@@ -3,15 +3,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 // Impor komponen internal
-import LayoutUser from "../pages/layout/layoutUser";
+import LayoutUser from "../pages/layouts/layoutUser";
 import ListBudaya from "../pages/listBudaya";
 import Pencarian from "../pages/pencarian";
 import TentangKami from "../pages/tentangkami";
 import DetailBudaya from "../pages/detailBudaya";
 import DaftarPustaka from "../pages/daftarpustaka";
-import Beranda from "../pages/beranda";
 import Login from "../pages/auth/login";
 import Register from '../pages/auth/register';
+import Home from "../pages/userViews/home";
 
 // Konfigurasi router
 const routes = [
@@ -19,7 +19,7 @@ const routes = [
   {
     element: <LayoutUser />,
     children: [
-      { path: "/", element: <Beranda /> },
+      { path: "/", element: <Home /> },
       { path: "/List", element: <ListBudaya /> },
       { path: "/Detail-Budaya", element: <DetailBudaya /> },
       { path: "/Pencarian/Budaya", element: <Pencarian /> },

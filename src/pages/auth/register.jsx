@@ -1,8 +1,7 @@
-import { useReducer, useState } from "react"; // Mengimpor useState untuk pengelolaan state
-import { z } from "zod"; // Mengimpor zod untuk validasi
-
-import bgAuth from "../../assets/img/bg-authentication.png";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import ikon untuk eye toggle
+import { useReducer, useState } from "react"; 
+import { FaEye, FaEyeSlash, FaUser, FaEnvelope, FaUserAlt, FaPhone, FaLock, FaTransgender, FaCalendarAlt } from "react-icons/fa"; 
+import { userRegistration } from "../../validations/validation"
+import "./style.css";
 
 const formReducer = (state, event) => {
     return {
@@ -11,70 +10,11 @@ const formReducer = (state, event) => {
     };
 };
 
-const User = z
-    .object({
-        fullName: z
-            .string({
-                required_error: "Username is required",
-                invalid_type_error:
-                    "Nama Lengkap wajib terdiri dari minimal 3 karakter & maksimal 50 karakter!",
-            })
-            .min(3, { message: "Nama Lengkap wajib terdiri dari minimal 3 karakter" })
-            .max(50, { message: "Nama Lengkap maksimal 50 karakter" }),
-        username: z
-            .string({
-                required_error: "Username is required",
-                invalid_type_error:
-                    "Username wajib terdiri dari minimal 3 karakter & maksimal 15 karakter!",
-            })
-            .min(3, { message: "Username wajib terdiri dari minimal 3 karakter" })
-            .max(15, { message: "Username maksimal 15 karakter" }),
-        email: z
-            .string({
-                required_error: "Email is required!",
-            })
-            .email({ message: "Email tidak valid" }),
-        phone: z
-            .string({
-                invalid_type_error:
-                    "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
-            })
-            .min(10, { message: "Nomor Telepon minimal 10 angka" })
-            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
-        gender: z
-            .string()
-            .min(1, { message: "Jenis Kelamin harus dipilih" }),
-        birthdate: z
-            .string()
-            .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
-        password: z
-            .string({
-                required_error: "Password is required",
-                invalid_type_error:
-                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
-            })
-            .min(6, { message: "Password minimal 6 karakter" })
-            .max(20, { message: "Password maksimal 20 karakter" }),
-
-        confirmPassword: z.string()
-            .min(6, { message: "Password minimal 6 karakter" })
-            .max(20, { message: "Password maksimal 20 karakter" }),
-    })
-    .superRefine(({ password, confirmPassword }, ctx) => {
-        if (password !== confirmPassword) {
-            ctx.addIssue({
-                code: "custom",
-                path: ["confirmPassword"],
-                message: "Tidak sesuai dengan Password yang diinputkan! ",
-            });
-        }
-    });
-
 const Register = () => {
     const [formData, setFormData] = useReducer(formReducer, {});
     const [formErrors, setFormErrors] = useState({});
-    const [showPassword, setShowPassword] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -83,19 +23,10 @@ const Register = () => {
         setShowPassword2(!showPassword2);
     };
 
-    const registerStyle = {
-        backgroundImage: `url(${bgAuth})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.8)', // Mengubah latar belakang menjadi putih transparan
-        color: '#000000', // Mengubah warna teks menjadi hitam abu-abu
-    };
-
-
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("formData", formData);
-        const parsedUser = User.safeParse(formData);
+        const parsedUser = userRegistration.safeParse(formData);
         if (!parsedUser.success) {
             const error = parsedUser.error;
             let newErrors = {};
@@ -108,12 +39,12 @@ const Register = () => {
             return setFormErrors(newErrors);
         }
         setFormErrors({});
-        // TODO: Send data to server
+        // TODO: Kirim data ke server
     };
 
     return (
         <>
-            <div style={registerStyle} className="min-h-screen flex items-center justify-center w-full">
+            <div className=" bg-authPage min-h-screen flex items-center justify-center w-full">
                 <div className="bg-white bg-opacity-[38%] shadow-md rounded-lg px-6 md:px-[56px] py-6 w-[400px] md:w-[600px] backdrop-blur-md m-7">
                     <h1 className="text-[35px] font-bold text-center mb-6">
                         Registrasi
@@ -123,14 +54,18 @@ const Register = () => {
                             <label htmlFor="fullName" className="block text-sm font-medium mb-2">
                                 Nama Lengkap
                             </label>
-                            <input
-                                type="text"
-                                name="fullName"
-                                className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
-                                placeholder="Masukkan nama lengkap"
-                                onChange={setFormData}
-                                required
-                            />
+                            <div className="flex items-center border-b-[1px] border-black">
+                                <FaUser className="mr-2 text-gray-800" />
+                                <input
+                                    type="text"
+                                    name="fullName"
+                                    className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
+                                    placeholder="Masukkan nama lengkap"
+                                    onChange={setFormData}
+                                    required
+                                />
+                            </div>
+
                             {formErrors.fullName && <p className="text-red-600 font-medium">{formErrors.fullName}</p>}
 
                         </div>
@@ -138,14 +73,18 @@ const Register = () => {
                             <label htmlFor="email" className="block text-sm font-medium mb-2">
                                 Email
                             </label>
-                            <input
-                                type="email"
-                                name="email"
-                                className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
-                                placeholder="Masukkan alamat email"
-                                onChange={setFormData}
-                                required
-                            />
+
+                            <div className="flex items-center border-b-[1px] border-black">
+                                <FaEnvelope className="mr-2 text-gray-800" />
+                                <input
+                                    type="email"
+                                    name="email"
+                                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
+                                    placeholder="Masukkan alamat email"
+                                    onChange={setFormData}
+                                    required
+                                />
+                            </div>
                             {formErrors.email && <p className="text-red-600 font-medium">{formErrors.email}</p>}
 
                         </div>
@@ -154,14 +93,17 @@ const Register = () => {
                                 <label htmlFor="username" className="block text-sm font-medium mb-2">
                                     Nama Pengguna
                                 </label>
-                                <input
-                                    type="text"
-                                    name="username"
-                                    className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
-                                    placeholder="Masukkan nama pengguna"
-                                    onChange={setFormData}
-                                    required
-                                />
+                                <div className="flex items-center border-b-[1px] border-black">
+                                    <FaUserAlt className="mr-2 text-gray-800" />
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
+                                        placeholder="Masukkan nama pengguna"
+                                        onChange={setFormData}
+                                        required
+                                    />
+                                </div>
                                 {formErrors.username && <p className="text-red-600 font-medium">{formErrors.username}</p>}
 
                             </div>
@@ -169,14 +111,17 @@ const Register = () => {
                                 <label htmlFor="phone" className="block text-sm font-medium mb-2">
                                     No Telepon
                                 </label>
-                                <input
-                                    type="number"
-                                    name="phone"
-                                    className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
-                                    placeholder="Masukkan no telepon"
-                                    onChange={setFormData}
-                                    required
-                                />
+                                <div className="flex items-center border-b-[1px] border-black">
+                                    <FaPhone className="mr-2 text-gray-800" />
+                                    <input
+                                        type="number"
+                                        name="phone"
+                                        className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
+                                        placeholder="Masukkan no telepon"
+                                        onChange={setFormData}
+                                        required
+                                    />
+                                </div>
                                 {formErrors.phone && <p className="text-red-600 font-medium">{formErrors.phone}</p>}
 
                             </div>
@@ -186,11 +131,12 @@ const Register = () => {
                             <label htmlFor="password" className="block text-sm font-medium mb-2">
                                 Kata Sandi
                             </label>
-                            <div className="flex items-center border-black">
+                            <div className="flex items-center border-b-[1px] border-black">
+                                <FaLock className="mr-2 text-gray-800" />
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     name="password"
-                                    className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
+                                    className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                                     placeholder="Masukkan kata sandi"
                                     onChange={setFormData}
                                     required
@@ -209,11 +155,12 @@ const Register = () => {
                             <label htmlFor="confirmPassword" className="block text-sm font-medium mb-2">
                                 Konfirmasi Kata Sandi
                             </label>
-                            <div className="flex items-center border-black">
+                            <div className="flex items-center border-b-[1px] border-black">
+                                <FaLock className="mr-2 text-gray-800" />
                                 <input
                                     type={showPassword2 ? "text" : "password"}
                                     name="confirmPassword"
-                                    className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
+                                    className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                                     placeholder="Masukkan Konfirmasi kata sandi"
                                     onChange={setFormData}
                                     required
@@ -232,30 +179,35 @@ const Register = () => {
                                 <label htmlFor="gender" className="block text-sm font-medium mb-2">
                                     Jenis Kelamin
                                 </label>
-                                <select
-                                    name="gender"
-                                    className="border-b-[1px] border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
-                                    onChange={setFormData}
-                                    required
-                                >
-                                    <option value="">Pilih Jenis Kelamin</option>
-                                    <option value="male">Laki-laki</option>
-                                    <option value="female">Perempuan</option>
+                                <div className="flex items-center border-b-[1px] border-black">
+                                    <FaTransgender className="mr-2 text-gray-800" />
+                                    <select
+                                        name="gender"
+                                        className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
+                                        onChange={setFormData}
+                                        required
+                                    >
+                                        <option value="">Pilih Jenis Kelamin</option>
+                                        <option value="male">Laki-laki</option>
+                                        <option value="female">Perempuan</option>
 
-                                </select>
+                                    </select>
+                                </div>
                             </div>
                             <div className="mb-4 w-full">
                                 <label htmlFor="birthdate" className="block text-sm font-medium mb-2">
                                     Tanggal Lahir
                                 </label>
-                                <input
-                                    type="date"
-                                    name="birthdate"
-                                    style={{ color: 'black',}}
-                                    className="border-b-[1px]  border-black w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
-                                    onChange={setFormData}
-                                    required
-                                />
+                                <div className="flex items-center border-b-[1px] border-black">
+                                    <FaCalendarAlt className="mr-2 text-gray-800" />
+                                    <input
+                                        type="date"
+                                        name="birthdate"
+                                        className="w-full h-8 text-base font-medium outline-none bg-transparent appearance-none text-gray-800"
+                                        onChange={setFormData}
+                                        required
+                                    />
+                                </div>
                             </div>
                         </div>
                         <button
@@ -267,6 +219,7 @@ const Register = () => {
                     </form>
                 </div>
             </div>
+            
         </>
     );
 }

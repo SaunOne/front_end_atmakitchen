@@ -13,15 +13,15 @@ const TopNavbar = () => {
         <>
             <div className={`nav w-screen ${isDropdownOpen ? 'bg-nav' : 'bg-transparent'} absolute top-0 flex justify-between text-nav px-10  transition-all duration-300 `}>
                 <div className="web-name flex-1 justify-start h-14 flex items-center">
-                    <a href="/" className="text-white hover:text-white font-normal">budayakita.id</a>
+                    <a href="/" className="text-black hover:text-white font-normal">budayakita.id</a>
                 </div>
                 <div className="center-nav flex items-center">
                     <ul className="flex space-x-20 decoration-white items-center">
-                        <li><a className="text-white hover:text-white font-normal" href="/Tentang-Kami">Tentang Kami</a></li>
+                        <li><a className="text-black hover:text-white font-normal" href="/Tentang-Kami">Tentang Kami</a></li>
                         <li>
                             <button
                                 onClick={toggleDropdown}
-                                className="bg-inherit text-white hover:text-white border-none focus:outline-none font-normal"
+                                className="bg-inherit text-black hover:text-white border-none focus:outline-none font-normal"
                                 id="menu-button"
                                 aria-expanded={isDropdownOpen}
                                 aria-haspopup="true"
@@ -34,7 +34,7 @@ const TopNavbar = () => {
                     </ul>
                 </div>
                 <div className="search flex-1 px-4 flex items-center justify-end">
-                    <a className="text-white hover:text-white inline-block" href="/Pencarian/Budaya">
+                    <a className="text-black hover:text-white inline-block" href="/Pencarian/Budaya">
                         <span>
                             <IoIosSearch className="size-8" />
                         </span>
@@ -55,15 +55,15 @@ const TopNavbar = () => {
                     <h1 className="font-bold text-titlebudaya">Budaya Indonesia</h1>
                     <div className="">
                         <ul className="inline-block mr-28 align-top">
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Rumah Adat</a></li>
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Tradisi Daerah</a></li>
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Wayang</a></li>
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Pakaian Adat</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Rumah Adat</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Tradisi Daerah</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Wayang</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Pakaian Adat</a></li>
                         </ul>
                         <ul className="inline-block align-top">
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Rumah Adat</a></li>
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Musik Daerah</a></li>
-                            <li className="mt-1"><a className="text-white hover:text-white font-normal" href="/List">Makanan Daerah</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Rumah Adat</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Musik Daerah</a></li>
+                            <li className="mt-1"><a className="text-black hover:text-white font-normal" href="/List">Makanan Daerah</a></li>
                         </ul>
                     </div>
                 </div>
