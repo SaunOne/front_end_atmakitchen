@@ -4,7 +4,7 @@ import "../../fonts.css";
 
 export const FirstBanner = () => {
     return <>
-        <div className="w-full bg-hero min-h-[150vh] mx-auto pt-[190px] px-[100px]">
+        <div className="w-full bg-hero min-h-[150vh] mx-auto pt-[190px] px-[50px] md:px-[100px]">
             <h1 className="geologica-600 text-black">Jajanan Enak</h1>
             <h1 className="geologica-600 text-black">Menunggu Mu</h1>
             <div className="mt-6 md:max-w-[566px]">

@@ -1,48 +1,49 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-
-import { FaShoppingCart, FaUserCircle, FaBell } from "react-icons/fa";
-import "../fonts.css";
 import logo from '../../assets/img/logo-hero.png';
-
-// import Image from "../../designLayouts/Image";
+import { FaShoppingCart, FaUserCircle, FaBell } from "react-icons/fa";
 import { navBarList } from "../../constants/index.js";
-// import Flex from "../../designLayouts/Flex";
+import "../fonts.css";
+import "./style.css";
 
-const Flex = ({ children, className }) => {
-    return <div className={className}>{children}</div>;
-};
-Flex.propTypes = {
-    children: PropTypes.node.isRequired,
-    className: PropTypes.string.isRequired,
-};
-
-const Header = () => {
+export const Header = () => {
     const [showMenu, setShowMenu] = useState(true);
     const [sidenav, setSidenav] = useState(false);
     const [category, setCategory] = useState(false);
-    const [brand, setBrand] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown2, setShowDropdown2] = useState(false);  // 1. Tambah state untuk dropdown
     const [products, setProducts] = useState([{ nama: "kevin" }, { nama: "kevin" }, { nama: "kevin" }]);
     const location = useLocation();
     useEffect(() => {
         let ResponsiveMenu = () => {
             if (window.innerWidth < 768) {
                 setShowMenu(false);
+                setShowDropdown(false);
+                setProducts([{ nama: "kevin" }, { nama: "kevin" }])
             } else {
-                setProducts([{nama:"kevin"},{nama:"kevin"}])
+                setShowDropdown2(false);
                 setShowMenu(true);
+                setSidenav(false);
             }
         };
         ResponsiveMenu();
         window.addEventListener("resize", ResponsiveMenu);
     }, []);
 
+    const toggleDropdown = () => {
+        setShowDropdown(!showDropdown); // 2. Fungsi untuk toggle dropdown
+    };
+
+    const toggleDropdown2 = () => {
+        setShowDropdown2(!showDropdown2); // 2. Fungsi untuk toggle dropdown
+    };
+
     return (
-        <div className="w-full h-20 bg-white sticky top-0 z-50 border-b-[1px] border-b-gray-200">
+        <div className="w-full h-[90px] pb-2 pt-2 bg-[#fff6ec] sticky top-0 z-50 border-b-[1px] border-b-gray-200">
             <nav className="h-full px-4 max-w-container mx-auto relative">
                 <Flex className="flex items-center justify-between h-full">
                     <Link className="w-40 ml-12" to="/">
@@ -64,7 +65,18 @@ const Header = () => {
                                 </div>
                             </Link>
 
-                            <FaUserCircle className="text-gray-800 w-5 h-5 mb-2" />
+                            <div className="relative">
+                                <FaUserCircle
+                                    className="text-gray-800 w-5 h-5 mb-2 cursor-pointer"
+                                    onClick={toggleDropdown}
+                                />
+                                {showDropdown && (
+                                    <div className="absolute z-2 top-8 right-0 bg-white shadow-md rounded-md">
+                                        <Link to="/register" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Register</Link>
+                                        <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
+                                    </div>
+                                )}
+                            </div>
                         </div>
                         <div className="flex justify-end mr-12 ">
                             {showMenu && (
@@ -72,7 +84,7 @@ const Header = () => {
                                     initial={{ y: 30, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
                                     transition={{ duration: 0.5 }}
-                                    className="flex items-center w-auto z-50 p-0 gap-2"
+                                    className="flex items-center w-auto z-1 p-0 gap-2"
                                 >
                                     <>
                                         {navBarList.map(({ _id, title, link }) => (
@@ -101,7 +113,19 @@ const Header = () => {
                                     </div>
                                 </Link>
 
-                                <FaUserCircle className="inline-block md:hidden text-gray-800 w-5 h-5 mb-2" />
+                                <div className="relative"> {/* 3. Tambahkan dropdown */}
+                                    <FaUserCircle
+                                        className="inline-block md:hidden text-gray-800 w-5 h-5 mb-2 cursor-pointer"
+                                        onClick={toggleDropdown2} // Panggil fungsi untuk menampilkan dropdown
+                                    />
+                                    {showDropdown2 && ( // Tampilkan dropdown jika showDropdown bernilai true
+                                        <div className="absolute top-8 right-0 bg-white shadow-md rounded-md">
+                                            <Link to="/register" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Register</Link>
+                                            <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
+                                        </div>
+                                    )}
+                                </div>
+
                                 <HiMenuAlt2
                                     onClick={() => setSidenav(!sidenav)}
                                     className="inline-block md:hidden text-black  cursor-pointer w-8 h-6 absolute top-6 right-4"
@@ -116,16 +140,17 @@ const Header = () => {
                                         transition={{ duration: 0.5 }}
                                         className="w-[80%] h-full relative"
                                     >
-                                        <div className="w-full h-full bg-primeColor p-6">
+                                        <div className="w-full h-full bg-[#675757] p-6">
 
                                             <ul className="text-gray-200 flex flex-col gap-2">
                                                 {navBarList.map((item) => (
                                                     <li
-                                                        className="font-normal hover:font-bold items-center text-lg text-gray-200 hover:underline underline-offset-[4px] decoration-[1px] hover:text-white md:border-r-[1px] border-r-gray-300 hoverEffect last:border-r-0"
+
                                                         key={item._id}
                                                     >
                                                         <NavLink
                                                             to={item.link}
+                                                            className="font-normal hover:font-bold items-center text-[20px] text-gray-200 hover:underline underline-offset-[4px] decoration-[1px] hover:text-white md:border-r-[1px] border-r-gray-300 hoverEffect last:border-r-0"
                                                             state={{ data: location.pathname.split("/")[1] }}
                                                             onClick={() => setSidenav(false)}
                                                         >
@@ -137,9 +162,9 @@ const Header = () => {
                                             <div className="mt-4">
                                                 <h1
                                                     onClick={() => setCategory(!category)}
-                                                    className="flex justify-between text-base cursor-pointer items-center font-titleFont mb-2"
+                                                    className="flex justify-between text-[20px] cursor-pointer items-center font-titleFont mb-2"
                                                 >
-                                                    Shop by Category{" "}
+                                                    Kategori Produk{" "}
                                                     <span className="text-lg">{category ? "-" : "+"}</span>
                                                 </h1>
                                                 {category && (
@@ -149,37 +174,15 @@ const Header = () => {
                                                         transition={{ duration: 0.4 }}
                                                         className="text-sm flex flex-col gap-1"
                                                     >
-                                                        <li className="headerSedenavLi">New Arrivals</li>
-                                                        <li className="headerSedenavLi">Gudgets</li>
-                                                        <li className="headerSedenavLi">Accessories</li>
-                                                        <li className="headerSedenavLi">Electronics</li>
-                                                        <li className="headerSedenavLi">Others</li>
+                                                        <li className="headerSedenavLi ml-5">New Arrivals</li>
+                                                        <li className="headerSedenavLi ml-5">Gudgets</li>
+                                                        <li className="headerSedenavLi ml-5">Accessories</li>
+                                                        <li className="headerSedenavLi ml-5">Electronics</li>
+                                                        <li className="headerSedenavLi ml-5">Others</li>
                                                     </motion.ul>
                                                 )}
                                             </div>
-                                            <div className="mt-4">
-                                                <h1
-                                                    onClick={() => setBrand(!brand)}
-                                                    className="flex justify-between text-base cursor-pointer items-center font-titleFont mb-2"
-                                                >
-                                                    Shop by Brand
-                                                    <span className="text-lg">{brand ? "-" : "+"}</span>
-                                                </h1>
-                                                {brand && (
-                                                    <motion.ul
-                                                        initial={{ y: 15, opacity: 0 }}
-                                                        animate={{ y: 0, opacity: 1 }}
-                                                        transition={{ duration: 0.4 }}
-                                                        className="text-sm flex flex-col gap-1"
-                                                    >
-                                                        <li className="headerSedenavLi">New Arrivals</li>
-                                                        <li className="headerSedenavLi">Gudgets</li>
-                                                        <li className="headerSedenavLi">Accessories</li>
-                                                        <li className="headerSedenavLi">Electronics</li>
-                                                        <li className="headerSedenavLi">Others</li>
-                                                    </motion.ul>
-                                                )}
-                                            </div>
+
                                         </div>
                                         <span
                                             onClick={() => setSidenav(false)}
@@ -198,6 +201,15 @@ const Header = () => {
             </nav>
         </div>
     );
+};
+
+
+const Flex = ({ children, className }) => {
+    return <div className={className}>{children}</div>;
+};
+Flex.propTypes = {
+    children: PropTypes.node.isRequired,
+    className: PropTypes.string.isRequired,
 };
 
 export default Header;
