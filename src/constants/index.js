@@ -1,27 +1,23 @@
 export const navBarList = [
     {
         _id: 1001,
-        title: "Home",
+        title: "Beranda",
         link: "/",
     },
     {
         _id: 1002,
-        title: "Shop",
-        link: "/shop",
+        title: "Produk",
+        link: "/product",
     },
     {
         _id: 1003,
-        title: "About",
+        title: "Tentang Kami",
         link: "/about",
     },
     {
         _id: 1004,
-        title: "Contact",
-        link: "contact",
+        title: "Kontak",
+        link: "/contact",
     },
-    {
-        _id: 1005,
-        title: "Journal",
-        link: "/journal",
-    },
+
 ];

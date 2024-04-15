@@ -1,0 +1,16 @@
+.bg-hero {
+    background-image: url("../../../assets/img/bg-hero.png");
+    background-size: cover;
+    background-position: center;
+    margin-top: -120px;
+    background-color: rgba(255, 255, 255, 0.8); 
+    color: #000000; 
+}
+
+.bg-desc{
+    background-image: url("../../../assets/img/bg-desc.png");
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.8); 
+    color: #000000; 
+}
