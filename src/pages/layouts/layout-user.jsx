@@ -1,12 +1,12 @@
 import { Outlet } from "react-router-dom";
 import Footer from "../../components/layouts/footer";
-import TopNavbar from "../../components/layouts/top-navbar";
+import Header from "../../components/layouts/header";
 import PropTypes from "prop-types";
 
 const LayoutUser = ({ children }) => {
   return (
-    <div className="">
-      <TopNavbar />
+    <div className="w-full">
+      <Header />
       <div >
         {children ? children : <Outlet />}
       </div>

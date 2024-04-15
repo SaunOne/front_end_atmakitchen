@@ -5,7 +5,7 @@ import { CircleBrown }  from "../circle-brown";
 
 export const Information = () => {
     return <>
-        <div className="min-h-screen py-[50px] px-[50px] md:py-[100px] md:px-[100px]">
+        <div className="min-h-screen w-[100%] py-[50px] px-[50px] md:py-[100px] md:px-[100px]">
             <div className="md:flex ">
                 <img src={BakingPict} className="md:w-[380px] mr-2" alt="" />
                 <div className="bg-[#F9E4BD] h-auto w-full pt-5 px-5 pb-5 md:pt-[65px] md:pb-[40px] md:px-[75px]">

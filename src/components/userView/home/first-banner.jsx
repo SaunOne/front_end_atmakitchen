@@ -1,7 +1,6 @@
 import "./style.css"
 import "../../fonts.css";
 
-
 export const FirstBanner = () => {
     return <>
         <div className="w-full bg-hero min-h-[150vh] mx-auto pt-[190px] px-[50px] md:px-[100px]">
@@ -20,7 +19,6 @@ export const FirstBanner = () => {
                     Lihat Produk
                 </button>
             </div>
-
         </div>
     </>
 }

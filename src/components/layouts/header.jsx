@@ -10,12 +10,12 @@ import { navBarList } from "../../constants/index.js";
 import "../fonts.css";
 import "./style.css";
 
-export const Header = () => {
+const Header = () => {
     const [showMenu, setShowMenu] = useState(true);
     const [sidenav, setSidenav] = useState(false);
     const [category, setCategory] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [showDropdown2, setShowDropdown2] = useState(false);  // 1. Tambah state untuk dropdown
+    const [showDropdown2, setShowDropdown2] = useState(false); 
     const [products, setProducts] = useState([{ nama: "kevin" }, { nama: "kevin" }, { nama: "kevin" }]);
     const location = useLocation();
     useEffect(() => {
@@ -194,9 +194,7 @@ export const Header = () => {
                                 </div>
                             )}
                         </div>
-
                     </div>
-
                 </Flex>
             </nav>
         </div>
