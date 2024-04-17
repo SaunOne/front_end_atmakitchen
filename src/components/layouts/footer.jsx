@@ -15,7 +15,7 @@ const Footer = () => {
                 <div className="md:ml-[10%]" >
                     <div className="md:flex md:justify-start gap-5">
                         <div className="w-[210px]">
-                            <h2 className=" geologica-600 text-justify text-[20px] w-[400px]">Navigasi</h2>
+                            <h2 className="mt-9 md:mt-0 geologica-600 text-justify text-[20px] w-[400px]">Navigasi</h2>
                             <ul>
                                 <li className="mt-3">
                                     <a className="geologica-300 text-white text-justify text-[16px] w-[400px]" href="#">Beranda</a>
@@ -33,7 +33,7 @@ const Footer = () => {
 
                         </div>
                         <div className="w-[210px]">
-                            <h2 className=" geologica-600 text-justify text-[20px] w-[400px]">Sosial Media</h2>
+                            <h2 className="mt-9 md:mt-0 geologica-600 text-justify text-[20px] w-[400px]">Sosial Media</h2>
                             <ul>
                                 <li className="mt-3">
                                     <a className="geologica-300 text-white text-justify text-[16px] w-[400px]" href="#">Beranda</a>
@@ -51,7 +51,7 @@ const Footer = () => {
 
                         </div>
                         <div className="w-[210px]">
-                            <h2 className=" geologica-600 text-justify text-[20px] w-[400px]">Kontak Kami</h2>
+                            <h2 className="mt-9 md:mt-0 geologica-600 text-justify text-[20px] w-[400px]">Kontak Kami</h2>
                             <ul>
                                 <li className="mt-3">
                                     <a className="geologica-300 text-white text-justify text-[16px] w-[400px]" href="#">Beranda</a>

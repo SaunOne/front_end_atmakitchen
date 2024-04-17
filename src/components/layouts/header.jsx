@@ -15,7 +15,7 @@ const Header = () => {
     const [sidenav, setSidenav] = useState(false);
     const [category, setCategory] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [showDropdown2, setShowDropdown2] = useState(false); 
+    const [showDropdown2, setShowDropdown2] = useState(false);
     const [products, setProducts] = useState([{ nama: "kevin" }, { nama: "kevin" }, { nama: "kevin" }]);
     const location = useLocation();
     useEffect(() => {
@@ -43,7 +43,7 @@ const Header = () => {
     };
 
     return (
-        <div className="w-full h-[90px] pb-2 pt-2 bg-[#fff6ec] sticky top-0 z-50 border-b-[1px] border-b-gray-200">
+        <div className="w-full h-[90px] pb-2 pt-2 bg-[#fff6ec] sticky top-0 z-50 border-b-[1px] border-b-gray-200 shadow-lg">
             <nav className="h-full px-4 max-w-container mx-auto relative">
                 <Flex className="flex items-center justify-between h-full">
                     <Link className="w-40 ml-12" to="/">
@@ -52,7 +52,7 @@ const Header = () => {
                         </div>
                     </Link>
                     <div className=" w-[85%] ">
-                        <div className="hidden mb-2 md:flex md:justify-end items-end md:h-[35px] md:border-b-[1px] md:border-[#585767]  mr-[60px] gap-6">
+                        <div className="hidden mb-2 md:flex md:justify-end items-end md:h-[35px] md:border-b-[1px] md:border-[#9694ae]  mr-[60px] gap-6">
                             <FaBell className="text-gray-800 w-5 h-5 mb-2" />
                             <Link to="/cart">
                                 <div className="relative">
@@ -100,7 +100,7 @@ const Header = () => {
                                     </>
                                 </motion.ul>
                             )}
-                            <div className="flex justify-end gap-7">
+                            <div className="flex mt-3 justify-end gap-7">
                                 <FaBell className="inline-block md:hidden text-gray-800 w-5 h-5 mb-2" />
                                 <Link to="/cart">
                                     <div className="relative inline-block md:hidden">
@@ -134,14 +134,18 @@ const Header = () => {
 
                             {sidenav && (
                                 <div className="fixed top-0 left-0 w-full h-screen bg-black text-gray-200 bg-opacity-80 z-50">
+
+
                                     <motion.div
                                         initial={{ x: -300, opacity: 0 }}
                                         animate={{ x: 0, opacity: 1 }}
                                         transition={{ duration: 0.5 }}
-                                        className="w-[80%] h-full relative"
+                                        className="w-[70%] h-full relative"
                                     >
                                         <div className="w-full h-full bg-[#675757] p-6">
-
+                                            <div className="inline-block h-auto p-4 mb-5 bg-[#F9E4BD] rounded-[20px]">
+                                                <img className="w-25 object-cover" src={logo} alt={logo} />
+                                            </div>
                                             <ul className="text-gray-200 flex flex-col gap-2">
                                                 {navBarList.map((item) => (
                                                     <li

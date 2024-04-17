@@ -38,6 +38,7 @@ const Register = () => {
             }
             return setFormErrors(newErrors);
         }
+        console.log("formData", formData);
         setFormErrors({});
         // TODO: Kirim data ke server
     };

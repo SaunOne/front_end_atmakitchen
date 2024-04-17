@@ -75,3 +75,39 @@ export const userRegistration = z
             });
         }
     });
+
+
+export const forgotPassword = z
+    .object({
+        email: z
+            .string({
+                required_error: "Email wajib diisi!",
+            })
+            .email({ message: "Email tidak valid" }),
+    });
+
+
+    export const addNewPassword = z
+    .object({
+        password: z
+            .string({
+                required_error: "Password wajib diisi",
+                invalid_type_error:
+                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+            })
+            .min(6, { message: "Password minimal 6 karakter" })
+            .max(20, { message: "Password maksimal 20 karakter" }),
+
+        confirmPassword: z.string()
+            .min(6, { message: "Password minimal 6 karakter" })
+            .max(20, { message: "Password maksimal 20 karakter" }),
+    })
+    .superRefine(({ password, confirmPassword }, ctx) => {
+        if (password !== confirmPassword) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["confirmPassword"],
+                message: "Tidak sesuai dengan Password yang diinputkan! ",
+            });
+        }
+    });

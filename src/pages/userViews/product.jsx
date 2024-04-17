@@ -1,6 +1,14 @@
+import { Banner } from "../../components/userView/product/banner";
+
+
 const Product = () => {
     return <>
-        <h1>Product</h1>
+        <div className="px-7">
+            <Banner />
+            <h className="text-black">Product</h>
+
+        </div>
+
     </>
 }
 
