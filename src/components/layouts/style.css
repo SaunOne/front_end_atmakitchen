@@ -1,0 +1,10 @@
+.hoverEffect {
+    transition: duration-300, cursor-pointer;
+}
+
+.headerSedenavLi {
+    text-decoration: underline;
+    text-underline-offset: 2;
+    cursor: pointer;
+    color: text-gray-300;
+}
