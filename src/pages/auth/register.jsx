@@ -14,8 +14,9 @@ import { userRegistration } from "../../validations/validation";
 import { Button } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { Register } from "../../api/authApi";
+import { Register , CekVerify} from "../../api/authApi";
 import "./style.css";
+import { useInterval } from "../../utility/useInterval";
 
 const formReducer = (state, event) => {
   return {
@@ -31,6 +32,8 @@ const register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [id, setId] = useState(null);
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -39,7 +42,24 @@ const register = () => {
     setShowPassword2(!showPassword2);
   };
 
-  const ws = new WebSocket("http://127.0.0.1:8000/")
+  useInterval(() => {
+    console.log("id " + id);
+    if(id!==null){
+        CekVerify(id).then((res) => {
+            console.log("res : ",res);
+            setIsActive(res);
+            if(isActive === 1){
+                navigate('/login');
+            }
+        }).catch((err)=>{
+            console.log("Error", err);
+        });
+    } else {
+        console.log("gak masuk");
+    }
+    
+  },1000 * 3);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -61,7 +81,8 @@ const register = () => {
 
     Register(formData).then((res) => {
         console.log("Masuk");
-        console.log("res : ",res);
+        console.log("res : ");
+        setId(res.id_user);
         setLoading(false);
       }).catch((err) => {
           console.log("Error", err);

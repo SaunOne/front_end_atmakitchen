@@ -32,10 +32,23 @@ export const Register = async (data) => { //data diisi dengan maping atau object
     
     const response = await useAxios.post("/register", data);
 
-    console.log("Response:", response.data.data);
+    console.log("Response:", response);
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     throw error.response.data;
   }
+};
+
+export const CekVerify = async (id) => { //data diisi dengan maping atau object dasar
+    try {
+      
+      const response = await useAxios.get("/cek-active/" + id);
+  
+      console.log("Response:", response.data.Status);
+  
+      return response.data.Status;
+    } catch (error) {
+      throw error.response;
+    }
 };

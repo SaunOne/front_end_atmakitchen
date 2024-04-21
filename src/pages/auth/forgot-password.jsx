@@ -1,7 +1,7 @@
 import { useState, useReducer } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { forgotPassword } from "../../validations/validation";
-import { useInterval }
+import { useInterval } from "../../utility/useInterval";
 
 const formReducer = (state, event) => {
     return {
@@ -13,6 +13,8 @@ const formReducer = (state, event) => {
 const ForgotPassword = () => {
     const [formData, setFormData] = useReducer(formReducer, {});
     const [formErrors, setFormErrors] = useState({});
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
