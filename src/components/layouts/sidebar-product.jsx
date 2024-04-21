@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { navBarProduct } from "../../constants/index.js";
+import { navBarUserProduct } from "../../constants/index.js";
 
 
 const Sidebar = () => {
@@ -9,7 +9,7 @@ const Sidebar = () => {
                 <div className="text-black ">
                     <h2 className="text-[18px] align-center font-semibold mb-2">Kategori</h2>
                     <ul >
-                        {navBarProduct.map((item) => (
+                        {navBarUserProduct.map((item) => (
                             <li
                                 key={item._id}
                             >

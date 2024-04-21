@@ -1,4 +1,4 @@
-export const navBarList = [
+export const navBarUserList = [
     {
         _id: 1001,
         title: "Beranda",
@@ -7,23 +7,23 @@ export const navBarList = [
     {
         _id: 1002,
         title: "Produk",
-        link: "/product",
+        link: "/user/product",
     },
     {
         _id: 1003,
         title: "Tentang Kami",
-        link: "/about",
+        link: "/user/about",
     },
     {
         _id: 1004,
         title: "Kontak",
-        link: "/contact",
+        link: "/user/contact",
     },
 
 ];
 
 
-export const navBarProduct = [
+export const navBarUserProduct = [
     {
         _id: 1001,
         title: "Beranda",

@@ -1,6 +1,7 @@
 import { useState, useReducer } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { forgotPassword } from "../../validations/validation";
+import { useInterval }
 
 const formReducer = (state, event) => {
     return {
@@ -28,6 +29,7 @@ const ForgotPassword = () => {
             }
             return setFormErrors(newErrors);
         }
+        
         console.log("formData", formData);
         setFormErrors({});
         // TODO: Kirim data ke server
