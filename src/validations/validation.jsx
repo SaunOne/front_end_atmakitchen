@@ -98,12 +98,12 @@ export const forgotPassword = z
             .min(6, { message: "Password minimal 6 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
 
-        confirmPassword: z.string()
+            password_confirmation: z.string()
             .min(6, { message: "Password minimal 6 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
     })
-    .superRefine(({ password, confirmPassword }, ctx) => {
-        if (password !== confirmPassword) {
+    .superRefine(({ password, password_confirmation }, ctx) => {
+        if (password !== password_confirmation) {
             ctx.addIssue({
                 code: "custom",
                 path: ["confirmPassword"],

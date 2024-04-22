@@ -5,6 +5,9 @@ import { ToastContainer } from "react-toastify";
 // Impor komponen internal
 import LayoutUser from "../pages/layouts/layout-user";
 import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedResetPassword from "./ProtectedResetPassword";
+import Footer from "../components/layouts/footer";
+import Header from "../components/layouts/header";
 
 import Login from "../pages/auth/login";
 import Register from "../pages/auth/register";
@@ -25,6 +28,16 @@ const routes = [
   },
   {
     path: "/",
+    element: <LayoutUser/>,
+    children:[
+      {
+        path : "/",
+        element : <Home/>      
+      }
+    ]
+  },
+  {
+    path: "/",
     element: <Home />,
   },
   {
@@ -41,7 +54,10 @@ const routes = [
   },
   {
     path: "/add-new-password",
-    element: <AddNewPassword />,
+    element: 
+    // <ProtectedResetPassword>
+      <AddNewPassword />,
+    
   },
   {
     path: "/succes-verify",
@@ -56,7 +72,7 @@ const routes = [
     (
       <ProtectedRoutes>
         <LayoutUser />
-      </ProtectedRoutes>
+      </ProtectedRoutes> 
     ),
     
     children: [

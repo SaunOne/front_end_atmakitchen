@@ -1,6 +1,8 @@
-import { useState, useReducer } from "react";
+import { useState, useReducer , useEffect} from "react";
 import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { addNewPassword } from "../../validations/validation";
+import { ResetPassword } from "../../api/authApi";
+import { useLocation } from 'react-router-dom';
 
 const formReducer = (state, event) => {
     return {
@@ -9,12 +11,15 @@ const formReducer = (state, event) => {
     };
 };
 
+
 const AddNewPassword = () => {
     const [formData, setFormData] = useReducer(formReducer, {});
     const [showPassword, setShowPassword] = useState(false);
-
+    const [email, setEmail] = useState('haha');
+    const [token, setToken] = useState('haha');
     const [showPassword2, setShowPassword2] = useState(false);
     const [formErrors, setFormErrors] = useState({});
+    const location = useLocation(true);
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -22,6 +27,16 @@ const AddNewPassword = () => {
     const toggleShowPassword2 = () => {
         setShowPassword2(!showPassword2);
     };
+
+    useEffect(() => {
+        // Update the email state when the component mounts or location changes
+        const emailFromQuery = new URLSearchParams(location.search).get('email');
+        setEmail(emailFromQuery);
+        const token = new URLSearchParams(location.search).get('token');
+        setToken(token);
+        console.log('email : ' + email + " token : " + token);
+    }, [location]);
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,9 +52,18 @@ const AddNewPassword = () => {
             }
             return setFormErrors(newErrors);
         }
-        console.log("formData", formData);
+        
+        console.log("email", email);
+    
+        console.log("formData ", formData);
+        setFormData({ target: { name: 'email', value: email } });
+        setFormData({ target: { name: 'token', value: token } });
         setFormErrors({});
-        // TODO: Kirim data ke server
+        ResetPassword(formData).then((res) => {
+            console.log("data " + res);
+        }).catch((err) => {
+            console.log("err " + err);
+        });
     };
 
     return (
@@ -51,6 +75,7 @@ const AddNewPassword = () => {
                     </h1>
 
                     <form onSubmit={handleSubmit}>
+                        
                         <div className="mb-4 relative">
                             <label
                                 htmlFor="password"
@@ -91,7 +116,7 @@ const AddNewPassword = () => {
                             <div className="flex items-center border-b-[1px] border-black">
                                 <FaLock className="mr-2 text-gray-800" />
                                 <input
-                                    name="confirmPassword"
+                                    name="password_confirmation"
                                     onChange={setFormData}
                                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
                                     type={showPassword2 ? "text" : "password"}

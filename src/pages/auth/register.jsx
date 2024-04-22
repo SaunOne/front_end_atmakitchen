@@ -88,7 +88,7 @@ const register = () => {
           console.log("Error", err);
           setLoading(false);
       });
-    // TODO: Kirim data ke server
+
   };
 
   return (

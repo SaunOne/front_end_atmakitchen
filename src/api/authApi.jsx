@@ -52,3 +52,30 @@ export const CekVerify = async (id) => { //data diisi dengan maping atau object 
       throw error.response;
     }
 };
+
+export const ForgotPasswordUser = async (data) => { //data diisi dengan maping atau object dasar
+  try {
+    
+    const response = await useAxios.post("/forgot-password",data);
+
+    console.log("Response:", response.data);
+
+    return response.data.status;
+  } catch (error) {
+    throw error.response;
+  }
+};
+
+export const ResetPassword = async (data) => { //data diisi dengan maping atau object dasar
+  try {
+    
+    const response = await useAxios.post("/reset-password",data);
+
+    console.log("Response: ", response.data);
+
+    return response.data;
+  } catch (error) {
+    console.log("Error: ", error.status);
+    throw error.response;
+  }
+};

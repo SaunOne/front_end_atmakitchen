@@ -21,6 +21,10 @@ const Header = () => {
     const [isLogin, setIsLogin] = useState(false);
 
     useEffect(() => {
+        var token = sessionStorage.getItem("token");
+        if(token !== null){
+            setIsLogin(true);
+        }
         let ResponsiveMenu = () => {
             if (window.innerWidth < 768) {
                 setShowMenu(false);
@@ -130,7 +134,7 @@ const Header = () => {
                                             <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
                                         </div>
                                     )}
-                                </div>
+                                    </div>
                                 )}
                                 <HiMenuAlt2
                                     onClick={() => setSidenav(!sidenav)}
