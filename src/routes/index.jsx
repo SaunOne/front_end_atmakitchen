@@ -16,12 +16,20 @@ import Contact from "../pages/userViews/contact";
 import About from "../pages/userViews/about";
 import Product from "../pages/userViews/product";
 import ForgotPassword from "../pages/auth/forgot-password";
-import LayoutProduct from "../pages/layouts/layout-product";
+import LayoutProduct from "../pages/layouts/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
 import SuccesVerify from "../pages/auth/succesVerify"; 
+import Dashboard from "../pages/layouts/layout-admin";
+import { Home_admin } from "../pages/dashboard/home";
+import { ProductAdmin } from "../pages/dashboard/product";
+import { AddProduk } from "../pages/dashboard/addProduk";
+import { editProduk } from "../pages/dashboard/editProduk";
+import { Notifications } from "../pages/dashboard/notifications";
 
 // Konfigurasi router
 const routes = [
+
+  //default routes
   {
     path: "*",
     element: <div>Routes Not Found!</div>,
@@ -36,6 +44,8 @@ const routes = [
       }
     ]
   },
+
+  //guest
   {
     path: "/",
     element: <Home />,
@@ -63,11 +73,30 @@ const routes = [
     path: "/succes-verify",
     element: <SuccesVerify />,
   },
-  {
 
+  //admin
+  {
+    path: "/admin",
+    element: <Dashboard/>,
+    children  : [
+      {
+        path : "/admin/home",
+        element : <Home_admin/>
+      },
+      {
+        path : "/admin/product",
+        element : <ProductAdmin/>,
+      },
+      {
+        path : "/admin/product/add",
+        element : <AddProduk/>,
+      }
+    ]
   },
 
+  //user
   {
+    path: "/user",
     element: 
     (
       <ProtectedRoutes>
@@ -97,10 +126,9 @@ const routes = [
         path: "/user/contact",
         element: <Contact />,
       },
+
     ],
   },
-  
-  
 ];
 
 const router = createBrowserRouter(routes);

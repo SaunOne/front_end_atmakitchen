@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
-import Sidebar from "../../components/layouts/sidebar-product";
+import Sidebar from "../../../components/layouts/sidebar-product";
 
 const LayoutUser = ({ children }) => {
     return (

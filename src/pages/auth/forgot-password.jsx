@@ -2,7 +2,6 @@ import { useState, useReducer } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { forgotPassword } from "../../validations/validation";
 import { ForgotPasswordUser } from "../../api/authApi";
-import { useInterval,getEmail } from "../../utility/useInterval";
 
 const formReducer = (state, event) => {
     return {
