@@ -1,0 +1,113 @@
+import { z } from "zod";
+
+export const userLogin = z
+    .object({
+        email: z
+            .string({
+                required_error: "Email wajib diisi!",
+            })
+            .email({ message: "Email tidak valid" }),
+        password: z
+            .string({
+                required_error: "Password wajib diisi",
+                invalid_type_error:
+                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+            })
+            .min(1, { message: "Password wajib diisi!" }),
+    });
+
+
+export const userRegistration = z
+    .object({
+        nama_lengkap: z
+            .string({
+                required_error: "Nama Lengkap wajib diisi",
+                invalid_type_error:
+                    "Nama Lengkap wajib terdiri dari minimal 3 karakter & maksimal 50 karakter!",
+            })
+            .min(3, { message: "Nama Lengkap wajib terdiri dari minimal 3 karakter" })
+            .max(50, { message: "Nama Lengkap maksimal 50 karakter" }),
+        username: z
+            .string({
+                required_error: "Username wajib diisi",
+                invalid_type_error:
+                    "Username wajib terdiri dari minimal 3 karakter & maksimal 15 karakter!",
+            })
+            .min(6, { message: "Username wajib terdiri dari minimal 6 karakter" })
+            .max(15, { message: "Username maksimal 15 karakter" }),
+        email: z
+            .string({
+                required_error: "Email wajib diisi!",
+            })
+            .email({ message: "Email tidak valid" }),
+        no_telp: z
+            .string({
+                invalid_type_error:
+                    "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
+            })
+            .min(10, { message: "Nomor Telepon minimal 10 angka" })
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
+        gender: z
+            .string()
+            .min(1, { message: "Jenis Kelamin harus dipilih" }),
+        tanggal_lahir: z
+            .string()
+            .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
+        password: z
+            .string({
+                required_error: "Password wajib diisi",
+                invalid_type_error:
+                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+            })
+            .min(6, { message: "Password minimal 6 karakter" })
+            .max(20, { message: "Password maksimal 20 karakter" }),
+
+        confirmPassword: z.string()
+            .min(6, { message: "Password minimal 6 karakter" })
+            .max(20, { message: "Password maksimal 20 karakter" }),
+    })
+    .superRefine(({ password, confirmPassword }, ctx) => {
+        if (password !== confirmPassword) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["confirmPassword"],
+                message: "Tidak sesuai dengan Password yang diinputkan! ",
+            });
+        }
+    });
+
+
+export const forgotPassword = z
+    .object({
+        email: z
+            .string({
+                required_error: "Email wajib diisi!",
+            })
+            .email({ message: "Email tidak valid" }),
+    });
+
+
+    export const addNewPassword = z
+    .object({
+        password: z
+            .string({
+                required_error: "Password wajib diisi",
+                invalid_type_error:
+                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+            })
+            .min(6, { message: "Password minimal 6 karakter" })
+            .max(20, { message: "Password maksimal 20 karakter" }),
+
+            password_confirmation: z.string()
+            .min(6, { message: "Password minimal 6 karakter" })
+            .max(20, { message: "Password maksimal 20 karakter" }),
+    })
+    .superRefine(({ password, password_confirmation }, ctx) => {
+        if (password !== password_confirmation) {
+            ctx.addIssue({
+                code: "custom",
+                path: ["confirmPassword"],
+                message: "Tidak sesuai dengan Password yang diinputkan! ",
+            });
+        }
+    });

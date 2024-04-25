@@ -6,9 +6,15 @@ import {
     Button,
     Typography,
   } from "@material-tailwind/react";
+<<<<<<< HEAD
 import { Dashboard } from "@/layouts";
   
   export function addProduk() {
+=======
+// import { Dashboard } from "@/layouts";
+  
+  export function AddProduk() {
+>>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
     return (
        <Card color="transparent" shadow={false}>
         <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
@@ -55,4 +61,8 @@ import { Dashboard } from "@/layouts";
     );
   }
 
+<<<<<<< HEAD
   export default addProduk;
+=======
+  export default AddProduk;
+>>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597

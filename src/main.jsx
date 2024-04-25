@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /**
 =========================================================
 * Material Tailwind Dashboard React - v2.1.0
@@ -28,3 +29,24 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </React.StrictMode>
 );
+=======
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import AppRouter from './routes';
+import './index.css';
+import { MaterialTailwindControllerProvider } from "./context";
+import { BrowserRouter } from "react-router-dom";
+import { ThemeProvider } from "@material-tailwind/react";
+import "../public/css/tailwind.css";
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+   
+   <React.StrictMode>
+      <ThemeProvider>
+        <MaterialTailwindControllerProvider>
+          <AppRouter />
+        </MaterialTailwindControllerProvider>
+      </ThemeProvider>
+  </React.StrictMode>
+)
+>>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597

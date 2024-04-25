@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # [Material Tailwind Dashboard React](http://demos.creative-tim.com/material-tailwind-dashboard-react/#/?ref=readme-mtdr) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&logo=twitter)](https://twitter.com/intent/tweet?url=https://www.creative-tim.com/product/material-tailwind-dashboard-react&text=Check%20Material%20Tailwind%20Dashboard%20React%20made%20by%20@CreativeTim%20#webdesign%20#kit%20#materialdesign%20#react%20#materialtailwind%20#tailwindcss%20https://www.creative-tim.com/product/material-tailwind-dashboard-react)
 
 ![version](https://img.shields.io/badge/version-2.1.0-blue.svg) [![GitHub issues open](https://img.shields.io/github/issues/creativetimofficial/material-tailwind-dashboard-react.svg)](https://github.com/creativetimofficial/material-tailwind-dashboard-react/issues?q=is%3Aopen+is%3Aissue) [![GitHub issues closed](https://img.shields.io/github/issues-closed-raw/creativetimofficial/material-tailwind-dashboard-react.svg)](https://github.com/creativetimofficial/material-tailwind-dashboard-react/issues?q=is%3Aissue+is%3Aclosed)
@@ -178,3 +179,13 @@ Dribbble: <https://dribbble.com/creativetim>
 Google+: <https://plus.google.com/+CreativetimPage>
 
 Instagram: <https://instagram.com/creativetimofficial>
+=======
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+>>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
