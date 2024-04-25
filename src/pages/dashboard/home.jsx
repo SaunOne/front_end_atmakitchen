@@ -17,29 +17,17 @@ import {
   EllipsisVerticalIcon,
   ArrowUpIcon,
 } from "@heroicons/react/24/outline";
-<<<<<<< HEAD
-import { StatisticsCard } from "@/widgets/cards";
-import { StatisticsChart } from "@/widgets/charts";
-=======
 import { StatisticsCard } from "../../widgets/cards";
 import { StatisticsChart } from "../../widgets/charts";
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
 import {
   statisticsCardsData,
   statisticsChartsData,
   projectsTableData,
   ordersOverviewData,
-<<<<<<< HEAD
-} from "@/data";
-import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
-
-export function Home() {
-=======
 } from "../../data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 
 export function Home_admin() {
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
   return (
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
@@ -267,8 +255,4 @@ export function Home_admin() {
   );
 }
 
-<<<<<<< HEAD
-export default Home;
-=======
 export default Home_admin;
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597

@@ -7,11 +7,7 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
-<<<<<<< HEAD
-import { useMaterialTailwindController, setOpenSidenav } from "@/context";
-=======
 import { useMaterialTailwindController, setOpenSidenav } from "../../context";
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
 
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -66,11 +62,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
             )}
             {pages.map(({ icon, name, path }) => (
               <li key={name}>
-<<<<<<< HEAD
-                <NavLink to={`/${layout}${path}`}>
-=======
                 <NavLink to={`${path}`}>
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
                   {({ isActive }) => (
                     <Button
                       variant={isActive ? "gradient" : "text"}

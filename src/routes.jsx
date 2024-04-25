@@ -6,7 +6,7 @@ import {
   ServerStackIcon,
   RectangleStackIcon,
 } from "@heroicons/react/24/solid";
-import { Home, Profile, Tables, Notifications, Product, Resep, addProduk, editProduk } from "@/pages/dashboard";
+import { Home_admin, Profile, Tables, Notifications, ProductAdmin, Resep } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 
 const icon = {
@@ -21,7 +21,7 @@ export const routes = [
         icon: <HomeIcon {...icon} />,
         name: "dashboard",
         path: "/home",
-        element: <Home />,
+        element: <Home_admin />,
       },
       {
         icon: <UserCircleIcon {...icon} />,
@@ -45,7 +45,7 @@ export const routes = [
         icon: <RectangleStackIcon {...icon} />,
         name: "Product",
         path: "/product",
-        element: <Product />,
+        element: <ProductAdmin />,
         pages: [ 
           {
             icon: <RectangleStackIcon {...icon} />,

@@ -21,11 +21,7 @@ import {
   import { useNavigate } from "react-router-dom";
   
   
-<<<<<<< HEAD
-  export function Product() {
-=======
   export function ProductAdmin() {
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
     const [selectedTabValue, setSelectedTabValue] = useState("utama"); // Nilai tab yang dipilih, diatur ke nilai default 'utama'
 
     const tabsProduct = [ 
@@ -58,11 +54,7 @@ import {
                 </TabsHeader>
             </Tabs>
             <div className="flex justify-end">
-<<<<<<< HEAD
-                <Button onClick={() => navigate('/dashboard/product/addProduk')}>Tambah</Button>
-=======
                 <Button onClick={() => navigate('/admin/product/add')}>Tambah</Button>
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
             </div>
         </div>
         <Card>
@@ -152,9 +144,5 @@ import {
     );
   }
   
-<<<<<<< HEAD
-  export default Product;
-=======
   export default ProductAdmin;
->>>>>>> 3c7be9f2a806f2f2293bedaa1bf26a99e2106597
   
