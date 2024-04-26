@@ -12,7 +12,7 @@ import {
 import navbarRoutes from "../../routes/routeData";
 import { useMaterialTailwindController, setOpenConfigurator } from "../../context";
 
-const LayoutAdmin = ({children}) => {
+const LayoutMO = ({children}) => {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
@@ -49,4 +49,4 @@ const LayoutAdmin = ({children}) => {
 
 // Dashboard.displayName = "/src/layout/dashboard.jsx";
 
-export default LayoutAdmin;
+export default LayoutMO;

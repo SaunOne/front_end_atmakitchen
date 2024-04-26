@@ -10,17 +10,18 @@ import {
   } from "@material-tailwind/react";
 // import { Dashboard } from "@/layouts";
   
-  export function AddProduk() {
+  export function AddBahanBaku() {
 
     const handleSubmit = (event) => {
-      event.preventDefault();
-      window.location.href = "/admin/product";
+        event.preventDefault();
+        window.location.href = "/admin/bahanBaku";
     };
+
     return (
        <Card color="white" shadow={false}>
         <div className=" border rounded-xl border-gray-400 p-4 shadow-md ">
           <form className="mt-8 mb-2" onSubmit={handleSubmit}>
-            <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-4">
+            <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-3">
               <div >
                 <Typography variant="h6" color="blue-gray" className="mb-3">
                   Jenis Produk
@@ -50,7 +51,6 @@ import {
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
-                  
                 />
               </div>
               <div>
@@ -81,7 +81,7 @@ import {
               </div>
             </div>
             <div className="flex justify-end">
-              <Button type="submit" className="mt-6 ">
+              <Button type="submit" className="mt-6 " >
                 Save
               </Button>
             </div>
@@ -91,4 +91,4 @@ import {
     );
   }
 
-  export default AddProduk;
+  export default AddBahanBaku;

@@ -19,6 +19,7 @@ import {
   import { authorsTableData, productTableData} from "@/data";
   import { useState } from "react";
   import { useNavigate } from "react-router-dom";
+  import { useEffect } from "react";
   
   
   export function ProductAdmin() {
@@ -45,13 +46,13 @@ import {
       <div className="mt-12 mb-8 flex flex-col gap-10">
         <div className="grid grid-cols-2 text-lg">
             <Tabs value={selectedTabValue} onChange={handleTabChange}>
-                <TabsHeader className="">
-                  {tabsProduct.map(({ label, value }) => (
-                    <Tab key={value} value={value}>
-                      {label}
-                    </Tab>
-                  ))}
-                </TabsHeader>
+              <TabsHeader>
+                {tabsProduct.map(tab => (
+                  <Tab key={tab.value} value={tab.value} onClick={() => setSelectedTabValue(tab.value)}>
+                    {tab.label}
+                  </Tab>
+                ))}
+              </TabsHeader>
             </Tabs>
             <div className="flex justify-end">
                 <Button onClick={() => navigate('/admin/product/add')}>Tambah</Button>

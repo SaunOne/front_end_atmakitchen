@@ -21,19 +21,19 @@ import {
   import { useNavigate } from "react-router-dom";
   
   
-  export function Resep() {
+  export function BahanBaku() {
 
     const navigate = useNavigate();
 
     return (
       <div className="mt-12 mb-8 flex flex-col gap-12">
         <div className="flex justify-end">
-          <Button onClick={() => navigate('/admin/resep/addResep')}>Tambah</Button>
+          <Button onClick={() => navigate('/admin/bahanBaku/addBahanBaku')}>Tambah</Button>
         </div>
         <Card>
         <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
             <Typography variant="h6" color="white">
-              Tabel Resep 
+              Tabel Bahan Baku
             </Typography>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
@@ -116,5 +116,5 @@ import {
     );
   }
   
-  export default Resep;
+  export default BahanBaku;
   

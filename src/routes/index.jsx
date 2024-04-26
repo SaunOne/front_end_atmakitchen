@@ -20,11 +20,16 @@ import LayoutProduct from "../pages/layouts/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
 import SuccesVerify from "../pages/auth/succesVerify"; 
 import Dashboard from "../pages/layouts/layout-admin";
+import DashboardMO from "../pages/layouts/layout-MO";
 import { Home_admin } from "../pages/dashboard/home";
 import { ProductAdmin } from "../pages/dashboard/product";
 import { AddProduk } from "../pages/dashboard/addProduk";
+import { AddResep } from "../pages/dashboard/addResep";
+import { AddBahanBaku } from "../pages/dashboard/addBahanBaku";
 import { editProduk } from "../pages/dashboard/editProduk";
 import { Notifications } from "../pages/dashboard/notifications";
+import { Resep } from "../pages/dashboard/resep";
+import { BahanBaku } from "../pages/dashboard/bahanBaku";
 
 // Konfigurasi router
 const routes = [
@@ -88,10 +93,33 @@ const routes = [
         element : <ProductAdmin/>,
       },
       {
+        path : "/admin/resep",
+        element : <Resep/>,
+      },
+      {
+        path : "/admin/bahanBaku",
+        element : <BahanBaku/>,
+      },
+      {
         path : "/admin/product/add",
         element : <AddProduk/>,
-      }
+      },
+      {
+        path : "/admin/resep/addResep",
+        element : <AddResep/>,
+      },
+      {
+        path : "/admin/bahanBaku/addBahanBaku",
+        element : <AddBahanBaku/>,
+      },
     ]
+  },
+
+  //MO
+
+  {
+    path: "/mo",
+    element: <DashboardMO/>,
   },
 
   //user
