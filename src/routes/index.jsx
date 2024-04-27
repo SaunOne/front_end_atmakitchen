@@ -4,36 +4,131 @@ import { ToastContainer } from "react-toastify";
 
 // Impor komponen internal
 import LayoutUser from "../pages/layouts/layout-user";
+import ProtectedRoutes from "./ProtectedRoutes";
+import ProtectedResetPassword from "./ProtectedResetPassword";
+import Footer from "../components/layouts/footer";
+import Header from "../components/layouts/header";
 
 import Login from "../pages/auth/login";
-import Register from '../pages/auth/register';
+import Register from "../pages/auth/register";
 import Home from "../pages/userViews/home";
 import Contact from "../pages/userViews/contact";
 import About from "../pages/userViews/about";
 import Product from "../pages/userViews/product";
 import ForgotPassword from "../pages/auth/forgot-password";
-import LayoutProduct from "../pages/layouts/layout-product";
+import LayoutProduct from "../pages/layouts/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
+import SuccesVerify from "../pages/auth/succesVerify"; 
+import Dashboard from "../pages/layouts/layout-admin";
+import { Home_admin } from "../pages/dashboard/home";
+import { ProductAdmin } from "../pages/dashboard/product";
+import { AddProduk } from "../pages/dashboard/addProduk";
+import { editProduk } from "../pages/dashboard/editProduk";
+import { Notifications } from "../pages/dashboard/notifications";
+
 // Konfigurasi router
 const routes = [
-  { path: "*", element: <div>Routes Not Found!</div> },
+
+  //default routes
   {
-    element: <LayoutUser />,
+    path: "*",
+    element: <div>Routes Not Found!</div>,
+  },
+  {
+    path: "/",
+    element: <LayoutUser/>,
+    children:[
+      {
+        path : "/",
+        element : <Home/>      
+      }
+    ]
+  },
+
+  //guest
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "/add-new-password",
+    element: 
+    // <ProtectedResetPassword>
+      <AddNewPassword />,
+    
+  },
+  {
+    path: "/succes-verify",
+    element: <SuccesVerify />,
+  },
+
+  //admin
+  {
+    path: "/admin",
+    element: <Dashboard/>,
+    children  : [
+      {
+        path : "/admin/home",
+        element : <Home_admin/>
+      },
+      {
+        path : "/admin/product",
+        element : <ProductAdmin/>,
+      },
+      {
+        path : "/admin/product/add",
+        element : <AddProduk/>,
+      }
+    ]
+  },
+
+  //user
+  {
+    path: "/user",
+    element: 
+    (
+      <ProtectedRoutes>
+        <LayoutUser />
+      </ProtectedRoutes> 
+    ),
+    
     children: [
-      { path: "/", element: <Home /> },
-      { element: <LayoutProduct/>,
-        children:[
-          {path: "/product", element: <Product /> },
+      {
+        path: "/user",
+        element: <Home />,
+      },
+      {
+        element: <LayoutProduct />,
+        children: [
+          {
+            path: "/user/product",
+            element: <Product />,
+          },
         ],
       },
-      { path: "/about", element: <About /> },
-      { path: "/contact", element: <Contact /> },
+      {
+        path: "/user/about",
+        element: <About />,
+      },
+      {
+        path: "/user/contact",
+        element: <Contact />,
+      },
+
     ],
   },
-  { path: "/login", element: <Login /> },
-  { path: "/register", element: <Register /> },
-  { path: "/forgot-password", element: <ForgotPassword /> },
-  { path: "/add-new-password", element: <AddNewPassword /> },
 ];
 
 const router = createBrowserRouter(routes);

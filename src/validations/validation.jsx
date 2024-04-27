@@ -19,7 +19,7 @@ export const userLogin = z
 
 export const userRegistration = z
     .object({
-        fullName: z
+        nama_lengkap: z
             .string({
                 required_error: "Nama Lengkap wajib diisi",
                 invalid_type_error:
@@ -33,14 +33,14 @@ export const userRegistration = z
                 invalid_type_error:
                     "Username wajib terdiri dari minimal 3 karakter & maksimal 15 karakter!",
             })
-            .min(3, { message: "Username wajib terdiri dari minimal 3 karakter" })
+            .min(6, { message: "Username wajib terdiri dari minimal 6 karakter" })
             .max(15, { message: "Username maksimal 15 karakter" }),
         email: z
             .string({
                 required_error: "Email wajib diisi!",
             })
             .email({ message: "Email tidak valid" }),
-        phone: z
+        no_telp: z
             .string({
                 invalid_type_error:
                     "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
@@ -50,7 +50,7 @@ export const userRegistration = z
         gender: z
             .string()
             .min(1, { message: "Jenis Kelamin harus dipilih" }),
-        birthdate: z
+        tanggal_lahir: z
             .string()
             .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
         password: z
@@ -98,12 +98,12 @@ export const forgotPassword = z
             .min(6, { message: "Password minimal 6 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
 
-        confirmPassword: z.string()
+            password_confirmation: z.string()
             .min(6, { message: "Password minimal 6 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
     })
-    .superRefine(({ password, confirmPassword }, ctx) => {
-        if (password !== confirmPassword) {
+    .superRefine(({ password, password_confirmation }, ctx) => {
+        if (password !== password_confirmation) {
             ctx.addIssue({
                 code: "custom",
                 path: ["confirmPassword"],

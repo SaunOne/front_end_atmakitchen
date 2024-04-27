@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import PropTypes from "prop-types";
 import logo from '../../assets/img/logo-hero.png';
 import { FaShoppingCart, FaUserCircle, FaBell } from "react-icons/fa";
-import { navBarList } from "../../constants/index.js";
+import { navBarUserList } from "../../constants/index.js";
 import "../fonts.css";
 import "./style.css";
 
@@ -18,7 +18,13 @@ const Header = () => {
     const [showDropdown2, setShowDropdown2] = useState(false);
     const [products, setProducts] = useState([{ nama: "kevin" }, { nama: "kevin" }, { nama: "kevin" }]);
     const location = useLocation();
+    const [isLogin, setIsLogin] = useState(false);
+
     useEffect(() => {
+        var token = sessionStorage.getItem("token");
+        if(token !== null){
+            setIsLogin(true);
+        }
         let ResponsiveMenu = () => {
             if (window.innerWidth < 768) {
                 setShowMenu(false);
@@ -87,7 +93,7 @@ const Header = () => {
                                     className="flex items-center w-auto z-1 p-0 gap-2"
                                 >
                                     <>
-                                        {navBarList.map(({ _id, title, link }) => (
+                                        {navBarUserList.map(({ _id, title, link }) => (
                                             <NavLink
                                                 key={_id}
                                                 className="flex font-normal hover:font-bold w-25 h-6 justify-center items-center px-10 text-base text-[#262626] hover:underline underline-offset-[4px] decoration-[1px] hover:text-[#262626] border-r-[2px] border-r-[#5c5c5c] hoverEffect last:border-r-0"
@@ -112,8 +118,12 @@ const Header = () => {
                                         )}
                                     </div>
                                 </Link>
-
-                                <div className="relative"> {/* 3. Tambahkan dropdown */}
+                                {isLogin ? (
+                                    <>
+    
+                                    </>
+                                ) : (
+                                    <div className="relative"> {/* 3. Tambahkan dropdown */}
                                     <FaUserCircle
                                         className="inline-block md:hidden text-gray-800 w-5 h-5 mb-2 cursor-pointer"
                                         onClick={toggleDropdown2} // Panggil fungsi untuk menampilkan dropdown
@@ -124,8 +134,8 @@ const Header = () => {
                                             <Link to="/login" className="block px-4 py-2 text-gray-800 hover:bg-gray-200">Login</Link>
                                         </div>
                                     )}
-                                </div>
-
+                                    </div>
+                                )}
                                 <HiMenuAlt2
                                     onClick={() => setSidenav(!sidenav)}
                                     className="inline-block md:hidden text-black  cursor-pointer w-8 h-6 absolute top-6 right-4"

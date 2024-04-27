@@ -1,6 +1,7 @@
 import { useState, useReducer } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { forgotPassword } from "../../validations/validation";
+import { ForgotPasswordUser } from "../../api/authApi";
 
 const formReducer = (state, event) => {
     return {
@@ -12,6 +13,8 @@ const formReducer = (state, event) => {
 const ForgotPassword = () => {
     const [formData, setFormData] = useReducer(formReducer, {});
     const [formErrors, setFormErrors] = useState({});
+
+    
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -28,9 +31,15 @@ const ForgotPassword = () => {
             }
             return setFormErrors(newErrors);
         }
+        
         console.log("formData", formData);
         setFormErrors({});
-        // TODO: Kirim data ke server
+        
+        ForgotPasswordUser(formData).then((res) => {
+            console.log("form ",res);
+        }).catch((err) => {
+            console.log("error ", err);
+        });
     };
 
     return (
