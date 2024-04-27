@@ -4,10 +4,10 @@ import { navBarProduct } from "../../constants/index.js";
 
 const Sidebar = () => {
     return <>
-        <div className="hidden md:block w-[25%] h-[800px] ">
+        <div className="hidden md:block w-[25%] h-[800px] px-5">
             <div className="flex p-8 h-[400px] rounded bg-white  shadow-lg ">
                 <div className="text-black ">
-                    <h2 className="text-[18px] align-center font-semibold mb-2">Kategori</h2>
+                    <h2 className="text-[18px] align-center font-bold mb-2">Kategori</h2>
                     <ul >
                         {navBarProduct.map((item) => (
                             <li

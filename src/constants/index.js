@@ -26,13 +26,13 @@ export const navBarList = [
 export const navBarProduct = [
     {
         _id: 1001,
-        title: "Beranda",
-        link: "/",
+        title: "Cake",
+        link: "/cake",
     },
     {
         _id: 1002,
-        title: "Produk",
-        link: "/product",
+        title: "Roti",
+        link: "/roti",
     },
     {
         _id: 1003,
