@@ -87,7 +87,7 @@ export const forgotPassword = z
     });
 
 
-    export const addNewPassword = z
+export const addNewPassword = z
     .object({
         password: z
             .string({
@@ -98,7 +98,7 @@ export const forgotPassword = z
             .min(6, { message: "Password minimal 6 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
 
-            password_confirmation: z.string()
+        password_confirmation: z.string()
             .min(6, { message: "Password minimal 6 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
     })
@@ -111,3 +111,78 @@ export const forgotPassword = z
             });
         }
     });
+
+
+export const addPenitip = z
+    .object({
+        name: z
+            .string({
+                required_error: "Nama Lengkap wajib diisi",
+                invalid_type_error:
+                    "Nama Lengkap wajib terdiri dari minimal 3 karakter & maksimal 50 karakter!",
+            })
+            .min(3, { message: "Nama Lengkap wajib terdiri dari minimal 3 karakter" })
+            .max(50, { message: "Nama Lengkap maksimal 50 karakter" }),
+        phone: z
+            .string({
+                invalid_type_error:
+                    "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
+            })
+            .min(10, { message: "Nomor Telepon minimal 10 angka" })
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
+        address: z
+            .string({
+                required_error: "Username wajib diisi",
+                invalid_type_error:
+                    "Username wajib terdiri dari minimal 3 karakter & maksimal 15 karakter!",
+            })
+            .min(6, { message: "Alamat wajib terdiri dari minimal 6 karakter" })
+            .max(50, { message: "Alamat maksimal 50 karakter" }),
+    });
+
+
+export const addStaff = z
+    .object({
+        username: z
+            .string({
+                required_error: "Username wajib diisi",
+                invalid_type_error:
+                    "Username wajib terdiri dari minimal 3 karakter & maksimal 50 karakter!",
+            })
+            .min(3, { message: "Username wajib terdiri dari minimal 3 karakter" })
+            .max(50, { message: "Username maksimal 50 karakter" }),
+        nama_lengkap: z
+            .string({
+                required_error: "Nama Lengkap wajib diisi",
+                invalid_type_error:
+                    "Nama Lengkap wajib terdiri dari minimal 3 karakter & maksimal 50 karakter!",
+            })
+            .min(3, { message: "Nama Lengkap wajib terdiri dari minimal 3 karakter" })
+            .max(50, { message: "Nama Lengkap maksimal 50 karakter" }),
+        no_telp: z
+            .string({
+                invalid_type_error:
+                    "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
+            })
+            .min(10, { message: "Nomor Telepon minimal 10 angka" })
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
+        email: z
+            .string({
+                required_error: "Email wajib diisi!",
+            })
+            .email({ message: "Email tidak valid" }),
+        gender: z.string({
+            invalid_type_error:
+                "Gender Wajib Diisi",
+        })
+            .min(1, { message: "Gender Wajib Diisi" }),
+        tanggal_lahir: z
+            .string()
+            .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
+        nama_role: z
+            .string({
+                invalid_type_error:
+                    "Jabatan Wajib Diisi",
+            })
+            .min(1, { message: "Jabatan Wajib Diisi" }),
+    }); 

@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import {
   FaEye,
   FaEyeSlash,
@@ -12,21 +12,14 @@ import {
 } from "react-icons/fa";
 import { userRegistration } from "../../validations/validation";
 import { Button } from "@material-tailwind/react";
-import { Link, useNavigate } from "react-router-dom";
-import { Navigate } from "react-router-dom";
-import { Register , CekVerify} from "../../api/authApi";
+import {  useNavigate } from "react-router-dom"; //Link,
+//import { Navigate } from "react-router-dom";
+import { RegisterApi , CekVerify} from "../../api/authApi";
 import "./style.css";
 import { useInterval } from "../../utility/useInterval";
 
-const formReducer = (state, event) => {
-  return {
-    ...state,
-    [event.target.name]: event.target.value,
-  };
-};
 
-const register = () => {
-  const [formData, setFormData] = useReducer(formReducer, {});
+const Register = () => {
   const [formErrors, setFormErrors] = useState({});
   const [showPassword2, setShowPassword2] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -63,8 +56,10 @@ const register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("formData", formData);
-    const parsedUser = userRegistration.safeParse(formData);
+    const formData = new FormData(e.target); 
+    const formDataObject = Object.fromEntries(formData.entries()); 
+    console.log(formDataObject);
+    const parsedUser = userRegistration.safeParse(formDataObject);
     if (!parsedUser.success) {
       const error = parsedUser.error;
       let newErrors = {};
@@ -76,10 +71,9 @@ const register = () => {
       }
       return setFormErrors(newErrors);
     }
-    console.log("formData", formData);
     setFormErrors({});
 
-    Register(formData).then((res) => {
+    RegisterApi(formData).then((res) => {
         console.log("Masuk");
         console.log("res : ");
         setId(res.id_user);
@@ -111,7 +105,6 @@ const register = () => {
                   name="nama_lengkap"
                   className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                   placeholder="Masukkan nama lengkap"
-                  onChange={setFormData}
                   required
                 />
               </div>
@@ -134,7 +127,6 @@ const register = () => {
                   name="email"
                   className="w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                   placeholder="Masukkan alamat email"
-                  onChange={setFormData}
                   required
                 />
               </div>
@@ -157,7 +149,6 @@ const register = () => {
                     name="username"
                     className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                     placeholder="Masukkan nama pengguna"
-                    onChange={setFormData}
                     required
                   />
                 </div>
@@ -181,7 +172,6 @@ const register = () => {
                     name="no_telp"
                     className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                     placeholder="Masukkan no telepon"
-                    onChange={setFormData}
                     required
                   />
                 </div>
@@ -205,7 +195,6 @@ const register = () => {
                   name="password"
                   className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                   placeholder="Masukkan kata sandi"
-                  onChange={setFormData}
                   required
                 />
 
@@ -239,7 +228,6 @@ const register = () => {
                   name="confirmPassword"
                   className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800 "
                   placeholder="Masukkan Konfirmasi kata sandi"
-                  onChange={setFormData}
                   required
                 />
                 <a
@@ -271,12 +259,11 @@ const register = () => {
                   <select
                     name="gender"
                     className=" w-full h-8 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
-                    onChange={setFormData}
                     required
                   >
                     <option value="">Pilih Jenis Kelamin</option>
-                    <option value="male">Laki-laki</option>
-                    <option value="female">Perempuan</option>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
                   </select>
                 </div>
               </div>
@@ -293,7 +280,6 @@ const register = () => {
                     type="date"
                     name="tanggal_lahir"
                     className="w-full h-8 text-base font-medium outline-none bg-transparent appearance-none text-gray-800"
-                    onChange={setFormData}
                     required
                   />
                 </div>
@@ -311,4 +297,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;

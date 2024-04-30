@@ -9,7 +9,7 @@ import {
   Configurator,
   Footer,
 } from "../../widgets/layout";
-import navbarRoutes from "../../routes/routeData";
+import {routesAdmin} from "../../routes/routeData";
 import { useMaterialTailwindController, setOpenConfigurator } from "../../context";
 
 const LayoutAdmin = ({children}) => {
@@ -19,7 +19,7 @@ const LayoutAdmin = ({children}) => {
   return (
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav
-        routes={navbarRoutes}
+        routes={routesAdmin}
         brandImg={
           sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
         }
