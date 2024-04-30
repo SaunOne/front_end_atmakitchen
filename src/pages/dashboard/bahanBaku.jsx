@@ -16,7 +16,7 @@ import {
   } from "@material-tailwind/react";
   import { NavLink } from 'react-router-dom';
   import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-  import { productTableData, resepTableData } from "@/data";
+  import { bahanBakuTableData} from "@/data";
   import { useState } from "react";
   import { useNavigate } from "react-router-dom";
   
@@ -40,14 +40,14 @@ import {
           <table className="w-full min-w-[640px] table-auto">
             <thead>
               <tr>
-                {["Nama Resep", "Bahan", "Jumlah Kebutuhan", "Stok", ""].map((el) => (
+                {["No", "Nama Bahan", "Harga", "Stok", ""].map((el) => (
                   <th
                     key={el}
                     className="border-b border-blue-gray-50 py-3 px-5 text-left"
                   >
                     <Typography
                       variant="small"
-                      className="text-[11px] font-bold uppercase text-blue-gray-400"
+                      className=" text-center text-[11px] font-bold uppercase text-blue-gray-400"
                     >
                       {el}
                     </Typography>
@@ -56,38 +56,37 @@ import {
               </tr>
             </thead>
             <tbody>
-              {resepTableData.map(
-                ({ img, name, ingridients, amount, stok }, key) => {
-                  const className = `py-3 px-5 ${
-                    key === resepTableData.length - 1
+              {bahanBakuTableData.map(
+                ({ id, name, price, stok }, key) => {
+                  const className = `py-3 px-5 text-center ${
+                    key === bahanBakuTableData.length - 1
                       ? ""
                       : "border-b border-blue-gray-50"
                   }`;
 
                   return (
-                    <tr key={name}>
+                    <tr key={id}>
                       <td className={className}>
-                        <div className="flex items-center gap-4">
-                          <Avatar src={img} alt={name} size="sm" variant="rounded" />
+                        <div className="text-xs font-semibold text-blue-gray-600">
                           <div>
                             <Typography
                               variant="small"
                               color="blue-gray"
                               className="font-semibold"
                             >
-                              {name}
+                              {id}
                             </Typography>
                           </div>
                         </div>
                       </td>
                       <td className={className}>
                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {ingridients}
+                          {name}
                         </Typography>
                       </td>
                       <td className={className}>
                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                          {amount}
+                          {price}
                         </Typography>
                       </td>
                       <td className={className}>
@@ -100,6 +99,7 @@ import {
                           as="a"
                           href=""
                           className="text-xs font-semibold text-blue-gray-600"
+                          onClick={() => navigate('/dashboard/product/editProduk')}
                         >
                           Edit
                         </Typography>

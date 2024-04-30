@@ -10,7 +10,8 @@ import {
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import { 
     faBoxesStacked ,
-    faScroll
+    faScroll,
+    faList
   } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
@@ -76,6 +77,11 @@ import {
               path: "/admin/product/edit",
             },
           ],
+        },
+        {
+          icon: <FontAwesomeIcon icon={faList} {...icon} />,
+          name: "List Pesanan",
+          path: "/admin/listPesanan",
         },
       ],
     },

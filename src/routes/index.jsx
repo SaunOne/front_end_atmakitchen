@@ -30,6 +30,7 @@ import { editProduk } from "../pages/dashboard/editProduk";
 import { Notifications } from "../pages/dashboard/notifications";
 import { Resep } from "../pages/dashboard/resep";
 import { BahanBaku } from "../pages/dashboard/bahanBaku";
+import { ListPesanan } from "../pages/dashboard/listPesanan";
 
 // Konfigurasi router
 const routes = [
@@ -99,6 +100,10 @@ const routes = [
       {
         path : "/admin/bahanBaku",
         element : <BahanBaku/>,
+      },
+      {
+        path : "/admin/listPesanan",
+        element : <ListPesanan/>,
       },
       {
         path : "/admin/product/add",

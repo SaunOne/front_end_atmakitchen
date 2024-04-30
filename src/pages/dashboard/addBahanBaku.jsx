@@ -24,27 +24,9 @@ import {
             <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-3">
               <div >
                 <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Jenis Produk
-                </Typography>
-                <Select
-                  size="lg"
-                  placeholder=""
-                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                  labelProps={{
-                    className: "before:content-none after:content-none",
-                  }}
-                >
-                  <Option>Produk Utama</Option>
-                  <Option>Produk Titipan</Option>
-                  <Option>Produk Hampers</Option>
-                </Select>
-              </div>
-              <div>
-                <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Nama Produk
+                  Nama Bahan
                 </Typography>
                 <Input
-                  
                   size="lg"
                   placeholder=""
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -55,7 +37,7 @@ import {
               </div>
               <div>
                 <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Stok
+                  Jumlah
                 </Typography>
                 <Input
                   size="lg"
