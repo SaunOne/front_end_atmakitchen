@@ -1,10 +1,10 @@
 import { Typography } from "@material-tailwind/react";
 import { pengeluaranBahanTableData } from "@/data";
-import { UpdatePenitip, DeletePenitip } from "../button";
+import { UpdatePengeluaranBahan, DeletePengeluaranBahan } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 import { SearchContext } from "@/context/searchContext";
 
-export default function PenitipTable() {
+export default function PengeluaranBahanTable() {
     const [data, setData] = useState([]);
     const { search } = useContext(SearchContext);
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,7 +33,7 @@ export default function PenitipTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No", "Nama", "Nomor Telepon", "Alamat", "Produk Titipan", "Aksi"].map(
+                        {["Tanggal Pengadaan","Nama Bahan", "Jumlah", "Satuan","Total Harga", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -56,15 +56,14 @@ export default function PenitipTable() {
                             const lowerCaseSearch = search.toLowerCase();
                             return (
                                 lowerCaseSearch === "" ||
-                                item.name.toLowerCase().includes(lowerCaseSearch) ||
-                                item.phone.toLowerCase().includes(lowerCaseSearch) ||
-                                item.address.toLowerCase().includes(lowerCaseSearch) ||
-                                item.product.some((product) =>
-                                    product.name.toLowerCase().includes(lowerCaseSearch)
-                                )
+                                item.tanggal.toLowerCase().includes(lowerCaseSearch) ||
+                                item.nama_bahan.toLowerCase().includes(lowerCaseSearch) ||
+                                item.satuan.toLowerCase().includes(lowerCaseSearch) ||
+                                item.jumlah.toLowerCase().includes(lowerCaseSearch) ||
+                                item.harga_beli.toLowerCase().includes(lowerCaseSearch) 
                             );
                         })
-                        .map(({ id, name, phone, address, product }, index) => {
+                        .map(({ id, tanggal, nama_bahan, jumlah, satuan, harga_beli }, index) => {
                             const className = `py-3 px-5 border-r  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -74,45 +73,33 @@ export default function PenitipTable() {
                                 <tr key={index}>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {rowNumber}
+                                            {tanggal}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {name}
+                                            {nama_bahan}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {phone}
+                                            {jumlah}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {address}
+                                            {satuan}
                                         </Typography>
                                     </td>
                                     <td className={className}>
-                                        {product.map(({ id, name, status, price, stok }, key) => {
-                                            const className2 = `py-3 px-5 ${key === product.length - 1
-                                                ? ""
-                                                : "border-b border-blue-gray-50"
-                                                }`;
-                                            return (
-                                                <div className={className2} key={id}>
-                                                    <p>{name}</p>
-                                                    <p>Stok : {stok}</p>
-                                                    <p>Status : {status}</p>
-                                                    <p>Rp. {price}</p>
-                                                </div>
-                                            );
-                                        })}
+                                        <Typography className="text-xs font-[400] text-blue-gray-600">
+                                            {harga_beli}
+                                        </Typography>
                                     </td>
                                     <td className={className}>
                                         <div className="flex gap-2">
-                                            <UpdatePenitip id={id} />
-                                            <DeletePenitip id={id} />
-
+                                            <UpdatePengeluaranBahan id={id} />
+                                            <DeletePengeluaranBahan id={id} />
                                         </div>
                                     </td>
                                 </tr>

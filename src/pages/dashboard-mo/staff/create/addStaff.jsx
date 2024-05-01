@@ -5,7 +5,7 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import { addStaff } from "../../../../validations/validation";
+import { staff } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ export function AddStaff() {
         const formData = new FormData(e.target);
         const formDataObject = Object.fromEntries(formData.entries());
         console.log(formDataObject);
-        const parsedStaff = addStaff.safeParse(formDataObject);
+        const parsedStaff = staff.safeParse(formDataObject);
         if (!parsedStaff.success) {
             const error = parsedStaff.error;
             let newErrors = {};

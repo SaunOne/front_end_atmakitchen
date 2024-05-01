@@ -5,7 +5,7 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import { addPenitip } from "../../../../validations/validation";
+import { penitip } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -44,7 +44,7 @@ export function EditPenitip() {
         const formData = new FormData(e.target);
         const formDataObject = Object.fromEntries(formData.entries());
         console.log(formDataObject);
-        const parsedPenitip = addPenitip.safeParse(formDataObject);
+        const parsedPenitip = penitip.safeParse(formDataObject);
         if (!parsedPenitip.success) {
             const error = parsedPenitip.error;
             let newErrors = {};

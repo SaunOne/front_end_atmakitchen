@@ -15,7 +15,7 @@ export default function PenitipMO() {
     const navigate = useNavigate();
 
     return (
-        <div className="mt-12 mb-8 flex flex-col gap-10">
+        <div className="mt-6 mb-8 flex flex-col gap-10">
             <div className="text-lg">
                 <div className="flex justify-beetwen gap-6 md:gap-[40%]">
                     <Search className="w-full" placeholder="Cari penitip..." />

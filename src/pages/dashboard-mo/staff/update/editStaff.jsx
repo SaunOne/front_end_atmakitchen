@@ -5,7 +5,7 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import { addStaff } from "../../../../validations/validation";
+import { staff } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -41,7 +41,7 @@ export function EditStaff() {
         const formData = new FormData(e.target);
         const formDataObject = Object.fromEntries(formData.entries());
         console.log(formDataObject);
-        const parsedStaff = addStaff.safeParse(formDataObject);
+        const parsedStaff = staff.safeParse(formDataObject);
         if (!parsedStaff.success) {
             const error = parsedStaff.error;
             let newErrors = {};
@@ -58,7 +58,7 @@ export function EditStaff() {
         }
         setFormErrors({});
         console.log(formErrors);
-        console.log(parsedStaff.data.username);
+        
     }
 
     return (

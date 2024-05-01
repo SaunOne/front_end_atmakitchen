@@ -113,7 +113,7 @@ export const addNewPassword = z
     });
 
 
-export const addPenitip = z
+export const penitip = z
     .object({
         name: z
             .string({
@@ -141,7 +141,7 @@ export const addPenitip = z
     });
 
 
-export const addStaff = z
+export const staff = z
     .object({
         username: z
             .string({
@@ -185,4 +185,63 @@ export const addStaff = z
                     "Jabatan Wajib Diisi",
             })
             .min(1, { message: "Jabatan Wajib Diisi" }),
-    }); 
+    });
+
+
+
+export const bahanBaku = z
+    .object({
+        nama_bahan: z
+            .string({
+                required_error: "Nama Bahan wajib diisi",
+                invalid_type_error:
+                    "Nama Bahan wajib diisi!",
+            })
+            .min(1, { message: "Nama Bahan wajib diisi!" }),
+        jumlah: z
+            .string({
+                invalid_type_error:
+                    "Jumlah Wajib Diisi!",
+            })
+            .min(1, { message: "Jumlah Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Jumlah harus lebih dari 0" }),
+
+        harga_beli: z
+            .string({
+                invalid_type_error:
+                    "Jumlah Wajib Diisi!",
+            })
+            .min(1, { message: "Jumlah Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Harga beli harus lebih dari 0" }),
+        satuan: z
+            .string({
+                required_error: "Satuan wajib diisi!",
+                invalid_type_error:
+                    "Satuan wajib diisi!",
+            })
+            .min(1, { message: "Satuan wajib diisi!" }),
+
+
+    });
+
+
+export const pengeluaranLainnya = z
+    .object({
+        nama_pengeluaran: z
+            .string({
+                required_error: "Nama Pengeluaran wajib diisi",
+                invalid_type_error:
+                    "Nama Pengeluaran wajib diisi!",
+            })
+            .min(1, { message: "Peruntukan Pengeluaran wajib diisi!" }),
+        
+
+        jumlah_pengeluaran: z
+            .string({
+                invalid_type_error:
+                    "Jumlah Wajib Diisi!",
+            })
+            .min(1, { message: "Total Pengeluaran Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Total Pengeluaran harus lebih dari 0" }),
+
+    });

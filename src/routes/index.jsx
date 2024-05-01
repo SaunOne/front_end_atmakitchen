@@ -20,9 +20,9 @@ import LayoutProduct from "../pages/layouts/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
 import SuccesVerify from "../pages/auth/succesVerify";
 import DashboardAdmin from "../pages/layouts/layout-admin";
-import HomeAdmin from "../pages/dashboard-admin/home";
-import ProductAdmin from "../pages/dashboard-admin/product/product";
-import { AddProduk } from "../pages/dashboard-admin/product/addProduk";
+import HomeAdmin from "../pages/dashboard/home";
+import ProductAdmin from "../pages/dashboard/product";
+import AddProduk from "../pages/dashboard/addProduk";
 import AddPenitip from "@/pages/dashboard-mo/penitip/create/addPenitip";
 import DashboardMO from "../pages/dashboard-mo/layout/layout-MO";
 import PenitipMO from "@/pages/dashboard-mo/penitip/penitip";
@@ -33,8 +33,10 @@ import EditStaff from "@/pages/dashboard-mo/staff/update/editStaff";
 import AddStaff from "@/pages/dashboard-mo/staff/create/addStaff";
 import PengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/pengeluaranBahanBaku";
 import PengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/pengeluaranLainnnya";
-
-
+import AddPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/create/addPengeluaranBahanBaku";
+import EditPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/update/editPengeluaranBahanBaku";
+import AddPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/create/addPengeluaranLainnya";
+import EditPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/update/editPengeluaranLainnya";
 //import { editProduk } from "../pages/dashboard-admin/editProduk";
 //import { Notifications } from "../pages/dashboard-admin/notifications";
 
@@ -138,8 +140,24 @@ const routes = [
         element: <PengeluaranBahanBakuMO />,
       },
       {
+        path: "/mo/pengeluaran-bahan-baku/add",
+        element: <AddPengeluaranBahanBakuMO />,
+      },
+      {
+        path: "/mo/pengeluaran-bahan-baku/edit/:id",
+        element: <EditPengeluaranBahanBakuMO />,
+      },
+      {
+        path: "/mo/pengeluaran-lain-lain/add",
+        element: <AddPengeluaranLainnyaMO />,
+      },
+      {
         path: "/mo/pengeluaran-lain-lain",
         element: <PengeluaranLainnyaMO />,
+      },
+      {
+        path: "/mo/pengeluaran-lain-lain/edit/:id",
+        element: <EditPengeluaranLainnyaMO />,
       },
     ],
   },
@@ -186,17 +204,17 @@ const AppRouter = () => {
   return (
     <>
       <ToastContainer
-          position="top-right"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <SearchProvider>
         <RouterProvider router={router} />
