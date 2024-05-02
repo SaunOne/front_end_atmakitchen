@@ -109,6 +109,20 @@ export function AddProduk() {
                     }}
                   />
                 </div>
+                <div>
+                  <Typography variant="h6" color="blue-gray" className="mb-3">
+                    Gambar Produk
+                  </Typography>
+                  <Input
+                    size="lg"
+                    type="file"
+                    placeholder=""
+                    className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                    labelProps={{
+                      className: "before:content-none after:content-none",
+                    }}
+                  />
+                </div>
               </div>
             )}
             {jenisStok === "stok lama" && jenisProduk === "produk utama" && (

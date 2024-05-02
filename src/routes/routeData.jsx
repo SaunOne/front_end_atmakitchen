@@ -40,7 +40,7 @@ import {
             {
               icon: <RectangleStackIcon {...icon} />,
               name: "Edit Produk",
-              path: "/admin/product/edit",
+              path: "/admin/product/editProduk",
             },
           ],
         },
@@ -51,13 +51,13 @@ import {
           pages: [ 
             {
               icon: <FontAwesomeIcon icon={faScroll} {...icon} />,
-              name: "addProduk",
+              name: "Tambah Resep",
               path: "/admin/resep/addResep",
             },
             {
-              icon: <RectangleStackIcon {...icon} />,
-              name: "editProduk",
-              path: "/admin/product/edit",
+              icon: <FontAwesomeIcon icon={faScroll} {...icon} />,
+              name: "Edit Resep",
+              path: "/admin/resep/editResep",
             },
           ],
         },
@@ -73,8 +73,8 @@ import {
             },
             {
               icon: <RectangleStackIcon {...icon} />,
-              name: "editProduk",
-              path: "/admin/product/edit",
+              name: "Edit Bahan Baku",
+              path: "/admin/bahanBaku/editBahanBaku",
             },
           ],
         },

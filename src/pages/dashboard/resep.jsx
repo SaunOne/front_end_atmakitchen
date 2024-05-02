@@ -100,6 +100,7 @@ import {
                           as="a"
                           href=""
                           className="text-xs font-semibold text-blue-gray-600"
+                          onClick={() => navigate('/admin/resep/editResep')}
                         >
                           Edit
                         </Typography>

@@ -6,4 +6,5 @@ export * from "@/pages/dashboard/product";
 export * from "@/pages/dashboard/resep";
 export * from "@/pages/dashboard/addProduk";
 export * from "@/pages/dashboard/editProduk";
+export * from "@/pages/dashboard/editResep";
 export * from "@/pages/dashboard/bahanBaku";

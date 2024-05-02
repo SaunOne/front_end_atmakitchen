@@ -26,11 +26,13 @@ import { ProductAdmin } from "../pages/dashboard/product";
 import { AddProduk } from "../pages/dashboard/addProduk";
 import { AddResep } from "../pages/dashboard/addResep";
 import { AddBahanBaku } from "../pages/dashboard/addBahanBaku";
-import { editProduk } from "../pages/dashboard/editProduk";
 import { Notifications } from "../pages/dashboard/notifications";
 import { Resep } from "../pages/dashboard/resep";
 import { BahanBaku } from "../pages/dashboard/bahanBaku";
 import { ListPesanan } from "../pages/dashboard/listPesanan";
+import { EditProduk } from "../pages/dashboard/editProduk";
+import { EditResep } from "../pages/dashboard/editResep";
+import { EditBahanBaku } from "../pages/dashboard/editBahanBaku";
 
 // Konfigurasi router
 const routes = [
@@ -110,12 +112,24 @@ const routes = [
         element : <AddProduk/>,
       },
       {
+        path : "/admin/product/editProduk",
+        element : <EditProduk/>,
+      },
+      {
         path : "/admin/resep/addResep",
         element : <AddResep/>,
       },
       {
+        path : "/admin/resep/editResep",
+        element : <EditResep/>,
+      },
+      {
         path : "/admin/bahanBaku/addBahanBaku",
         element : <AddBahanBaku/>,
+      },
+      {
+        path : "/admin/bahanBaku/EditBahanBaku",
+        element : <EditBahanBaku/>,
       },
     ]
   },

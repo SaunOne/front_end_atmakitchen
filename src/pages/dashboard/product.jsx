@@ -147,7 +147,7 @@ export function ProductAdmin() {
                         as="a"
                         href=""
                         className="text-xs font-semibold text-blue-gray-600"
-                        onClick={() => navigate('/dashboard/product/editProduk')}
+                        onClick={() => navigate('/admin/product/editProduk')}
                       >
                         Edit
                       </Typography>

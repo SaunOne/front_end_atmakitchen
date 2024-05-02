@@ -39,9 +39,6 @@ const LayoutAdmin = ({children}) => {
         <div >
           {children ? children : <Outlet />}
         </div>
-        <div className="text-blue-gray-600">
-          <Footer />
-        </div>
       </div>
     </div>
   );
