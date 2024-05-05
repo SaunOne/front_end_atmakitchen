@@ -28,7 +28,6 @@ export function ProductAdmin() {
   ];
 
   useEffect(() => {
-    // Set productData based on the initially selected tab
     switch (selectedTabValue) {
       case "utama":
         setProductData([...productUtamaTableData]);
@@ -37,10 +36,10 @@ export function ProductAdmin() {
         setProductData([...productTitipanTableData]);
         break;
       case "hampers":
-        setProductData([...productHampersTableData]);  
+        setProductData([...productHampersTableData]); 
         break;
       default:
-        setProductData([]); 
+        setProductData([]);
         break;
     }
   }, [selectedTabValue]);

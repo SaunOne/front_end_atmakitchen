@@ -19,11 +19,10 @@ import ForgotPassword from "../pages/auth/forgot-password";
 import LayoutProduct from "../pages/layouts/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
 import SuccesVerify from "../pages/auth/succesVerify";
-import DashboardAdmin from "../pages/layouts/layout-admin";
-import DashboardMO from "../pages/layouts/layout-MO";
-import HomeAdmin from "../pages/dashboard/home";
-import ProductAdmin from "../pages/dashboard/product";
-import AddProduk from "../pages/dashboard/addProduk";
+import DashboardAdmin from "../pages/dashboard-admin/layout/layout-admin";
+import HomeAdmin from "../pages/dashboard-admin/home";
+import ProductAdmin from "../pages/dashboard-admin/product/product";
+import AddProduk from "../pages/dashboard-admin/product/create/addProduk";
 import AddPenitip from "@/pages/dashboard-mo/penitip/create/addPenitip";
 import DashboardMO from "../pages/dashboard-mo/layout/layout-MO";
 import PenitipMO from "@/pages/dashboard-mo/penitip/penitip";
@@ -38,15 +37,15 @@ import AddPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-ba
 import EditPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/update/editPengeluaranBahanBaku";
 import AddPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/create/addPengeluaranLainnya";
 import EditPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/update/editPengeluaranLainnya";
-//import { AddResep } from "../pages/dashboard-admin/addResep";
-import { AddBahanBaku } from "../pages/dashboard/addBahanBaku";
+import { AddResep } from "../pages/dashboard-admin/resep/create/addResep";
+import { AddBahanBaku } from "../pages/dashboard-admin/bahan-baku/create/addBahanBaku";
 //import { Notifications } from "../pages/dashboard-admin/notifications";
-import { Resep } from "../pages/dashboard/resep";
-import { BahanBaku } from "../pages/dashboard/bahanBaku";
-import { ListPesanan } from "../pages/dashboard/listPesanan";
-import { EditProduk } from "../pages/dashboard/editProduk";
-import { EditResep } from "../pages/dashboard/editResep";
-import { EditBahanBaku } from "../pages/dashboard/editBahanBaku";
+import { Resep } from "../pages/dashboard-admin/resep/resep";
+import { BahanBaku } from "../pages/dashboard-admin/bahan-baku/bahanBaku";
+import { ListPesanan } from "../pages/dashboard-admin/list-pesanan/listPesanan";
+import { EditProduk } from "../pages/dashboard-admin/product/update/editProduk";
+import { EditResep } from "../pages/dashboard-admin/resep/update/editResep";
+import { EditBahanBaku } from "../pages/dashboard-admin/bahan-baku/update/editBahanBaku";
 
 // Konfigurasi router
 const routes = [

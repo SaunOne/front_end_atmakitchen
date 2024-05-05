@@ -8,9 +8,9 @@ import {
   DashboardNavbar,
   Configurator,
   Footer,
-} from "../../widgets/layout";
-import {routesAdmin} from "../../routes/routeData";
-import { useMaterialTailwindController, setOpenConfigurator } from "../../context";
+} from "../../../widgets/layout";
+import {routesAdmin} from "../../../routes/routeData";
+import { useMaterialTailwindController, setOpenConfigurator } from "../../../context";
 
 const LayoutAdmin = ({children}) => {
   const [controller, dispatch] = useMaterialTailwindController();
