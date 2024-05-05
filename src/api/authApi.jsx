@@ -3,7 +3,7 @@ import useAxios from ".";
 // Assuming you're using Axios, make sure to import it at the beginning of your file
 // import useAxios from 'axios';
 
-export const Login = async (data) => {
+export const LoginApi = async (data) => {
   try {
     const response = await useAxios.post("/login", data, {
       headers: {
@@ -27,7 +27,7 @@ export const Login = async (data) => {
 };
 
 //register
-export const Register = async (data) => { //data diisi dengan maping atau object dasar
+export const RegisterApi = async (data) => { //data diisi dengan maping atau object dasar
   try {
     
     const response = await useAxios.post("/register", data);

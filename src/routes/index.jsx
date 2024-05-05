@@ -1,13 +1,13 @@
 // Impor modul eksternal
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
 // Impor komponen internal
-import LayoutUser from "../pages/layouts/layout-user";
+import LayoutUser from "../pages/userViews/layout.jsx/layout-user";
 import ProtectedRoutes from "./ProtectedRoutes";
-import ProtectedResetPassword from "./ProtectedResetPassword";
-import Footer from "../components/layouts/footer";
-import Header from "../components/layouts/header";
+//import ProtectedResetPassword from "./ProtectedResetPassword";
+//import Footer from "../components/layouts/footer";
+//import Header from "../components/layouts/header";
 
 import Login from "../pages/auth/login";
 import Register from "../pages/auth/register";
@@ -18,15 +18,29 @@ import Product from "../pages/userViews/product";
 import ForgotPassword from "../pages/auth/forgot-password";
 import LayoutProduct from "../pages/layouts/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
-import SuccesVerify from "../pages/auth/succesVerify"; 
-import Dashboard from "../pages/layouts/layout-admin";
+import SuccesVerify from "../pages/auth/succesVerify";
+import DashboardAdmin from "../pages/layouts/layout-admin";
 import DashboardMO from "../pages/layouts/layout-MO";
-import { Home_admin } from "../pages/dashboard/home";
-import { ProductAdmin } from "../pages/dashboard/product";
-import { AddProduk } from "../pages/dashboard/addProduk";
-import { AddResep } from "../pages/dashboard/addResep";
+import HomeAdmin from "../pages/dashboard/home";
+import ProductAdmin from "../pages/dashboard/product";
+import AddProduk from "../pages/dashboard/addProduk";
+import AddPenitip from "@/pages/dashboard-mo/penitip/create/addPenitip";
+import DashboardMO from "../pages/dashboard-mo/layout/layout-MO";
+import PenitipMO from "@/pages/dashboard-mo/penitip/penitip";
+import EditPenitip from "@/pages/dashboard-mo/penitip/update/editPenitip";
+import { SearchProvider } from "../context/searchContext";
+import StaffMO from "@/pages/dashboard-mo/staff/staff";
+import EditStaff from "@/pages/dashboard-mo/staff/update/editStaff";
+import AddStaff from "@/pages/dashboard-mo/staff/create/addStaff";
+import PengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/pengeluaranBahanBaku";
+import PengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/pengeluaranLainnnya";
+import AddPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/create/addPengeluaranBahanBaku";
+import EditPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/update/editPengeluaranBahanBaku";
+import AddPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/create/addPengeluaranLainnya";
+import EditPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/update/editPengeluaranLainnya";
+//import { AddResep } from "../pages/dashboard-admin/addResep";
 import { AddBahanBaku } from "../pages/dashboard/addBahanBaku";
-import { Notifications } from "../pages/dashboard/notifications";
+//import { Notifications } from "../pages/dashboard-admin/notifications";
 import { Resep } from "../pages/dashboard/resep";
 import { BahanBaku } from "../pages/dashboard/bahanBaku";
 import { ListPesanan } from "../pages/dashboard/listPesanan";
@@ -36,7 +50,6 @@ import { EditBahanBaku } from "../pages/dashboard/editBahanBaku";
 
 // Konfigurasi router
 const routes = [
-
   //default routes
   {
     path: "*",
@@ -44,13 +57,13 @@ const routes = [
   },
   {
     path: "/",
-    element: <LayoutUser/>,
-    children:[
+    element: <LayoutUser />,
+    children: [
       {
-        path : "/",
-        element : <Home/>      
-      }
-    ]
+        path: "/",
+        element: <Home />,
+      },
+    ],
   },
 
   //guest
@@ -72,10 +85,10 @@ const routes = [
   },
   {
     path: "/add-new-password",
-    element: 
-    // <ProtectedResetPassword>
-      <AddNewPassword />,
-    
+    element: (
+      // <ProtectedResetPassword>
+      <AddNewPassword />
+    ),
   },
   {
     path: "/succes-verify",
@@ -85,15 +98,27 @@ const routes = [
   //admin
   {
     path: "/admin",
-    element: <Dashboard/>,
-    children  : [
+    element: <DashboardAdmin />,
+    children: [
       {
-        path : "/admin/home",
-        element : <Home_admin/>
+        path: "/admin/home",
+        element: <HomeAdmin />,
       },
       {
-        path : "/admin/product",
-        element : <ProductAdmin/>,
+        path: "/admin/product",
+        element: <ProductAdmin />,
+      },
+      {
+        path : "/admin/resep",
+        element : <Resep/>,
+      },
+      {
+        path : "/admin/bahanBaku",
+        element : <BahanBaku/>,
+      },
+      {
+        path : "/admin/listPesanan",
+        element : <ListPesanan/>,
       },
       {
         path : "/admin/resep",
@@ -131,7 +156,62 @@ const routes = [
         path : "/admin/bahanBaku/EditBahanBaku",
         element : <EditBahanBaku/>,
       },
-    ]
+    ],
+  },
+
+  {
+    path: "/mo",
+    element: <DashboardMO />,
+    children: [
+      {
+        path: "/mo/penitip",
+        element: <PenitipMO />,
+      },
+      {
+        path: "/mo/penitip/add",
+        element: <AddPenitip />,
+      },
+      {
+        path: "/mo/penitip/edit/:id",
+        element: <EditPenitip />,
+      },
+      {
+        path: "/mo/staff",
+        element: <StaffMO />,
+      },
+      {
+        path: "/mo/staff/add",
+        element: <AddStaff />,
+      },
+      {
+        path: "/mo/staff/edit/:id",
+        element: <EditStaff />,
+      },
+      {
+        path: "/mo/pengeluaran-bahan-baku",
+        element: <PengeluaranBahanBakuMO />,
+      },
+      {
+        path: "/mo/pengeluaran-bahan-baku/add",
+        element: <AddPengeluaranBahanBakuMO />,
+      },
+      {
+        path: "/mo/pengeluaran-bahan-baku/edit/:id",
+        element: <EditPengeluaranBahanBakuMO />,
+      },
+      {
+        path: "/mo/pengeluaran-lain-lain/add",
+        element: <AddPengeluaranLainnyaMO />,
+      },
+      {
+        path: "/mo/pengeluaran-lain-lain",
+        element: <PengeluaranLainnyaMO />,
+      },
+      {
+        path: "/mo/pengeluaran-lain-lain/edit/:id",
+        element: <EditPengeluaranLainnyaMO />,
+      },
+    ],
   },
 
   //MO
@@ -144,13 +224,12 @@ const routes = [
   //user
   {
     path: "/user",
-    element: 
-    (
+    element: (
       <ProtectedRoutes>
         <LayoutUser />
-      </ProtectedRoutes> 
+      </ProtectedRoutes>
     ),
-    
+
     children: [
       {
         path: "/user",
@@ -173,7 +252,6 @@ const routes = [
         path: "/user/contact",
         element: <Contact />,
       },
-
     ],
   },
 ];
@@ -194,9 +272,12 @@ const AppRouter = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="light"
       />
-      <RouterProvider router={router} />
+
+      <SearchProvider>
+        <RouterProvider router={router} />
+      </SearchProvider>
     </>
   );
 };
