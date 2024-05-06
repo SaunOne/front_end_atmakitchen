@@ -16,7 +16,7 @@ import Contact from "../pages/userViews/contact";
 import About from "../pages/userViews/about";
 import Product from "../pages/userViews/product";
 import ForgotPassword from "../pages/auth/forgot-password";
-import LayoutProduct from "../pages/layouts/produk/layout-product";
+import LayoutProduct from "../pages/userViews/layout.jsx/produk/layout-product";
 import AddNewPassword from "../pages/auth/add-new-password";
 import SuccesVerify from "../pages/auth/succesVerify";
 import DashboardAdmin from "../pages/layouts/layout-admin";
@@ -54,6 +54,16 @@ const routes = [
       {
         path: "/",
         element: <Home />,
+      },
+
+      {
+        element: <LayoutProduct />,
+        children: [
+          {
+            path: "/product",
+            element: <Product />,
+          },
+        ],
       },
     ],
   },

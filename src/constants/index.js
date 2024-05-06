@@ -7,17 +7,17 @@ export const navBarUserList = [
     {
         _id: 1002,
         title: "Produk",
-        link: "/user/product",
+        link: "/product",
     },
     {
         _id: 1003,
         title: "Tentang Kami",
-        link: "/user/about",
+        link: "/about",
     },
     {
         _id: 1004,
         title: "Kontak",
-        link: "/user/contact",
+        link: "/contact",
     },
 
 ];

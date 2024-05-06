@@ -2,6 +2,8 @@ import { Typography } from "@material-tailwind/react";
 import { pengeluaranBahanTableData } from "@/data";
 import { UpdatePengeluaranBahan, DeletePengeluaranBahan } from "../button";
 import React, { useEffect, useState, useContext } from "react";
+
+
 import { SearchContext } from "@/context/searchContext";
 
 export default function PengeluaranBahanTable() {

@@ -36,6 +36,7 @@ export function AddStaff() {
             navigateTo('/mo/staff');
         }
         setFormErrors({});
+        console.log(parsedStaff);
         console.log(formErrors);
         console.log(parsedStaff.data.username);
     }
