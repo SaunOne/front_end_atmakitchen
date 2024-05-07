@@ -25,6 +25,8 @@ import { ProductAdmin } from "../pages/dashboard/product";
 import { AddProduk } from "../pages/dashboard/addProduk";
 import { editProduk } from "../pages/dashboard/editProduk";
 import { Notifications } from "../pages/dashboard/notifications";
+import Test from "../pages/userViews/test";
+
 
 // Konfigurasi router
 const routes = [
@@ -41,6 +43,10 @@ const routes = [
       {
         path : "/",
         element : <Home/>      
+      },
+      {
+        path : "/test",
+        element : <Test/>
       }
     ]
   },
@@ -126,7 +132,7 @@ const routes = [
         path: "/user/contact",
         element: <Contact />,
       },
-
+      
     ],
   },
 ];
