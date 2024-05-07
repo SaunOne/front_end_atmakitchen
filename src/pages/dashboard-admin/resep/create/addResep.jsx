@@ -8,7 +8,6 @@ export function AddResep() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // Redirect atau handle submit disini
         window.location.href = "/admin/resep";
     };
 

@@ -62,8 +62,8 @@ export function EditStaff() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-full max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className="p-4 mt-8 mb-2 w-full max-w-screen-lg ">
                 <div className="mb-1 flex flex-col gap-3">
                     <div className="md:flex justify-start md:gap-[30px]">
                         <div>

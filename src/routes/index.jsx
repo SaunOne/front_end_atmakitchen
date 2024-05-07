@@ -46,6 +46,10 @@ import { ListPesanan } from "../pages/dashboard-admin/list-pesanan/listPesanan";
 import { EditProduk } from "../pages/dashboard-admin/product/update/editProduk";
 import { EditResep } from "../pages/dashboard-admin/resep/update/editResep";
 import { EditBahanBaku } from "../pages/dashboard-admin/bahan-baku/update/editBahanBaku";
+import DashboardOwner from "../pages/dashboard-owner/layout/layout-owner";
+import HomeOwner from "../pages/dashboard-owner/home";
+import Gaji from "../pages/dashboard-owner/gaji/gaji";
+import AddGaji from "../pages/dashboard-owner/gaji/create/addGaji";
 
 // Konfigurasi router
 const routes = [
@@ -213,11 +217,25 @@ const routes = [
     ],
   },
 
-  //MO
+  //OWNER
 
   {
-    path: "/mo",
-    element: <DashboardMO/>,
+    path: "/owner",
+    element: <DashboardOwner/>,
+    children: [
+      {
+        path: "/owner/home",
+        element: <HomeOwner/>
+      },
+      {
+        path: "/owner/gaji",
+        element: <Gaji />,
+      },
+      {
+        path: "/owner/gaji/add",
+        element: <AddGaji />,
+      },
+    ],
   },
 
   //user

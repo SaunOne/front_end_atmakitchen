@@ -18,3 +18,5 @@ export * from "@/data/pengeluaran-lain-table-data";
 
 export * from "@/data/list-pesanan-data";
 export * from "@/data/bahanBaku-table-data";
+
+export * from "@/data/salary-table-data";

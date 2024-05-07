@@ -13,7 +13,8 @@ import {
   import { 
     faBoxesStacked ,
     faScroll,
-    faList
+    faList,
+    faMoneyBillWave
   } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
@@ -130,6 +131,24 @@ import {
           name: "Pengeluaran Lain-lain",
           path: "/mo/pengeluaran-lain-lain",
         }
+      ],
+    },
+  ];
+
+  export const routesOwner = [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "Dashboard",
+          path: "/owner/home",
+        },
+        {
+          icon: <FontAwesomeIcon icon = {faMoneyBillWave} {...icon}/>,
+          name: "Gaji",
+          path: "/owner/gaji",
+        },
       ],
     },
   ];
