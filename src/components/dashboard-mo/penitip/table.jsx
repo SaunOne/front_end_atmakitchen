@@ -2,16 +2,26 @@ import { Typography } from "@material-tailwind/react";
 import { penitipTableData } from "@/data";
 import { UpdatePenitip, DeletePenitip } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { SearchContext } from "@/context/searchContext";
+import { GlobalContext } from "@/context/context";
+import { GetAllPenitip } from "@/api/penitipApi";
+import { getImage } from "@/api/index";
 
 export default function PenitipTable() {
     const [data, setData] = useState([]);
-    const { search } = useContext(SearchContext);
+    const [error, setError] = useState("");
+    const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
     useEffect(() => {
-        setData(penitipTableData);
+        GetAllPenitip()
+            .then((response) => {
+                setData(response);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
     }, []);
 
     console.log(search);
@@ -33,7 +43,7 @@ export default function PenitipTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No", "Nama", "Nomor Telepon", "Alamat", "Produk Titipan", "Aksi"].map(
+                        {["No","Foto", "Nama", "Nomor Telepon", "Alamat", "Produk Titipan", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -64,7 +74,7 @@ export default function PenitipTable() {
                                 )
                             );
                         })
-                        .map(({ id, name, phone, address, product }, index) => {
+                        .map(({ id, img_url, name, phone, address, product }, index) => {
                             const className = `py-3 px-5 border-r  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -75,6 +85,11 @@ export default function PenitipTable() {
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
                                             {rowNumber}
+                                        </Typography>
+                                    </td>
+                                    <td className={className}>
+                                        <Typography className="text-xs font-[400] text-blue-gray-600">
+                                            {getImage(img_url)}
                                         </Typography>
                                     </td>
                                     <td className={className}>

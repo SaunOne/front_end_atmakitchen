@@ -17,6 +17,7 @@ const Login = () => {
     const [formData, setFormData] = useReducer(formReducer, {});
     const [showPassword, setShowPassword] = useState(false);
     const [formErrors, setFormErrors] = useState({});
+    
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -71,6 +72,7 @@ const Login = () => {
             })
             .catch((err) => {
                 console.log("Error", err);
+                
                 setLoading(false);
             });
     };
@@ -166,9 +168,9 @@ const Login = () => {
                                 </a>
                             </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <Button type="submit" loading={loading}>
-                                Loading
+                        <div className="flex items-center justify-center gap-4">
+                            <Button className="w-full mt-3" type="submit" loading={loading}>
+                                Masuk
                             </Button>
                         </div>
                     </form>

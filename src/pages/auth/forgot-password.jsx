@@ -79,12 +79,23 @@ const ForgotPassword = () => {
                             )}
 
                         </div>
+                        <div className="flex justify-center">
+                            <div>
+                                Balik ke Login?
+                                <a
+                                    href="/login"
+                                    className="text-xs ml-2 text-neutral-700 hover:text-neutral-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
+                                >
+                                    Login
+                                </a>
+                            </div>
+                        </div>
 
                         <button
                             type="submit"
-                            className="w-full mt-12 flex justify-center py-2 px-4 border border-transparent rounded-[30px] shadow-sm text-sm font-medium text-white hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
+                            className="w-full mt-5 flex justify-center py-2 px-4 border border-transparent rounded-[30px] shadow-sm text-sm font-medium text-white bg-black hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
                         >
-                            Submit
+                            Kirim
                         </button>
                     </form>
                 </div>

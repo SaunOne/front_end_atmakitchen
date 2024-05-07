@@ -4,11 +4,11 @@ import { UpdatePengeluaranBahan, DeletePengeluaranBahan } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 
 
-import { SearchContext } from "@/context/searchContext";
+import { GlobalContext } from "@/context/context";
 
 export default function PengeluaranBahanTable() {
     const [data, setData] = useState([]);
-    const { search } = useContext(SearchContext);
+    const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
@@ -35,7 +35,7 @@ export default function PengeluaranBahanTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["Tanggal Pengadaan","Nama Bahan", "Jumlah", "Satuan","Total Harga", "Aksi"].map(
+                        {["Tanggal Pengadaan", "Nama Bahan", "Jumlah", "Satuan", "Total Harga", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -62,7 +62,7 @@ export default function PengeluaranBahanTable() {
                                 item.nama_bahan.toLowerCase().includes(lowerCaseSearch) ||
                                 item.satuan.toLowerCase().includes(lowerCaseSearch) ||
                                 item.jumlah.toLowerCase().includes(lowerCaseSearch) ||
-                                item.harga_beli.toLowerCase().includes(lowerCaseSearch) 
+                                item.harga_beli.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
                         .map(({ id, tanggal, nama_bahan, jumlah, satuan, harga_beli }, index) => {
