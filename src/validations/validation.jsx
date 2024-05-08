@@ -57,9 +57,9 @@ export const userRegistration = z
             .string({
                 required_error: "Password wajib diisi",
                 invalid_type_error:
-                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+                    "Password wajib terdiri dari minimal 8 karakter & maksimal 20 karakter!",
             })
-            .min(6, { message: "Password minimal 6 karakter" })
+            .min(8, { message: "Password minimal 8 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
 
         confirmPassword: z.string()
@@ -115,7 +115,7 @@ export const addNewPassword = z
 
 export const penitip = z
     .object({
-        name: z
+        nama_penitip: z
             .string({
                 required_error: "Nama Lengkap wajib diisi",
                 invalid_type_error:
@@ -123,14 +123,14 @@ export const penitip = z
             })
             .min(3, { message: "Nama Lengkap wajib terdiri dari minimal 3 karakter" })
             .max(50, { message: "Nama Lengkap maksimal 50 karakter" }),
-        phone: z
+        no_telp_penitip: z
             .string({
                 invalid_type_error:
                     "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
             })
             .min(10, { message: "Nomor Telepon minimal 10 angka" })
             .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
-        address: z
+        alamat: z
             .string({
                 required_error: "Username wajib diisi",
                 invalid_type_error:

@@ -10,9 +10,12 @@ import { penitip } from "../../../../validations/validation";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { penitipTableData } from "@/data";
+import { UpdatePenitip, GetPenitipById } from "@/api/penitipApi";
+import { set } from "zod";
 
 export function EditPenitip() {
-    const {id} = useParams();
+    const { id } = useParams();
+    const [data, setData] = useState([]);
     const [formErrors, setFormErrors] = useState({});
     const [values, setValues] = useState({});
     const navigateTo = useNavigate();
@@ -20,23 +23,22 @@ export function EditPenitip() {
     console.log(id);
     //Uji coba
     useEffect(() => {
-        const data = penitipTableData.find(item => item.id === id);
-        if (data) {
-            setValues({
-                name: data.name,
-                phone: data.phone,
-                address: data.address
+        GetPenitipById({ id })
+            .then((response) => {
+                console.log(response)
+                setValues(response);
+                
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
             });
-        }
-    }, [id]);
 
-    // useEffect(() => {
-    //     axios.get(`http://localhost:3000/penitip/${id}`)
-    //     .then(res => {
-    //         setValues({...values, name: res.data.name, phone: res.data.phone, address: res.data.address})
-    //     })
-    //     .catch(err => console.log(err))
-    // }, []);
+
+
+        console.log(values);
+
+    }, [id]);
 
 
     const handleSubmit = (e) => {
@@ -56,13 +58,18 @@ export function EditPenitip() {
             }
             return setFormErrors(newErrors);
         } else {
-            console.log(parsedPenitip.data.name);
             navigateTo('/mo/penitip');
         }
         setFormErrors({});
-
         console.log(formErrors);
-        
+        parsedPenitip.data.id_penitip = id;
+        UpdatePenitip(parsedPenitip.data)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     return (
@@ -74,18 +81,18 @@ export function EditPenitip() {
                     </Typography>
                     <Input
                         type="text"
-                        name="name"
+                        name="nama_penitip"
                         size="lg"
                         placeholder=""
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
-                        defaultValue={values.name}
+                        defaultValue={values.nama_penitip}
                     />
-                    {formErrors.name && (
+                    {formErrors.nama_penitip && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.name}
+                            {formErrors.nama_penitip}
                         </p>
                     )}
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -93,18 +100,18 @@ export function EditPenitip() {
                     </Typography>
                     <Input
                         type="number"
-                        name="phone"
+                        name="no_telp_penitip"
                         size="lg"
                         placeholder=""
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
-                        defaultValue={values.phone}
+                        defaultValue={values.no_telp_penitip}
                     />
-                    {formErrors.phone && (
+                    {formErrors.no_telp_penitip && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.phone}
+                            {formErrors.no_telp_penitip}
                         </p>
                     )}
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -112,18 +119,18 @@ export function EditPenitip() {
                     </Typography>
                     <Input
                         type="text"
-                        name="address"
+                        name="alamat"
                         size="lg"
                         placeholder=""
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
-                        defaultValue={values.address}
+                        defaultValue={values.alamat}
                     />
-                    {formErrors.address && (
+                    {formErrors.alamat && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.address}
+                            {formErrors.alamat}
                         </p>
                     )}
                 </div>

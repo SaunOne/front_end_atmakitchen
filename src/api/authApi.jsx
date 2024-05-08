@@ -29,7 +29,7 @@ export const LoginApi = async (data) => {
 //register
 export const RegisterApi = async (data) => { //data diisi dengan maping atau object dasar
   try {
-    
+    console.log(data);  
     const response = await useAxios.post("/register", data);
 
     console.log("Response:", response);

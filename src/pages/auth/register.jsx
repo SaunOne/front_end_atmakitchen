@@ -75,7 +75,8 @@ const Register = () => {
 
     RegisterApi(formData).then((res) => {
         console.log("Masuk");
-        console.log("res : ");
+        console.log("res : " );
+        console.log(res.id_user);
         setId(res.id_user);
         setLoading(false);
       }).catch((err) => {
