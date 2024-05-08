@@ -256,7 +256,7 @@ export function ListPesanan() {
               mount: { y: 0 },
               unmount: { y: 100 },
             }}
-            className="fixed bottom-0 left-0 mb-4 ml-4 rounded-none border-l-4 border-[#ff0000] bg-[#ff0000]/10 font-medium text-[#ff0000]"
+            className="absolute z-100 bottom-0 left-0 mb-4 ml-4 rounded-none border-l-4 border-[#ff0000] bg-[#ff0000]/10 font-medium text-[#ff0000]"
           >
             Berhasil batalkan pesanan
           </Alert>

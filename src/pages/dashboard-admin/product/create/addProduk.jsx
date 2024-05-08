@@ -6,8 +6,11 @@ import {
   Typography,
   Select,
   Option,
-  Radio
+  Radio,
+  Textarea
 } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
 export function AddProduk() {
   const [jenisProduk, setJenisProduk] = useState(""); 
@@ -26,6 +29,17 @@ export function AddProduk() {
   useEffect(() => {
     setJenisProdukTitipan(""); 
   }, [jenisProduk]);
+
+  const [inputs, setInputs] = useState([{ isi_produk: ""}]);
+
+  const handleAddInput = () => {
+      setInputs([...inputs, { isi_produk: "" }]);
+  };
+
+  const handleRemoveInput = (index) => {
+      const newInputs = inputs.filter((_, i) => i !== index);
+      setInputs(newInputs);
+  };
 
   return (
     <Card color="white" shadow={false}>
@@ -60,12 +74,6 @@ export function AddProduk() {
               <div className="mt-8 flex gap-10">
                 <Radio name="jenisProdukTitipan" label="Produk Lama" value="produk lama" onChange={(e) => setJenisProdukTitipan(e.target ? e.target.value : e)} />
                 <Radio name="jenisProdukTitipan" label="Produk Baru" value="produk baru" onChange={(e) => setJenisProdukTitipan(e.target ? e.target.value : e)} />
-              </div>
-            )}
-            {jenisProduk === "produk hampers" && (
-              <div className="mt-8 flex gap-10">
-                <Radio name="jenisStok" label="1" value="stok lama" onChange={(e) => setJenisStok(e.target ? e.target.value : e)} />
-                <Radio name="jenisStok" label="2" value="stok baru" onChange={(e) => setJenisStok(e.target ? e.target.value : e)} />
               </div>
             )}
             {jenisStok === "stok baru" && jenisProduk === "produk utama" && (
@@ -244,6 +252,108 @@ export function AddProduk() {
                       }}
                     />
                   </div>
+              </div>
+            )}
+            { jenisProduk === "produk hampers" && (
+                <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-1">
+                  <div>
+                    <Typography variant="h6" color="blue-gray" className="mb-3">
+                      Nama Produk
+                    </Typography>
+                    <Input
+                      size="lg"
+                      placeholder=""
+                      className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Typography variant="h6" color="blue-gray" className="mb-3">
+                      Harga
+                    </Typography>
+                    <Input
+                      size="lg"
+                      placeholder=""
+                      className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Typography variant="h6" color="blue-gray" className="mb-3">
+                      Deskripsi Hampers
+                    </Typography>
+                    <Textarea
+                      size="lg"
+                      placeholder=""
+                      className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <Typography variant="h6" color="blue-gray" className="mb-3">
+                      Gambar Produk
+                    </Typography>
+                    <Input
+                      size="lg"
+                      type="file"
+                      placeholder=""
+                      className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                      labelProps={{
+                        className: "before:content-none after:content-none",
+                      }}
+                    />
+                  </div>
+                  {inputs.map((input, index) => (
+                    <div key={index} className="mb-1 gap-2 grid grid-cols-1 md:grid-cols-2">
+                      <div>
+                        <Typography variant="h6" color="blue-gray" className="mb-3">
+                          Isi Produk
+                        </Typography>
+                        <Select
+                          size="lg"
+                          placeholder=""
+                          className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                          value={input.isi_produk}
+                        >
+                          <Option value="Lapis Legit">Lapis Legit</Option>
+                        </Select>
+                      </div>
+                      <div>
+                        <Typography variant="h6" color="blue-gray" className="mb-3">
+                          Jumlah
+                        </Typography>
+                        <Input
+                          size="lg"
+                          placeholder=""
+                          className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                          labelProps={{
+                            className: "before:content-none after:content-none",
+                          }}
+                        />
+                      </div>
+                      <div className="md:col-span-2 flex justify-end">
+                          {inputs.length > 1 && (
+                              <button onClick={() => handleRemoveInput(index)} className="mr-2 border-none">
+                                  <FontAwesomeIcon icon={faMinus} />
+                              </button>
+                          )}
+                          {index === inputs.length - 1 && (
+                              <button onClick={handleAddInput} className=" border-none">
+                                  <FontAwesomeIcon icon={faPlus} />
+                              </button>
+                          )}
+                      </div>
+                    </div>
+                  ))}
               </div>
             )}
           </div>

@@ -9,12 +9,37 @@ import {
     Option
   } from "@material-tailwind/react";
 // import { Dashboard } from "@/layouts";
+import { bahanBakuAdmin } from "../../../../validations/validation";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
   
   export function AddBahanBaku() {
+    const [formErrors, setFormErrors] = useState({});
+    const navigateTo = useNavigate();
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        window.location.href = "/admin/bahanBaku";
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const formDataObject = Object.fromEntries(formData.entries());
+      console.log(formDataObject);
+      const parsedBahanBaku = bahanBakuAdmin.safeParse(formDataObject);
+      if (!parsedBahanBaku.success) {
+          const error = parsedBahanBaku.error;
+          let newErrors = {};
+          for (const issue of error.issues) {
+              newErrors = {
+                  ...newErrors,
+                  [issue.path[0]]: issue.message,
+              };
+          }
+          return setFormErrors(newErrors);
+
+      } else {
+          navigateTo('/admin/bahanBaku');
+      }
+      setFormErrors({});
+      console.log(formErrors);
+      console.log(parsedBahanBaku.data.name);
     };
 
     return (
@@ -27,39 +52,60 @@ import {
                   Nama Bahan
                 </Typography>
                 <Input
+                  type="text"
                   size="lg"
+                  name="nama_bahan"
                   placeholder=""
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                 />
+                {formErrors.nama_bahan && (
+                    <p className="text-red-600 font-medium">
+                        {formErrors.nama_bahan}
+                    </p>
+                )}
               </div>
               <div>
                 <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Jumlah
+                  Jumlah Stok
                 </Typography>
                 <Input
+                  type="text"
                   size="lg"
+                  name="stok_bahan"
                   placeholder=""
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                 />
+                {formErrors.stok_bahan && (
+                    <p className="text-red-600 font-medium">
+                        {formErrors.stok}
+                    </p>
+                )}
               </div>
               <div>
                 <Typography variant="h6" color="blue-gray" className="mb-3">
-                  Harga
+                  Satuan
                 </Typography>
                 <Input
+                  type="text"
                   size="lg"
+                  name="satuan"
                   placeholder=""
                   className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
                   labelProps={{
                     className: "before:content-none after:content-none",
                   }}
                 />
+                {formErrors.satuan && (
+                    <p className="text-red-600 font-medium">
+                        {formErrors.satuan}
+                    </p>
+                )}
               </div>
             </div>
             <div className="flex justify-end">

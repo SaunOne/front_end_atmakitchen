@@ -2,13 +2,35 @@ import React, { useState } from "react";
 import { Card, Input, Button, Typography, Select, Option } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { resepAdmin } from "@/validations/validation";
 
 export function AddResep() {
     const [inputs, setInputs] = useState([{ bahan: "", jumlah: "" }]);
+    const [formErrors, setFormErrors] = useState({});
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        window.location.href = "/admin/resep";
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const formDataObject = Object.fromEntries(formData.entries());
+        console.log(formDataObject);
+        const parsedResep = resepAdmin.safeParse(formDataObject);
+        if (!parsedResep.success) {
+            const error = parsedResep.error;
+            let newErrors = {};
+            for (const issue of error.issues) {
+                newErrors = {
+                    ...newErrors,
+                    [issue.path[0]]: issue.message,
+                };
+            }
+            return setFormErrors(newErrors);
+
+        } else {
+            navigateTo('/admin/resep');
+        }
+        setFormErrors({});
+        console.log(formErrors);
+        console.log(parsedResep.data.name);
     };
 
     const handleAddInput = () => {
@@ -29,17 +51,27 @@ export function AddResep() {
                             <Typography variant="h6" color="blue-gray" className="mb-2">
                                 Jenis Produk
                             </Typography>
-                            <Select size="lg" placeholder="Pilih Jenis Produk" className="!border-t-blue-gray-200 focus:!border-t-gray-900">
-                                <Option>Produk Utama</Option>
-                                <Option>Produk Titipan</Option>
-                                <Option>Produk Hampers</Option>
+                            <Select name="jenis_produk" size="lg" placeholder="Pilih Jenis Produk" className="!border-t-blue-gray-200 focus:!border-t-gray-900">
+                                <Option value="produk utama">Produk Utama</Option>
+                                <Option value="produk titipan">Produk Titipan</Option>
+                                <Option value="produk hampers">Produk Hampers</Option>
                             </Select>
+                            {formErrors.jenis_produk && (
+                                <p className="text-red-600 font-medium">
+                                    {formErrors.jenis_produk}
+                                </p>
+                            )}
                         </div>
                         <div>
                             <Typography variant="h6" color="blue-gray" className="mb-2">
                                 Nama Resep
                             </Typography>
-                            <Input size="lg" placeholder="Masukkan Nama Resep" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                            <Input name="nama_resep" size="lg" placeholder="Masukkan Nama Resep" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                            {formErrors.nama_resep && (
+                                <p className="text-red-600 font-medium">
+                                    {formErrors.nama_resep}
+                                </p>
+                            )}
                         </div>
                     </div>
                     {/* Dynamic Inputs */}
@@ -49,13 +81,23 @@ export function AddResep() {
                                 <Typography variant="h6" color="blue-gray" className="mb-2">
                                     Bahan
                                 </Typography>
-                                <Input size="lg" value={input.bahan} placeholder="Masukkan Bahan" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                                <Input type="text" name="bahan" size="lg" value={input.bahan} placeholder="Masukkan Bahan" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                                {formErrors.bahan && (
+                                    <p className="text-red-600 font-medium">
+                                        {formErrors.bahan}
+                                    </p>
+                                )}
                             </div>
                             <div className="md:col-span-2">
                                 <Typography variant="h6" color="blue-gray" className="mb-2">
                                     Jumlah Kebutuhan
                                 </Typography>
-                                <Input size="lg" value={input.jumlah} placeholder="Masukkan Jumlah" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                                <Input name="jumlah_kebutuhan " size="lg" value={input.jumlah} placeholder="Masukkan Jumlah" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                                {formErrors.jumlah_kebutuhan && (
+                                    <p className="text-red-600 font-medium">
+                                        {formErrors.jumlah_kebutuhan}
+                                    </p>
+                                )}
                             </div>
                             <div className="md:col-span-4 flex justify-end">
                                 {inputs.length > 1 && (

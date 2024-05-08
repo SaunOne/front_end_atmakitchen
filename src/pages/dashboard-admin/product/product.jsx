@@ -20,6 +20,20 @@ import { useEffect, useState } from "react";
 export function ProductAdmin() {
   const [selectedTabValue, setSelectedTabValue] = useState("utama"); 
   const [productData, setProductData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const rowsPerPage = 5;
+
+  // Calculate total pages
+  const totalPages = Math.ceil(productData.length / rowsPerPage);
+
+  // Get current page data
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = productData.slice(indexOfFirstRow, indexOfLastRow);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   const tabsProduct = [ 
     { label: "Utama", value: "utama", name: "Utama" },
@@ -97,48 +111,48 @@ export function ProductAdmin() {
             </tr>
           </thead>
           <tbody>
-            {productData.map(
-              ({ id, img, name, sales, price, stok }, key) => {
+            {currentRows.map(
+              ({ id_produk, image_produk, nama_produk, total_terjual, harga, stok_produk }, index) => {
                 const className = `py-3 px-5 ${
-                  key === productData.length - 1
+                  index === productData.length - 1
                     ? ""
                     : "border-b border-blue-gray-50"
                 }`;
 
                 return (
-                  <tr key={id}>
-                    <td className={className}>
+                  <tr key={index}>
+                    <td className={className}> 
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {id}
+                        {id_produk}
                       </Typography>
                     </td>
                     <td className={className}>
                       <div className="flex items-center gap-4">
-                        <Avatar src={img} alt={name} size="sm" variant="rounded" />
+                        <Avatar src={image_produk} alt={nama_produk} size="sm" variant="rounded" />
                         <div>
                           <Typography
                             variant="small"
                             color="blue-gray"
                             className="font-semibold"
                           >
-                            {name}
+                            {nama_produk}
                           </Typography>
                         </div>
                       </div>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {sales}
+                        {total_terjual}
                       </Typography>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {price}
+                        {harga}
                       </Typography>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {stok}
+                        {stok_produk}
                       </Typography>
                     </td>
                     <td className={className}>
@@ -157,38 +171,19 @@ export function ProductAdmin() {
             )}
           </tbody>
         </table>
-        </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" size="sm">
-          Previous
-        </Button>
-        <div className="flex items-center gap-2">
-          <IconButton variant="outlined" size="sm">
-            1
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            2
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            3
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            ...
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            8
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            9
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            10
-          </IconButton>
+        <div className="flex justify-center mt-2">
+            {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                    key={index}
+                    className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"
+                        }`}
+                    onClick={() => handlePageChange(index + 1)}
+                >
+                    {index + 1}
+                </button>
+            ))}
         </div>
-        <Button variant="outlined" size="sm">
-          Next
-        </Button>
-      </CardFooter>
+        </CardBody>
       </Card>
     </div>
   );
