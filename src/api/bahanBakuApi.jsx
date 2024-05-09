@@ -3,9 +3,9 @@
 import useAxios from "."; // Sesuaikan dengan path sesuai struktur proyek Anda
 
 // Menampilkan semua deposit
-export const GetAllPenitip = async () => {
+export const GetAllBahanBaku = async () => {
     try {
-        const response = await useAxios.get("/penitip", {
+        const response = await useAxios.get("/bahan", {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -19,10 +19,10 @@ export const GetAllPenitip = async () => {
 };
 
 // Menampilkan deposit berdasarkan ID
-export const GetPenitipById = async (id) => {
+export const GetBahanBakuById = async (id) => {
     try {
         console.log(id);
-        const response = await useAxios.get(`/penitip/${id.id}`, {
+        const response = await useAxios.get(`/bahan/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -36,9 +36,9 @@ export const GetPenitipById = async (id) => {
 };
 
 
-export const CreatePenitip = async (data) => {
+export const CreateBahanBaku = async (data) => {
     try {
-        const response = await useAxios.post("/penitip", data, {
+        const response = await useAxios.post("/bahan", data, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -50,10 +50,10 @@ export const CreatePenitip = async (data) => {
     }
 };
 
-export const UpdatePenitip = async (data) => {
+export const UpdateBahanBaku = async (data) => {
     try {
         console.log(data);
-        const response = await useAxios.put(`/penitip/${data.id_penitip}`, data, {
+        const response = await useAxios.put(`/bahan/${data.id_penitip}`, data, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -70,7 +70,7 @@ export const DeletePenitipById = async (id) => {
     console.log(id);
     try {
         
-        const response = await useAxios.delete(`/penitip/${id}`, {
+        const response = await useAxios.delete(`/bahan/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,

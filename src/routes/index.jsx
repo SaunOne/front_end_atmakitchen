@@ -39,6 +39,10 @@ import AddPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-ba
 import EditPengeluaranBahanBakuMO from "@/pages/dashboard-mo/pengeluaran-bahan-baku/update/editPengeluaranBahanBaku";
 import AddPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/create/addPengeluaranLainnya";
 import EditPengeluaranLainnyaMO from "@/pages/dashboard-mo/pengeluaran-lainnya/update/editPengeluaranLainnya";
+import DaftarTransaksi from "../pages/userViews/profile/daftar-transaksi";
+
+
+import HistoriWithdraw from "../pages/userViews/profile/histori-withdraw";
 
 //import { editProduk } from "../pages/dashboard-admin/editProduk";
 //import { Notifications } from "../pages/dashboard-admin/notifications";
@@ -73,9 +77,17 @@ const routes = [
         element: <LayoutProfile />,
         children: [
           {
+            path: "/user/profile/",
+            element: <DaftarTransaksi />,
+          },
+          {
             path: "/user/profile/edit",
             element: <EditProfile />,
           },
+          {
+            path: "/user/profile/histori-withdraw",
+            element: <HistoriWithdraw />,
+          }
         ],
       },
     ],
