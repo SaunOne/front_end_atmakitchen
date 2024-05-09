@@ -42,8 +42,8 @@ export function AddPengeluaranLainnya() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-[50%] max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className="p-4 mt-8 mb-2 w-[50%] max-w-screen-lg ">
                 <Typography variant="h6" color="blue-gray" className="mb-3">
                     Peruntukan Pengeluaran
                 </Typography>

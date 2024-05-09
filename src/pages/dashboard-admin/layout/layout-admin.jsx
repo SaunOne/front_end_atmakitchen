@@ -8,9 +8,9 @@ import {
   DashboardNavbar,
   Configurator,
   Footer,
-} from "../../widgets/layout";
-import {routesAdmin} from "../../routes/routeData";
-import { useMaterialTailwindController, setOpenConfigurator } from "../../context";
+} from "../../../widgets/layout";
+import {routesAdmin} from "../../../routes/routeData";
+import { useMaterialTailwindController, setOpenConfigurator } from "../../../context";
 
 const LayoutAdmin = ({children}) => {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -38,9 +38,6 @@ const LayoutAdmin = ({children}) => {
         </IconButton>
         <div >
           {children ? children : <Outlet />}
-        </div>
-        <div className="text-blue-gray-600">
-          <Footer />
         </div>
       </div>
     </div>
