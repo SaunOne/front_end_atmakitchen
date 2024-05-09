@@ -1,194 +1,154 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  CardFooter,
-  IconButton
+    Typography,
+    Avatar,
+    Button,
 } from "@material-tailwind/react";
-import { Tabs, Tab, TabsHeader, Button } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
-import {
-  productUtamaTableData,
-  productTitipanTableData,
-  productHampersTableData,
-} from "@/data";
-import { useEffect, useState } from "react";
+import { GlobalContext } from "@/context/context";
+import { productTableData } from "@/data";
+import { DeleteProduct, UpdateProduct } from "../button";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
 
-export function ProductAdmin() {
-  const [selectedTabValue, setSelectedTabValue] = useState("utama"); 
-  const [productData, setProductData] = useState([]);
+export default function ProductTable() {
+    const { search, selectedTabValue } = useContext(GlobalContext);
+    const [data, setData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(5);
 
-  const tabsProduct = [ 
-    { label: "Utama", value: "utama", name: "Utama" },
-    { label: "Titipan", value: "titipan", name: "Titipan" },
-    { label: "Hampers", value: "hampers", name: "Hampers" }
-  ];
+    useEffect(() => {
+        let filteredData = productTableData;
+        switch (selectedTabValue) {
+            case "Utama":
+                filteredData = productTableData.filter((el) => el.jenis_produk === "Utama");
+                break;
+            case "Titipan":
+                filteredData = productTableData.filter((el) => el.jenis_produk === "Titipan");
+                break;
+            case "Hampers":
+                filteredData = productTableData.filter((el) => el.jenis_produk === "Hampers");
+                break;
+            default:
+                break;
+        }
+        setData(filteredData);
+    }, [selectedTabValue]);
 
-  useEffect(() => {
-    switch (selectedTabValue) {
-      case "utama":
-        setProductData([...productUtamaTableData]);
-        break;
-      case "titipan":
-        setProductData([...productTitipanTableData]);
-        break;
-      case "hampers":
-        setProductData([...productHampersTableData]); 
-        break;
-      default:
-        setProductData([]);
-        break;
-    }
-  }, [selectedTabValue]);
+    useEffect(() => {
+        setData(productTableData.filter((el) =>
+            el.nama_produk.toLowerCase().includes(search.toLowerCase()) ||
+            el.harga.toString().includes(search.toLowerCase()) ||
+            el.stok_produk.toString().includes(search.toLowerCase()) ||
+            el.deskripsi.toLowerCase().includes(search.toLowerCase())
+        ));
+    }, [search]);
 
-  const getTabName = (value) => {
-    const selectedTab = tabsProduct.find(tab => tab.value === value);
-    return selectedTab ? selectedTab.name : "";
-  };
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(data.length / itemsPerPage);
 
-  const handleTabChange = (value) => {
-    setSelectedTabValue(value);
-  };
+    const nextPage = () => {
+        setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+    };
 
-  const navigate = useNavigate();
+    const prevPage = () => {
+        setCurrentPage((prev) => Math.max(prev - 1, 1));
+    };
 
-  return (
-    <div>
-      <div className="grid grid-cols-2 text-lg">
-          <Tabs value={selectedTabValue} onChange={handleTabChange}>
-            <TabsHeader>
-              {tabsProduct.map(tab => (
-                <Tab key={tab.value} value={tab.value} onClick={() => setSelectedTabValue(tab.value)}>
-                  {tab.label}
-                </Tab>
-              ))}
-            </TabsHeader>
-          </Tabs>
-      </div>
-      <Card>
-        <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
-          <Typography variant="h6" color="white">
-            Tabel Produk {getTabName(selectedTabValue)}
-          </Typography>
-        </CardHeader>
-        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-        <table className="w-full min-w-[640px] table-auto">
-          <thead>
-            <tr>
-              {["No", "Nama Produk", "Total Terjual", "Harga", "Stok", ""].map((el) => (
-                <th
-                  key={el}
-                  className="border-b border-blue-gray-50 py-3 px-5 text-left"
+    return (
+        <>
+            <table className="w-full min-w-[640px] table-auto">
+                <thead>
+                    <tr>
+                        {["No", "Nama Produk", "Deskripsi", "Harga", "Stok", ""].map((el) => (
+                            <th
+                                key={el}
+                                className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                            >
+                                <Typography
+                                    variant="small"
+                                    className="text-[11px] font-bold uppercase text-black"
+                                >
+                                    {el}
+                                </Typography>
+                            </th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody>
+                    {currentItems.map(({ id_produk, image_produk, nama_produk, deskripsi, harga, stok_produk }, index) => {
+                        const className = `py-3 px-5 border-r  ${index === currentItems.length - 1
+                            ? ""
+                            : "border-b border-blue-gray-50"
+                            }`;
+                        return (
+                            <tr key={id_produk}>
+                                <td className={className}>{indexOfFirstItem + index + 1}</td>
+                                <td className={className}>
+                                    <div className="flex items-center gap-4">
+                                        <Avatar src={image_produk} alt={nama_produk} size="sm" variant="rounded" />
+                                        <div>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-semibold"
+                                            >
+                                                {nama_produk}
+                                            </Typography>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className={className}>
+                                    <Typography className="text-[12px] font-semibold text-black">
+                                        {deskripsi}
+                                    </Typography>
+                                </td>
+                                <td className={className}>
+                                    <Typography className="text-xs font-semibold text-black">
+                                        {harga}
+                                    </Typography>
+                                </td>
+                                <td className={className}>
+                                    <Typography className="text-xs font-semibold text-black">
+                                        {stok_produk}
+                                    </Typography>
+                                </td>
+                                <td className={className}>
+                                    <div className="flex gap-2">        
+                                        <UpdateProduct id={id_produk} />
+                                        <DeleteProduct id={id_produk} />
+                                    </div>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+            <div className="flex justify-center gap-2 mt-4">
+                <Button
+                    className={`p-2 pt-0 h-7 pb-0 text-gray-900 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-200 focus:outline-none disabled:bg-gray-300 disabled:text-gray-500 ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""}`}
+                    onClick={prevPage}
+                    disabled={currentPage === 1}
                 >
-                  <Typography
-                    variant="small"
-                    className="text-[11px] font-bold uppercase text-blue-gray-400"
-                  >
-                    {el}
-                  </Typography>
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {productData.map(
-              ({ id, img, name, sales, price, stok }, key) => {
-                const className = `py-3 px-5 ${
-                  key === productData.length - 1
-                    ? ""
-                    : "border-b border-blue-gray-50"
-                }`;
-
-                return (
-                  <tr key={id}>
-                    <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {id}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <div className="flex items-center gap-4">
-                        <Avatar src={img} alt={name} size="sm" variant="rounded" />
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-semibold"
-                          >
-                            {name}
-                          </Typography>
-                        </div>
-                      </div>
-                    </td>
-                    <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {sales}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {price}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <Typography className="text-xs font-semibold text-blue-gray-600">
-                        {stok}
-                      </Typography>
-                    </td>
-                    <td className={className}>
-                      <Typography
-                        as="a"
-                        href=""
-                        className="text-xs font-semibold text-blue-gray-600"
-                        onClick={() => navigate('/admin/product/editProduk')}
-                      >
-                        Edit
-                      </Typography>
-                    </td>
-                  </tr>
-                );
-              }
-            )}
-          </tbody>
-        </table>
-        </CardBody>
-        <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" size="sm">
-          Previous
-        </Button>
-        <div className="flex items-center gap-2">
-          <IconButton variant="outlined" size="sm">
-            1
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            2
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            3
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            ...
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            8
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            9
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            10
-          </IconButton>
-        </div>
-        <Button variant="outlined" size="sm">
-          Next
-        </Button>
-      </CardFooter>
-      </Card>
-    </div>
-  );
+                    <ArrowLeftIcon className="h-4 w-4 p-0" />
+                </Button>
+                {Array.from({ length: totalPages }, (_, i) => (
+                    <Button
+                        key={i}
+                        className={`p-2 text-sm h-7 pt-0  pb-0 text-gray-900 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-200 focus:outline-none ${currentPage === i + 1 ? "bg-gray-700 text-white" : ""}`}
+                        onClick={() => setCurrentPage(i + 1)}
+                    >
+                        {i + 1}
+                    </Button>
+                ))}
+                <Button
+                    className={`p-2 text-gray-900 h-7 pt-0  pb-0 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-200 focus:outline-none disabled:bg-gray-300 disabled:text-gray-500 ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""}`}
+                    onClick={nextPage}
+                    disabled={currentPage === totalPages}
+                >
+                    <ArrowRightIcon className="h-5 w-5" />
+                </Button>
+            </div>
+        </>
+    );
 }
-
-export default Tab;
