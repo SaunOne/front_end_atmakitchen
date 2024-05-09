@@ -67,7 +67,7 @@ export default function PenitipTable() {
                             const lowerCaseSearch = search.toLowerCase();
                             return (
                                 lowerCaseSearch === "" ||
-                                item.nama_penitip.toLowerCase().includes(lowerCaseSearch) ||
+                                item.nama_penitip.toLowerCase().includes(lowerCaseSearch ) ||
                                 item.no_telp_penitip.toLowerCase().includes(lowerCaseSearch) ||
                                 item.alamat.toLowerCase().includes(lowerCaseSearch) 
                             );

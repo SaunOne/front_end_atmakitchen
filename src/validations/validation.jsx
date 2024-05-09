@@ -46,7 +46,8 @@ export const userRegistration = z
                     "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
             })
             .min(10, { message: "Nomor Telepon minimal 10 angka" })
-            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" })
+            .refine((value) => parseFloat(value) > 0, { message: "Nomor Telepon Tidak Valid!" }),
         gender: z
             .string()
             .min(1, { message: "Jenis Kelamin harus dipilih" }),
@@ -129,7 +130,8 @@ export const penitip = z
                     "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
             })
             .min(10, { message: "Nomor Telepon minimal 10 angka" })
-            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" })
+            .refine((value) => parseFloat(value) > 0, { message: "Nomor Telepon Tidak Valid!" }),
         alamat: z
             .string({
                 required_error: "Username wajib diisi",
@@ -165,7 +167,8 @@ export const staff = z
                     "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
             })
             .min(10, { message: "Nomor Telepon minimal 10 angka" })
-            .max(15, { message: "Nomor Telepon maksimal 15 angka" }),
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" })
+            .refine((value) => parseFloat(value) > 0, { message: "Nomor Telepon Tidak Valid!" }),
         email: z
             .string({
                 required_error: "Email wajib diisi!",
@@ -234,7 +237,7 @@ export const pengeluaranLainnya = z
                     "Nama Pengeluaran wajib diisi!",
             })
             .min(1, { message: "Peruntukan Pengeluaran wajib diisi!" }),
-        
+
 
         jumlah_pengeluaran: z
             .string({
@@ -245,3 +248,52 @@ export const pengeluaranLainnya = z
             .refine((value) => parseFloat(value) > 0, { message: "Total Pengeluaran harus lebih dari 0" }),
 
     });
+
+
+export const editProfile = z
+    .object({
+        nama_lengkap: z
+            .string({
+                required_error: "Nama Lengkap wajib diisi",
+                invalid_type_error:
+                    "Nama Lengkap wajib terdiri dari minimal 3 karakter & maksimal 50 karakter!",
+            })
+            .min(3, { message: "Nama Lengkap wajib terdiri dari minimal 3 karakter" })
+            .max(50, { message: "Nama Lengkap maksimal 50 karakter" }),
+        username: z
+            .string({
+                required_error: "Username wajib diisi",
+                invalid_type_error:
+                    "Username wajib terdiri dari minimal 3 karakter & maksimal 15 karakter!",
+            })
+            .min(6, { message: "Username wajib terdiri dari minimal 6 karakter" })
+            .max(15, { message: "Username maksimal 15 karakter" }),
+        email: z
+            .string({
+                required_error: "Email wajib diisi!",
+            })
+            .email({ message: "Email tidak valid" }),
+        no_telp: z
+            .string({
+                invalid_type_error:
+                    "Nomor Telepon wajib terdiri dari minimal 10 angka & maksimal 15 angka!",
+            })
+            .min(10, { message: "Nomor Telepon minimal 10 angka" })
+            .max(15, { message: "Nomor Telepon maksimal 15 angka" })
+            .refine((value) => parseFloat(value) > 0, { message: "Nomor Telepon Tidak Valid!" }),
+        gender: z
+            .string()
+            .min(1, { message: "Jenis Kelamin harus dipilih" }),
+        day: z
+            .string()
+            .min(1, { message: "Tanggal Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Tanggal Tidak Valid!" }),
+        month: z
+            .string()
+            .min(1, { message: "Bulan Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Bulan Tidak Valid!" }),
+        year: z
+            .string()
+            .min(1, { message: "Tahun Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Tahun Tidak Valid!" }),
+    })

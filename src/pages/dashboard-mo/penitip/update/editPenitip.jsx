@@ -1,4 +1,4 @@
-//import React from "react";
+
 import {
     Card,
     Input,
@@ -6,16 +6,14 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { penitip } from "../../../../validations/validation";
-// import { Dashboard } from "@/layouts";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { penitipTableData } from "@/data";
 import { UpdatePenitip, GetPenitipById } from "@/api/penitipApi";
-import { set } from "zod";
+
 
 export function EditPenitip() {
+    const {setSuccess} = useContext(GlobalContext);
     const { id } = useParams();
-    const [data, setData] = useState([]);
     const [formErrors, setFormErrors] = useState({});
     const [values, setValues] = useState({});
     const navigateTo = useNavigate();
@@ -27,7 +25,8 @@ export function EditPenitip() {
             .then((response) => {
                 console.log(response)
                 setValues(response);
-                
+
+
             })
             .catch((err) => {
                 console.log(err);
@@ -58,18 +57,21 @@ export function EditPenitip() {
             }
             return setFormErrors(newErrors);
         } else {
+            parsedPenitip.data.id_penitip = id;
+            UpdatePenitip(parsedPenitip.data)
+                .then((response) => {
+                    setSuccess({bool: true, message: 'Penitip berhasil diubah'});
+                    console.log(response);
+                    
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
             navigateTo('/mo/penitip');
         }
         setFormErrors({});
         console.log(formErrors);
-        parsedPenitip.data.id_penitip = id;
-        UpdatePenitip(parsedPenitip.data)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+
     }
 
     return (

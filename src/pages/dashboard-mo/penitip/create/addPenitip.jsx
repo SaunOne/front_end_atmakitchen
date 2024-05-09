@@ -11,8 +11,11 @@ import { penitip } from "../../../../validations/validation";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreatePenitip} from "@/api/penitipApi";
+import { useContext } from "react";
+import { GlobalContext } from "@/context/context";
 
 export function AddPenitip() {
+    const {setSuccess, success} = useContext(GlobalContext);
     const [formErrors, setFormErrors] = useState({});
     const navigateTo = useNavigate();
 
@@ -38,11 +41,11 @@ export function AddPenitip() {
         }
         setFormErrors({});
         console.log(formErrors);
-        console.log(parsedPenitip.data.nama_lengkap);
         CreatePenitip(parsedPenitip.data)
         .then((response) => {
             console.log(response);
-            //tambahin toastify success coo
+            setSuccess({bool: true, message: 'Penitip berhasil ditambahkan'});
+            console.log(success);
             navigateTo("/mo/penitip");
         })
         .catch((err) => {
