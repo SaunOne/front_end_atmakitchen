@@ -2,16 +2,27 @@ import { Typography } from "@material-tailwind/react";
 import { penitipTableData } from "@/data";
 import { UpdatePenitip, DeletePenitip } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { SearchContext } from "@/context/searchContext";
+import { GlobalContext } from "@/context/context";
+import { GetAllPenitip } from "@/api/penitipApi";
+import { getImage } from "@/api/index";
 
 export default function PenitipTable() {
     const [data, setData] = useState([]);
-    const { search } = useContext(SearchContext);
+    const [error, setError] = useState("");
+    const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
     useEffect(() => {
-        setData(penitipTableData);
+        GetAllPenitip()
+            .then((response) => {
+                console.log(response)
+                setData(response);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
     }, []);
 
     console.log(search);
@@ -56,15 +67,12 @@ export default function PenitipTable() {
                             const lowerCaseSearch = search.toLowerCase();
                             return (
                                 lowerCaseSearch === "" ||
-                                item.name.toLowerCase().includes(lowerCaseSearch) ||
-                                item.phone.toLowerCase().includes(lowerCaseSearch) ||
-                                item.address.toLowerCase().includes(lowerCaseSearch) ||
-                                item.product.some((product) =>
-                                    product.name.toLowerCase().includes(lowerCaseSearch)
-                                )
+                                item.nama_penitip.toLowerCase().includes(lowerCaseSearch ) ||
+                                item.no_telp_penitip.toLowerCase().includes(lowerCaseSearch) ||
+                                item.alamat.toLowerCase().includes(lowerCaseSearch) 
                             );
                         })
-                        .map(({ id, name, phone, address, product }, index) => {
+                        .map(({ id_penitip,  nama_penitip, no_telp_penitip, alamat, produk }, index) => {
                             const className = `py-3 px-5 border-r  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -79,39 +87,38 @@ export default function PenitipTable() {
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {name}
+                                            {nama_penitip}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {phone}
+                                            {no_telp_penitip}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-[400] text-blue-gray-600">
-                                            {address}
+                                            {alamat}
                                         </Typography>
                                     </td>
                                     <td className={className}>
-                                        {product.map(({ id, name, status, price, stok }, key) => {
-                                            const className2 = `py-3 px-5 ${key === product.length - 1
+                                        {produk.map(({ id_produk, nama_produk,  harga, jumlah_stok }, key) => {
+                                            const className2 = `py-3 px-5 ${key === produk.length - 1
                                                 ? ""
                                                 : "border-b border-blue-gray-50"
                                                 }`;
                                             return (
-                                                <div className={className2} key={id}>
-                                                    <p>{name}</p>
-                                                    <p>Stok : {stok}</p>
-                                                    <p>Status : {status}</p>
-                                                    <p>Rp. {price}</p>
+                                                <div className={className2} key={id_produk}>
+                                                    <p>{nama_produk}</p>
+                                                    <p>Stok : {jumlah_stok}</p>
+                                                    <p>Rp. {harga}</p>
                                                 </div>
                                             );
                                         })}
                                     </td>
                                     <td className={className}>
                                         <div className="flex gap-2">
-                                            <UpdatePenitip id={id} />
-                                            <DeletePenitip id={id} />
+                                            <UpdatePenitip id={id_penitip} />
+                                            <DeletePenitip id={id_penitip} />
 
                                         </div>
                                     </td>

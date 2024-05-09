@@ -2,11 +2,12 @@ import { Typography } from "@material-tailwind/react";
 import { salaryTableData } from "@/data";
 import { UpdateGaji, DeleteGaji } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { SearchContext } from "@/context/searchContext";
+
+import { GlobalContext } from "@/context/context";
 
 export default function SalaryTable() {
     const [data, setData] = useState([]);
-    const { search } = useContext(SearchContext);
+    const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 

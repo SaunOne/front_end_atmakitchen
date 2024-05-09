@@ -75,7 +75,8 @@ const Register = () => {
 
     RegisterApi(formData).then((res) => {
         console.log("Masuk");
-        console.log("res : ");
+        console.log("res : " );
+        console.log(res.id_user);
         setId(res.id_user);
         setLoading(false);
       }).catch((err) => {
@@ -285,8 +286,19 @@ const Register = () => {
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-4">
-              <Button type="submit" loading={loading}>
+            <div className="flex justify-center mt-2">
+                            <div>
+                                Sudah memiliki akun?
+                                <a
+                                    href="/login"
+                                    className="text-xs ml-2 text-neutral-700 hover:text-neutral-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
+                                >
+                                    Login
+                                </a>
+                            </div>
+                        </div>
+            <div className="flex items-center justify-center gap-4">
+              <Button className="w-full mt-5"type="submit" loading={loading}>
                 {loading ? "Loading" : "Daftar"}
               </Button>
             </div>

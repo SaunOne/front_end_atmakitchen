@@ -10,8 +10,12 @@ import { penitip } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CreatePenitip} from "@/api/penitipApi";
+import { useContext } from "react";
+import { GlobalContext } from "@/context/context";
 
 export function AddPenitip() {
+    const {setSuccess, success} = useContext(GlobalContext);
     const [formErrors, setFormErrors] = useState({});
     const navigateTo = useNavigate();
 
@@ -37,7 +41,17 @@ export function AddPenitip() {
         }
         setFormErrors({});
         console.log(formErrors);
-        console.log(parsedPenitip.data.name);
+        CreatePenitip(parsedPenitip.data)
+        .then((response) => {
+            console.log(response);
+            setSuccess({bool: true, message: 'Penitip berhasil ditambahkan'});
+            console.log(success);
+            navigateTo("/mo/penitip");
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+
     }
 
     return (
@@ -49,7 +63,7 @@ export function AddPenitip() {
                     </Typography>
                     <Input
                         type="text"
-                        name="name"
+                        name="nama_penitip"
                         size="lg"
                         placeholder=""
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -57,9 +71,9 @@ export function AddPenitip() {
                             className: "before:content-none after:content-none",
                         }}
                     />
-                    {formErrors.name && (
+                    {formErrors.nama_penitip && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.name}
+                            {formErrors.nama_penitip}
                         </p>
                     )}
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -67,7 +81,7 @@ export function AddPenitip() {
                     </Typography>
                     <Input
                         type="number"
-                        name="phone"
+                        name="no_telp_penitip"
                         size="lg"
                         placeholder=""
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -75,9 +89,9 @@ export function AddPenitip() {
                             className: "before:content-none after:content-none",
                         }}
                     />
-                    {formErrors.phone && (
+                    {formErrors.no_telp_penitip && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.phone}
+                            {formErrors.no_telp_penitip}
                         </p>
                     )}
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -85,7 +99,7 @@ export function AddPenitip() {
                     </Typography>
                     <Input
                         type="text"
-                        name="address"
+                        name="alamat"
                         size="lg"
                         placeholder=""
                         className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -93,9 +107,9 @@ export function AddPenitip() {
                             className: "before:content-none after:content-none",
                         }}
                     />
-                    {formErrors.address && (
+                    {formErrors.alamat && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.address}
+                            {formErrors.alamat}
                         </p>
                     )}
                 </div>

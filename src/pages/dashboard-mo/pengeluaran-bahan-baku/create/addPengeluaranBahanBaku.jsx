@@ -5,29 +5,33 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { bahanBaku } from "../../../../validations/validation";
 import { useNavigate } from "react-router-dom";
+import { GetAllBahanBaku } from "@/api/bahanBakuApi";
 
+import { CreatePengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
+import { GlobalContext } from "@/context/context";
 
 export function AddPengeluaranBahanBaku() {
     const [formErrors, setFormErrors] = useState({});
+    const {setSuccess, success} = useContext(GlobalContext);
+    const [bahan, setBahan] = useState([]);
     const [satuan, setSatuan] = useState("");
     const [selectedBahan, setSelectedBahan] = useState("");
     const navigateTo = useNavigate();
 
-    const bahan = [
-        {
-            id: 1,
-            nama_bahan: "Gula",
-            satuan: "Kg",
-        },
-        {
-            id: 2,
-            nama_bahan: "Tepung",
-            satuan: "Gram",
-        },
-    ];
+    useEffect(() => {
+        GetAllBahanBaku()
+            .then((response) => {
+                console.log(response)
+                setBahan(response);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
+    }, []);
 
     useEffect(() => {
         const selectedBahanObj = bahan.find((item) => item.nama_bahan === selectedBahan);
@@ -60,7 +64,19 @@ export function AddPengeluaranBahanBaku() {
             return setFormErrors(newErrors);
 
         } else {
-            navigateTo('/mo/pengeluaran-bahan-baku');
+            parsedPengeluaran.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedPengeluaran.data.nama_bahan).id_bahan;
+            console.log(parsedPengeluaran.data.id_bahan)
+            CreatePengeluaranBahanBaku(parsedPengeluaran.data)
+            .then((response) => {
+                console.log(response);
+                setSuccess({bool: true, message: 'Pengadaan Bahan Baku berhasil ditambahkan'});
+                console.log(success);
+                navigateTo('/mo/pengeluaran-bahan-baku');
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+            
         }
         setFormErrors({});
         console.log(formErrors);

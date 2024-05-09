@@ -5,16 +5,19 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { bahanBaku } from "../../../../validations/validation";
 import { useNavigate, useParams } from "react-router-dom";
-import { pengeluaranBahanTableData } from "@/data";
+import { GetAllBahanBaku, GetBahanBakuById } from "@/api/bahanBakuApi";
+import { GetPengeluaranBahanBakuById, UpdatePengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
+import { GlobalContext } from "@/context/context";
 
 
 export function EditPengeluaranBahanBaku() {
+    const { setSuccess, success } = useContext(GlobalContext);
     const { id } = useParams();
     const [values, setValues] = useState({});
-
+    const [bahan, setBahan] = useState([]);
     const [satuan, setSatuan] = useState("");
     const [formErrors, setFormErrors] = useState({});
     const [selectedBahan, setSelectedBahan] = useState("");
@@ -23,34 +26,43 @@ export function EditPengeluaranBahanBaku() {
     console.log(id);
 
     useEffect(() => {
-        const data = pengeluaranBahanTableData.find(item => item.id === id);
-        if (data) {
-            setValues({
-                nama_bahan: data.nama_bahan,
-                jumlah: data.jumlah,
-                harga_beli: data.harga_beli,
-                satuan: data.satuan
+        GetPengeluaranBahanBakuById({ id })
+            .then((response) => {
+                console.log(response)
+                setValues(response);
+                GetBahanBakuById(response.id_bahan)
+                    .then((response) => {
+                        console.log(response)
+                        setSelectedBahan(response.nama_bahan);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        setError(err.message);
+                    });
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
             });
-            setSatuan(data.satuan);
-        }
-        
+
+
+        GetAllBahanBaku()
+            .then((response) => {
+                console.log(response)
+                setBahan(response);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
+
         console.log(values);
     }, [id]);
 
-    const bahan = [
-        {
-            id: 1,
-            nama_bahan: "Gula",
-            satuan: "Kg",
-        },
-        {
-            id: 2,
-            nama_bahan: "Garam",
-            satuan: "Gram",
-        },
-    ];
+
 
     useEffect(() => {
+
         const selectedBahanObj = bahan.find((item) => item.nama_bahan === selectedBahan);
         if (selectedBahanObj) {
             setSatuan(selectedBahanObj.satuan);
@@ -77,9 +89,20 @@ export function EditPengeluaranBahanBaku() {
                 };
             }
             return setFormErrors(newErrors);
-
         } else {
-            navigateTo('/mo/pengeluaran-bahan-baku');
+            parsedBahanBaku.data.id_pengeluaran_bahan_baku = id;
+            parsedBahanBaku.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedBahanBaku.data.nama_bahan).id_bahan;
+            console.log(parsedBahanBaku.data);
+            UpdatePengeluaranBahanBaku(parsedBahanBaku.data)
+                .then((response) => {
+                    setSuccess({ bool: true, message: 'Pengadaan Bahan Baku berhasil diubah' });
+                    console.log(response);
+                    navigateTo('/mo/pengeluaran-bahan-baku');
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
         }
         setFormErrors({});
         console.log(formErrors);
@@ -106,7 +129,7 @@ export function EditPengeluaranBahanBaku() {
                         >
                             <option value="">Pilih Bahan</option>
                             {bahan.map((item) => (
-                                <option key={item.id} value={item.nama_bahan} selected={values.nama_bahan === item.nama_bahan ? true : false}>
+                                <option key={item.id} value={item.nama_bahan} selected={selectedBahan === item.nama_bahan ? true : false}>
                                     {item.nama_bahan}
                                 </option>
                             ))}
@@ -169,7 +192,7 @@ export function EditPengeluaranBahanBaku() {
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
-                        
+
                         defaultValue={values.harga_beli}
                     />
                     {formErrors.harga_beli && (

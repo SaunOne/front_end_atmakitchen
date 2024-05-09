@@ -2,11 +2,11 @@ import { Typography } from "@material-tailwind/react";
 import { staffTableData } from "@/data";
 import { UpdateStaff, DeleteStaff } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { SearchContext } from "@/context/searchContext";
+import { GlobalContext } from "@/context/context";
 
 export default function StaffTable() {
     const [data, setData] = useState([]);
-    const { search } = useContext(SearchContext);
+    const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
@@ -33,7 +33,7 @@ export default function StaffTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan","Aksi"].map(
+                        {["No", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -62,7 +62,7 @@ export default function StaffTable() {
                                 item.email.toLowerCase().includes(lowerCaseSearch) ||
                                 item.gender.toLowerCase().includes(lowerCaseSearch) ||
                                 item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch) ||
-                                item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch) 
+                                item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
                         .map(({ id, username, nama_lengkap, no_telp, email, gender, tanggal_lahir, nama_role }, index) => {

@@ -1,9 +1,11 @@
-import   { useState, useReducer } from "react";
+import   { useState, useReducer, useContext } from "react";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 import { userLogin } from "../../validations/validation";
 import { Button } from "@material-tailwind/react";
 import { LoginApi } from "../../api/authApi";
 import {  useNavigate } from "react-router-dom"; //Link,
+import { GlobalContext } from "../../context/context";
+import { set } from "zod";
 //import { Navigate } from "react-router-dom";
 
 const formReducer = (state, event) => {
@@ -14,9 +16,11 @@ const formReducer = (state, event) => {
 };
 
 const Login = () => {
+    const {setIsLogin} = useContext(GlobalContext);
     const [formData, setFormData] = useReducer(formReducer, {});
     const [showPassword, setShowPassword] = useState(false);
     const [formErrors, setFormErrors] = useState({});
+    
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -67,10 +71,12 @@ const Login = () => {
                     console.log("Masuk Sebagai Customer");
                     navigate("/user");
                 }
+                setIsLogin(true);
                 setLoading(false);
             })
             .catch((err) => {
                 console.log("Error", err);
+                
                 setLoading(false);
             });
     };
@@ -166,9 +172,9 @@ const Login = () => {
                                 </a>
                             </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <Button type="submit" loading={loading}>
-                                Loading
+                        <div className="flex items-center justify-center gap-4">
+                            <Button className="w-full mt-3" type="submit" loading={loading}>
+                                Masuk
                             </Button>
                         </div>
                     </form>
