@@ -191,7 +191,7 @@ const routes = [
         element : <AddBahanBaku/>,
       },
       {
-        path : "/admin/bahanBaku/EditBahanBaku",
+        path : "/admin/bahanBaku/editBahanBaku/:id",
         element : <EditBahanBaku/>,
       },
     ],
@@ -327,8 +327,10 @@ const AppRouter = () => {
         theme="light"
       />
 
+
       <GlobalContextProvider>
         <RouterProvider router={router} />
+        <ToastContainer />
       </GlobalContextProvider>
     </>
   );

@@ -76,12 +76,12 @@ export function ResepTable() {
                 return(
                     lowerCaseSearch === "" ||
                     item.nama_resep.toLowerCase().includes(lowerCaseSearch) ||
-                    item.bahan.toLowerCase().includes(lowerCaseSearch) ||
-                    item.jumlah.toLowerCase().includes(lowerCaseSearch) ||
-                    item.stok.toLowerCase().includes(lowerCaseSearch) 
+                    item.bahan.some(b => b.toLowerCase().includes(lowerCaseSearch)) ||
+                    item.jumlah.some(j => j.toLowerCase().includes(lowerCaseSearch)) ||
+                    item.stok.some(s => s.toLowerCase().includes(lowerCaseSearch))
                 );
             }).map(
-            ({ id_resep, nama_resep, bahan, jumlah, stok }, index) => {
+            ({ id_resep, nama_resep, bahan, jumlah_kebutuhan, stok }, index) => {
               const className = `text-center py-3 px-5 ${
                 index === resepTableData.length - 1
                   ? ""
@@ -109,64 +109,25 @@ export function ResepTable() {
                     </div>
                   </td>
                   <td className={className}>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {bahan[0]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {bahan[1]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {bahan[2]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {bahan[3]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {bahan[4]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {bahan[5]}
-                    </Typography>
+                    {bahan.map((item, index) => (
+                      <Typography key={index} className="text-xs font-semibold text-blue-gray-600">
+                        {item}
+                      </Typography>
+                    ))}
                   </td>
                   <td className={className}>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {jumlah[0]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {jumlah[1]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {jumlah[2]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {jumlah[3]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {jumlah[4]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {jumlah[5]}
-                    </Typography>
+                    {jumlah_kebutuhan.map((item, index) => (
+                      <Typography key={index} className="text-xs font-semibold text-blue-gray-600">
+                        {item}
+                      </Typography>
+                    ))}
                   </td>
                   <td className={className}>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok[0]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok[1]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok[2]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok[3]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok[4]}
-                    </Typography>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok[5]}
-                    </Typography>
+                    {stok.map((item, index) => (
+                      <Typography key={index} className="text-xs font-semibold text-blue-gray-600">
+                        {item}
+                      </Typography>
+                    ))}
                   </td>
                   <td className={className}>
                     <Typography
