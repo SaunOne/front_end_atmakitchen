@@ -51,11 +51,11 @@ export function AddResep() {
                             <Typography variant="h6" color="blue-gray" className="mb-2">
                                 Jenis Produk
                             </Typography>
-                            <Select name="jenis_produk" size="lg" placeholder="Pilih Jenis Produk" className="!border-t-blue-gray-200 focus:!border-t-gray-900">
-                                <Option value="produk utama">Produk Utama</Option>
-                                <Option value="produk titipan">Produk Titipan</Option>
-                                <Option value="produk hampers">Produk Hampers</Option>
-                            </Select>
+                            <select name="jenis_produk" size="lg" placeholder="Pilih Jenis Produk" className=" md:w-[77vh] w-full rounded border-[#acacac] border-[1px]  h-11 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800">
+                                <option value="produk utama">Produk Utama</option>
+                                <option value="produk titipan">Produk Titipan</option>
+                                <option value="produk hampers">Produk Hampers</option>
+                            </select>
                             {formErrors.jenis_produk && (
                                 <p className="text-red-600 font-medium">
                                     {formErrors.jenis_produk}
@@ -81,7 +81,7 @@ export function AddResep() {
                                 <Typography variant="h6" color="blue-gray" className="mb-2">
                                     Bahan
                                 </Typography>
-                                <Input type="text" name="bahan" size="lg" value={input.bahan} placeholder="Masukkan Bahan" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                                <Input type="text" name="bahan" size="lg"  placeholder="Masukkan Bahan" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
                                 {formErrors.bahan && (
                                     <p className="text-red-600 font-medium">
                                         {formErrors.bahan}
@@ -92,7 +92,7 @@ export function AddResep() {
                                 <Typography variant="h6" color="blue-gray" className="mb-2">
                                     Jumlah Kebutuhan
                                 </Typography>
-                                <Input name="jumlah_kebutuhan " size="lg" value={input.jumlah} placeholder="Masukkan Jumlah" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
+                                <Input name="jumlah_kebutuhan" type="number" size="lg"  placeholder="Masukkan Jumlah" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
                                 {formErrors.jumlah_kebutuhan && (
                                     <p className="text-red-600 font-medium">
                                         {formErrors.jumlah_kebutuhan}
