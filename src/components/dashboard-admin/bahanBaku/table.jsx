@@ -20,6 +20,8 @@ import { bahanBakuTableData } from "@/data";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/context";
+import { GetAllBahanBaku } from "@/api/bahanBakuApi";
+import { UpdateBahanBaku, DeleteBahanBaku } from "../button";
 
 export function BahanBakuTable() {
   const [data, setData] = useState([]);
@@ -28,8 +30,16 @@ export function BahanBakuTable() {
   const rowsPerPage = 5;
 
   useEffect(() => {
-    setData(bahanBakuTableData);
-  }, []);
+    GetAllBahanBaku()
+        .then((response) => {
+            console.log(response)
+            setData(response);
+        })
+        .catch((err) => {
+            console.log(err);
+            setError(err.message);
+        });
+  }, []); 
 
   console.log(search);
 
@@ -50,7 +60,7 @@ export function BahanBakuTable() {
       <table className="w-full min-w-[640px] table-auto">
         <thead>
           <tr>
-            {["No", "Nama Bahan", "Stok", "Satuan", ""].map((el) => (
+            {["No", "Nama Bahan", "Stok", "Satuan", "Aksi"].map((el) => (
               <th
                 key={el}
                 className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -76,8 +86,8 @@ export function BahanBakuTable() {
                 item.satuan.toLowerCase().includes(lowerCaseSearch)
               );
             }).map(
-            ({ id, nama_bahan, stok_bahan, satuan }, index) => {
-              const className = `py-3 px-5 text-center ${
+            ({ id_bahan, nama_bahan, stok_bahan, satuan }, index) => {
+              const className = `py-3 px-5 text-center border-r ${
                 index === bahanBakuTableData.length - 1
                   ? ""
                   : "border-b border-blue-gray-50"
@@ -93,7 +103,7 @@ export function BahanBakuTable() {
                           color="blue-gray"
                           className="font-semibold"
                         >
-                          {id}
+                          {rowNumber}
                         </Typography>
                       </div>
                     </div>
@@ -114,14 +124,10 @@ export function BahanBakuTable() {
                     </Typography>
                   </td>
                   <td className={className}>
-                    <Typography
-                      as="a"
-                      href=""
-                      className="text-xs font-semibold text-blue-gray-600"
-                      onClick={() => navigate("/admin/bahanBaku/editBahanBaku")}
-                    >
-                      Edit
-                    </Typography>
+                    <div className="flex justify-center ">
+                      <UpdateBahanBaku id={id_bahan} />
+                      <DeleteBahanBaku id={id_bahan} />
+                    </div>
                   </td>
                 </tr>
               );

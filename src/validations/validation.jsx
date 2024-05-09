@@ -307,13 +307,6 @@ export const bahanBakuAdmin = z
                     "Nama Bahan wajib diisi!",
             })
             .min(1, { message: "Nama Bahan wajib diisi!" }),
-        stok_bahan: z
-            .string({
-                invalid_type_error:
-                    "Jumlah stok Wajib Diisi!",
-            })
-            .min(1, { message: "Jumlah stok Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Jumlah stok harus lebih dari 0" }),
         satuan: z
             .string({
                 required_error: "Satuan wajib diisi!",

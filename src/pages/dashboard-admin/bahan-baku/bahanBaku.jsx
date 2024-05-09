@@ -14,14 +14,30 @@ import {
     Tabs,
     TabsHeader,
   } from "@material-tailwind/react";
-  import { useState } from "react";
-  import { useNavigate } from "react-router-dom";
-  import { BahanBakuTable } from "@/components/dashboard-admin/bahanBaku/table";
-  import Search from "@/components/dashboard-admin/search";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { BahanBakuTable } from "@/components/dashboard-admin/bahanBaku/table";
+import Search from "@/components/dashboard-admin/search";
+import { GlobalContext } from "@/context/context";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
   
   export function BahanBaku() {
     
     const navigate = useNavigate();
+
+    const { success, setSuccess } = useContext(GlobalContext);
+
+    useEffect(() => {
+        console.log(success);
+        if (success.bool) {
+            toast.success(success.message);
+
+            setTimeout(() => {
+                setSuccess({ bool: false, message: '' });
+            }, 1000);
+        }
+    }, [success]);
 
     return (
       <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -36,9 +52,10 @@ import {
             </Typography>
           </CardHeader>
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-            <BahanBakuTable/>
+            <BahanBakuTable/> 
           </CardBody>
         </Card>
+        {/* <ToastContainer/> */}
       </div>
     );
   }
