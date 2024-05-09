@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import {
   Card,
   CardHeader,
@@ -19,13 +19,13 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { resepTableData } from "@/data";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { SearchContext } from "@/context/searchContext";
+import { GlobalContext } from "@/context/context";
 
 export function ResepTable() {
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
-  const { search } = useContext(SearchContext);
+  const { search } = useContext(GlobalContext);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
 

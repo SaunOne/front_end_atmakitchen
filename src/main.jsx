@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import AppRouter from './routes';
+import AppRouter from './routes/index';
 import './index.css';
 import { MaterialTailwindControllerProvider } from "./context";
 import { ThemeProvider } from "@material-tailwind/react";
