@@ -175,7 +175,7 @@ const routes = [
         element : <AddProduk/>,
       },
       {
-        path : "/admin/product/editProduk",
+        path : "/admin/product/editProduk/:id",
         element : <EditProduk/>,
       },
       {

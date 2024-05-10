@@ -29,7 +29,7 @@ export function DeleteGaji({ id }) {
 export function UpdateProduct({ id }) {
     return (
         <Link
-            to={`/owner/gaji/edit/${id}`}
+            to={`/admin/product/editProduk/${id}`}
             className="rounded-md border  p-2 hover:bg-gray-100"
         >
             <PencilIcon className="w-5" />

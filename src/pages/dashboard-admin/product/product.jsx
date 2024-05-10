@@ -15,10 +15,22 @@ import { GlobalContext } from "@/context/context";
 import TabHeaders from "@/components/dashboard-admin/product/tab-headers";
 import ProductTable from "@/components/dashboard-admin/product/table";
 import Search from "@/components/dashboard-admin/search";
+import { ToastContainer, toast } from 'react-toastify';
 
 export function ProductAdmin() {
   const { selectedTabValue } = useContext(GlobalContext);
+  const { success, setSuccess } = useContext(GlobalContext);
 
+  useEffect(() => {
+      console.log(success);
+      if (success.bool) {
+          toast.success(success.message);
+
+          setTimeout(() => {
+              setSuccess({ bool: false, message: '' });
+          }, 1000);
+      }
+  }, [success]);
 
   return (
     <div className="mt-8">
