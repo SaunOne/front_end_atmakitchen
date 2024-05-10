@@ -3,10 +3,13 @@ import React, { createContext, useEffect, useState } from "react";
 const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
+    const [selectedTabValue, setSelectedTabValue] = useState("Utama");
     const [search, setSearch] = useState("");
     const [error, setError] = useState("");
-    const [success, setSuccess] = useState({bool: false, message: ""});
+    const [success, setSuccess] = useState({ bool: false, message: "" });
     const [isLogin, setIsLogin] = useState(false);
+
+
 
     const userData = {
         id: 1,
@@ -38,7 +41,7 @@ const GlobalContextProvider = ({ children }) => {
                     {
                         id: 1,
                         nama: "Lapis Legit 1/2 Loyang",
-                        gambar:"https://kurio-img.kurioapps.com/21/03/03/fba953f2-c456-49e3-bec5-7adc1cbfd5a6.jpe",
+                        gambar: "https://kurio-img.kurioapps.com/21/03/03/fba953f2-c456-49e3-bec5-7adc1cbfd5a6.jpe",
                         harga: 850000,
                         jumlah: 2
                     },
@@ -49,14 +52,16 @@ const GlobalContextProvider = ({ children }) => {
     const [user, setUser] = useState(userData);
 
 
+
     return (
         <GlobalContext.Provider
             value={{
+                selectedTabValue, setSelectedTabValue,
                 search, setSearch,
                 error, setError,
                 success, setSuccess,
                 user, setUser,
-                isLogin, setIsLogin
+                isLogin, setIsLogin,
             }}>
             {children}
         </GlobalContext.Provider>

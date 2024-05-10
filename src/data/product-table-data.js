@@ -1,0 +1,58 @@
+export const productTableData = [
+  {
+    id_produk: "1",
+    image_produk: "/img/lapis-legit.jpg",
+    nama_produk: "Lapis Legit",
+    harga: 500000,
+    stok_produk: 50,
+    deskripsi: "Lapis Legit adalah kue lapis yang terbuat dari bahan-bahan berkualitas tinggi",
+    jenis_produk: "Utama",
+  },
+  {
+    id_produk: "2",
+    image_produk: "/img/lapis-legit.jpg",
+    nama_produk: "Kue Kering",
+    harga: 500000,
+    deskripsi: "Lapis Legit adalah kue lapis yang terbuat dari bahan-bahan berkualitas tinggi",
+    stok_produk: 50,
+    jenis_produk: "Utama",
+  },
+  {
+    id_produk: 3,
+    image_produk: "/img/lapis-legit.jpg",
+    nama_produk: "Cookies",
+    harga: 500000,
+    deskripsi: "Lapis Legit adalah kue lapis yang terbuat dari bahan-bahan berkualitas tinggi",
+    stok_produk: 50,
+    jenis_produk: "Titipan",
+  },
+  {
+    id_produk:4,
+    image_produk: "/img/lapis-legit.jpg",
+    nama_produk: "Matcha Latte",
+    harga: 500000,
+    deskripsi: "Lapis Legit adalah kue lapis yang terbuat dari bahan-bahan berkualitas tinggi",
+    stok_produk: 50,
+    jenis_produk: "Titipan",
+  },
+  {
+    id_produk: 5,
+    image_produk: "/img/lapis-legit.jpg",
+    nama_produk: "Lapis Surabaya",
+    harga: 500000,
+    deskripsi: "Lapis Legit adalah kue lapis yang terbuat dari bahan-bahan berkualitas tinggi",
+    stok_produk: 50,
+    jenis_produk: "Hampers",
+  },
+  {
+    id_produk: 6,
+    image_produk: "/img/lapis-legit.jpg",
+    nama_produk: "Lapis",
+    harga: 500000,
+    deskripsi: "Lapis Legit adalah kue lapis yang terbuat dari bahan-bahan berkualitas tinggi",
+    stok_produk: 50,
+    jenis_produk: "Hampers",
+  },
+];
+
+export default productTableData;

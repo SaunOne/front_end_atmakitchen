@@ -7,7 +7,7 @@ export * from "@/data/platform-settings-data";
 export * from "@/data/conversations-data";
 export * from "@/data/projects-data";
 export * from "@/data/authors-table-data";
-export * from "@/data/productUtama-table-data";
+export * from "@/data/product-table-data";
 export * from "@/data/productTitipan-table-data";
 export * from "@/data/productHampers-table-data";
 export * from "@/data/tabs-product";

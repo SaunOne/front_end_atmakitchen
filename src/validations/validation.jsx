@@ -182,7 +182,7 @@ export const staff = z
         tanggal_lahir: z
             .string()
             .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
-        nama_role: z
+        jabatan: z
             .string({
                 invalid_type_error:
                     "Jabatan Wajib Diisi",
