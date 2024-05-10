@@ -5,9 +5,10 @@ import { GlobalContext } from '@/context/context';
 
 export const FormEditProfil = () => {
     const { user } = useContext(GlobalContext);
-    const [picture, setPicture] = useState(null);
+   
     const [formErrors, setFormErrors] = useState({});
     const navigateTo = useNavigate();
+    const [picture, setPicture] = useState(null);
     const img = useRef();
     console.log(user);
 

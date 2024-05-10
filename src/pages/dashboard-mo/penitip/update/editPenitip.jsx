@@ -6,9 +6,10 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { penitip } from "../../../../validations/validation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdatePenitip, GetPenitipById } from "@/api/penitipApi";
+import { GlobalContext } from "@/context/context";
 
 
 export function EditPenitip() {

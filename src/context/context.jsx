@@ -9,6 +9,10 @@ const GlobalContextProvider = ({ children }) => {
     const [success, setSuccess] = useState({bool: false, message: ""});
     const [isLogin, setIsLogin] = useState(false);
 
+    const [jenisProduk, setJenisProduk] = useState("");
+    const [jenisStok, setJenisStok] = useState("");
+    const [jenisProdukTitipan, setJenisProdukTitipan] = useState("");
+
     const userData = {
         id: 1,
         img: "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745",

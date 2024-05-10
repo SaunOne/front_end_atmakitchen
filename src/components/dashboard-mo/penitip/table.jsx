@@ -4,7 +4,7 @@ import { UpdatePenitip, DeletePenitip } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "@/context/context";
 import { GetAllPenitip } from "@/api/penitipApi";
-import { getImage } from "@/api/index";
+
 
 export default function PenitipTable() {
     const [data, setData] = useState([]);

@@ -4,6 +4,8 @@ import { UpdatePengeluaranLain, DeletePengeluaranLain } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "@/context/context";
 
+import { GetAllPengeluaranLain } from "@/api/pengeluaranLainApi";
+
 export default function PengeluaranLainTable() {
     const [data, setData] = useState([]);
     const { search } = useContext(GlobalContext);
@@ -11,7 +13,15 @@ export default function PengeluaranLainTable() {
     const rowsPerPage = 5;
 
     useEffect(() => {
-        setData(pengeluaranLainTableData);
+        GetAllPengeluaranLain()
+            .then((response) => {
+                console.log(response)
+                setData(response);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
     }, []);
 
     console.log(search);
@@ -58,10 +68,10 @@ export default function PengeluaranLainTable() {
                                 lowerCaseSearch === "" ||
                                 item.tanggal.toLowerCase().includes(lowerCaseSearch) ||
                                 item.nama_pengeluaran.toLowerCase().includes(lowerCaseSearch) ||
-                                item.jumlah_pengeluaran.toLowerCase().includes(lowerCaseSearch)
+                                item.jumlah_pengeluaran.toString() === search
                             );
                         })
-                        .map(({ id, tanggal, nama_pengeluaran, jumlah_pengeluaran }, index) => {
+                        .map(({ id_pengeluaran_lain_lain, tanggal, nama_pengeluaran, jumlah_pengeluaran }, index) => {
                             const className = `py-3 px-5 border-r  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -86,8 +96,8 @@ export default function PengeluaranLainTable() {
                                     </td>
                                     <td className={className}>
                                         <div className="flex gap-2">
-                                            <UpdatePengeluaranLain id={id} />
-                                            <DeletePengeluaranLain id={id} />
+                                            <UpdatePengeluaranLain id={id_pengeluaran_lain_lain} />
+                                            <DeletePengeluaranLain id={id_pengeluaran_lain_lain} />
 
                                         </div>
                                     </td>

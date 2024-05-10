@@ -14,6 +14,7 @@ import PengeluaranBahanTable from "@/components/dashboard-mo/pengeluaran-bahan-b
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "@/context/context";
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function PengeluaranBahanBakuMO() {
     const navigate = useNavigate();

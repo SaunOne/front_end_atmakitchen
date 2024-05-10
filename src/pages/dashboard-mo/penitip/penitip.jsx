@@ -49,7 +49,6 @@ export default function PenitipMO() {
                         <PenitipTable />
                     </CardBody>
                 </Card>
-               
             </div>
 
         </>
