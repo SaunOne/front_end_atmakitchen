@@ -4,16 +4,16 @@ import { UpdateGaji, DeleteGaji } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 
 import { GlobalContext } from "@/context/context";
-import { GetAllKaryawan } from "@/api/gajiKaryawanApi";
+import { GetAllCustomers } from "@/api/customersApi";
 
-export default function SalaryTable() {
+export default function TableCustomer() {
     const [data, setData] = useState([]);
     const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5; 
+    const rowsPerPage = 5;
 
     useEffect(() => {
-        GetAllKaryawan()
+        GetAllCustomers()
             .then((response) => {
                 console.log(response)
                 setData(response);
@@ -22,7 +22,7 @@ export default function SalaryTable() {
                 console.log(err);
                 setError(err.message);
             });
-      }, []); 
+      }, []);
 
     console.log(search);
 
@@ -43,7 +43,7 @@ export default function SalaryTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No", "Username", "Nama Lengkap", "Gender", "Jabatan", "Gaji", "Bonus Gaji", "Aksi"].map(
+                        {["No", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -71,12 +71,10 @@ export default function SalaryTable() {
                                 item.no_telp.toLowerCase().includes(lowerCaseSearch) ||
                                 item.email.toLowerCase().includes(lowerCaseSearch) ||
                                 item.gender.toLowerCase().includes(lowerCaseSearch) ||
-                                item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch) ||
-                                item.nama_role.toLowerCase().includes(lowerCaseSearch) ||
-                                item.gaji.toLowerCase().includes(lowerCaseSearch)
+                                item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
-                        .map(({ id_user, username, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan, gaji, bonus_gaji }, index) => {
+                        .map(({ id, username, nama_lengkap, no_telp, email, gender, tanggal_lahir }, index) => {
                             const className = `py-1 px-2 border-r text-center  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -101,28 +99,28 @@ export default function SalaryTable() {
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
+                                            {no_telp}
+                                        </Typography>
+                                    </td>
+                                    <td className={className}>
+                                        <Typography className="text-[14px] font-[400] text-blue-gray-600">
+                                            {email}
+                                        </Typography>
+                                    </td>
+                                    <td className={className}>
+                                        <Typography className="text-[14px] font-[400] text-blue-gray-600">
                                             {gender}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
-                                            {jabatan}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-[14px] font-[400] text-blue-gray-600">
-                                            {gaji}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-[14px] font-[400] text-blue-gray-600">
-                                            {bonus_gaji}
+                                            {tanggal_lahir}
                                         </Typography>
                                     </td>
                                     <td className={className}>
                                         <div className="flex gap-2 justify-center">
-                                            <UpdateGaji id={id_user} />
-                                            <DeleteGaji id={id_user} />
+                                            <UpdateGaji id={id} />
+                                            <DeleteGaji id={id} />
                                         </div>
                                     </td>
                                 </tr>

@@ -12,7 +12,7 @@ import { gajiKaryawan } from "@/validations/validation";
 import { useState, useEffect, useContext } from "react";
 
   
-  export function AddGaji() {
+  export function EditAdmin() {
     const gender = ["Laki-laki", "Perempuan"];
     const role = ["Manajer Operasional", "Admin", "Karyawan Biasa"];
     const [formErrors, setFormErrors] = useState({});
@@ -236,5 +236,3 @@ import { useState, useEffect, useContext } from "react";
       </Card>
     );
   }
-
-  export default AddGaji;

@@ -14,7 +14,10 @@ import {
     faBoxesStacked ,
     faScroll,
     faList,
-    faMoneyBillWave
+    faMoneyBillWave,
+    faCircleUser,
+    faClockRotateLeft,
+    faGear
   } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
@@ -85,6 +88,21 @@ import {
           icon: <FontAwesomeIcon icon={faList} {...icon} />,
           name: "List Pesanan",
           path: "/admin/listPesanan",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faClockRotateLeft} {...icon} />,
+          name: "History Pesanan",
+          path: "/admin/history",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faCircleUser} {...icon} />,
+          name: "Customer",
+          path: "/admin/customer",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faGear} {...icon} />,
+          name: "Admin Settings",
+          path: "/admin/settings",
         },
       ],
     },
