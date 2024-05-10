@@ -9,9 +9,25 @@ import {
 import PengeluaranLainTable from "@/components/dashboard-mo/pengeluaran-lainnya/table";
 import { useNavigate } from "react-router-dom";
 import Search from "@/components/dashboard-mo/search";
-
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "@/context/context";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function PengeluaranLainnyaMO() {
     const navigate = useNavigate();
+    const { success, setSuccess } = useContext(GlobalContext);
+
+    useEffect(() => {
+        console.log(success);
+        if (success.bool) {
+            toast.success(success.message);
+
+            setTimeout(() => {
+                setSuccess({ bool: false, message: '' });
+            }, 1000);
+        }
+    }, [success]);
+
 
     return (
         <div className="mt-6 mb-8 flex flex-col gap-10">
@@ -28,7 +44,7 @@ export default function PengeluaranLainnyaMO() {
                     </Typography>
                 </CardHeader>
                 <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-                    <PengeluaranLainTable/>
+                    <PengeluaranLainTable />
                 </CardBody>
             </Card>
         </div>

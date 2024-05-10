@@ -69,8 +69,8 @@ export default function PengeluaranBahanTable() {
                                 item.tanggal.toLowerCase().includes(lowerCaseSearch) ||
                                 item.nama_bahan.toLowerCase().includes(lowerCaseSearch) ||
                                 item.satuan.toLowerCase().includes(lowerCaseSearch) ||
-                                item.jumlah.toLowerCase().includes(lowerCaseSearch) ||
-                                item.harga_beli.toLowerCase().includes(lowerCaseSearch)
+                                item.jumlah.toString() === search ||
+                                item.harga_beli.toString() === search
                             );
                         })
                         .map(({ id_pembelian_bahan, tanggal, nama_bahan, jumlah, satuan, harga_beli }, index) => {

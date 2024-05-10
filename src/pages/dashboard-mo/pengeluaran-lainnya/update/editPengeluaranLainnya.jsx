@@ -5,12 +5,15 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { pengeluaranLainnya } from "../../../../validations/validation";
 import { useNavigate, useParams } from "react-router-dom";
-import { pengeluaranLainTableData } from "@/data";
+import { GetPengeluaranLainById, UpdatePengeluaranLain} from "@/api/pengeluaranLainApi";
+import { GlobalContext } from "@/context/context";
+
 
 export function EditPengeluaranLainnya() {
+    const { setSuccess} = useContext(GlobalContext);
     const { id } = useParams();
     const [values, setValues] = useState({});
     const [formErrors, setFormErrors] = useState({});
@@ -19,13 +22,25 @@ export function EditPengeluaranLainnya() {
     console.log(id);
 
     useEffect(() => {
-        const data = pengeluaranLainTableData.find(item => item.id === id);
-        if (data) {
-            setValues({
-                nama_pengeluaran: data.nama_pengeluaran,
-                jumlah_pengeluaran: data.jumlah_pengeluaran,
+        GetPengeluaranLainById({ id })
+            .then((response) => {
+                console.log(response)
+                setValues(response);
+                GetBahanBakuById(response.id_bahan)
+                    .then((response) => {
+                        console.log(response)
+                        setSelectedBahan(response.nama_bahan);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        setError(err.message);
+                    });
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
             });
-        }
+
         console.log(values);
     }, [id]);
 
@@ -48,7 +63,18 @@ export function EditPengeluaranLainnya() {
             return setFormErrors(newErrors);
 
         } else {
-            navigateTo('/mo/pengeluaran-lain-lain');
+            parsedPengeluaran.data.id_pengeluaran_lain_lain = id;
+            console.log(parsedPengeluaran.data);
+            UpdatePengeluaranLain(parsedPengeluaran.data)
+            .then((response) => {
+                setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil diubah' });
+                console.log(response);
+                navigateTo('/mo/pengeluaran-lain-lain');
+            })
+            .catch((err) => {
+                console.log(err);
+            }); 
+            
         }
         setFormErrors({});
         console.log(formErrors);
@@ -56,8 +82,8 @@ export function EditPengeluaranLainnya() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-[50%] max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className="p-4 mt-8 mb-2 w-[50%] max-w-screen-lg ">
                 <Typography variant="h6" color="blue-gray" className="mb-3">
                     Peruntukan Pengeluaran
                 </Typography>

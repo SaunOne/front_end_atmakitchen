@@ -21,10 +21,10 @@ import LayoutProduct from "../pages/userViews/layout.jsx/produk/layout-product";
 import LayoutProfile from "@/pages/userViews/layout.jsx/profile/layout-profile";
 import AddNewPassword from "../pages/auth/add-new-password";
 import SuccesVerify from "../pages/auth/succesVerify";
-import DashboardAdmin from "../pages/layouts/layout-admin";
-import HomeAdmin from "../pages/dashboard/home";
-import ProductAdmin from "../pages/dashboard/product";
-import AddProduk from "../pages/dashboard/addProduk";
+import DashboardAdmin from "../pages/dashboard-admin/layout/layout-admin";
+import HomeAdmin from "../pages/dashboard-admin/home";
+import ProductAdmin from "../pages/dashboard-admin/product/product";
+import AddProduk from "../pages/dashboard-admin/product/create/addProduk";
 import AddPenitip from "@/pages/dashboard-mo/penitip/create/addPenitip";
 import DashboardMO from "../pages/dashboard-mo/layout/layout-MO";
 import PenitipMO from "@/pages/dashboard-mo/penitip/penitip";
@@ -44,8 +44,19 @@ import DaftarTransaksi from "../pages/userViews/profile/daftar-transaksi";
 
 import HistoriWithdraw from "../pages/userViews/profile/histori-withdraw";
 
-//import { editProduk } from "../pages/dashboard-admin/editProduk";
+import { AddResep } from "../pages/dashboard-admin/resep/create/addResep";
+import { AddBahanBaku } from "../pages/dashboard-admin/bahan-baku/create/addBahanBaku";
 //import { Notifications } from "../pages/dashboard-admin/notifications";
+import { Resep } from "../pages/dashboard-admin/resep/resep";
+import { BahanBaku } from "../pages/dashboard-admin/bahan-baku/bahanBaku";
+import { ListPesanan } from "../pages/dashboard-admin/list-pesanan/listPesanan";
+import { EditProduk } from "../pages/dashboard-admin/product/update/editProduk";
+import { EditResep } from "../pages/dashboard-admin/resep/update/editResep";
+import { EditBahanBaku } from "../pages/dashboard-admin/bahan-baku/update/editBahanBaku";
+import DashboardOwner from "../pages/dashboard-owner/layout/layout-owner";
+import HomeOwner from "../pages/dashboard-owner/home";
+import Gaji from "../pages/dashboard-owner/gaji/gaji";
+import AddGaji from "../pages/dashboard-owner/gaji/create/addGaji";
 
 // Konfigurasi router
 const routes = [
@@ -136,8 +147,52 @@ const routes = [
         element: <ProductAdmin />,
       },
       {
-        path: "/admin/product/add",
-        element: <AddProduk />,
+        path : "/admin/resep",
+        element : <Resep/>,
+      },
+      {
+        path : "/admin/bahanBaku",
+        element : <BahanBaku/>,
+      },
+      {
+        path : "/admin/listPesanan",
+        element : <ListPesanan/>,
+      },
+      {
+        path : "/admin/resep",
+        element : <Resep/>,
+      },
+      {
+        path : "/admin/bahanBaku",
+        element : <BahanBaku/>,
+      },
+      {
+        path : "/admin/listPesanan",
+        element : <ListPesanan/>,
+      },
+      {
+        path : "/admin/product/add",
+        element : <AddProduk/>,
+      },
+      {
+        path : "/admin/product/editProduk",
+        element : <EditProduk/>,
+      },
+      {
+        path : "/admin/resep/addResep",
+        element : <AddResep/>,
+      },
+      {
+        path : "/admin/resep/editResep",
+        element : <EditResep/>,
+      },
+      {
+        path : "/admin/bahanBaku/addBahanBaku",
+        element : <AddBahanBaku/>,
+      },
+      {
+        path : "/admin/bahanBaku/editBahanBaku/:id",
+        element : <EditBahanBaku/>,
       },
     ],
   },
@@ -197,6 +252,27 @@ const routes = [
     ],
   },
 
+  //OWNER
+
+  {
+    path: "/owner",
+    element: <DashboardOwner/>,
+    children: [
+      {
+        path: "/owner/home",
+        element: <HomeOwner/>
+      },
+      {
+        path: "/owner/gaji",
+        element: <Gaji />,
+      },
+      {
+        path: "/owner/gaji/add",
+        element: <AddGaji />,
+      },
+    ],
+  },
+
   //user
   {
     path: "/user",
@@ -251,8 +327,10 @@ const AppRouter = () => {
         theme="light"
       />
 
+
       <GlobalContextProvider>
         <RouterProvider router={router} />
+        <ToastContainer />
       </GlobalContextProvider>
     </>
   );

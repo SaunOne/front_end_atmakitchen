@@ -7,11 +7,17 @@ import {
 } from "@material-tailwind/react";
 import { staff } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
-import React, { useState } from "react";
+import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { CreateStaff } from "@/api/staffApi";
+import { GlobalContext } from "@/context/context";
+
 
 export function AddStaff() {
     const [formErrors, setFormErrors] = useState({});
+    const {success, setSuccess} = useContext(GlobalContext);
+    const [picture, setPicture] = useState(null);
+    const img = useRef();
     const navigateTo = useNavigate();
     const role = ["Manajer Operasi", "Admin", "Karyawan Biasa"];
 
@@ -30,21 +36,40 @@ export function AddStaff() {
                     [issue.path[0]]: issue.message,
                 };
             }
+            console.log(newErrors);
             return setFormErrors(newErrors);
 
         } else {
-            navigateTo('/mo/staff');
+            
+            parsedStaff.data.foto_profile = formDataObject.foto_profile;
+            CreateStaff(parsedStaff.data)
+                .then((response) => {
+                    console.log(response);
+                    setSuccess({ bool: true, message: 'Karyawan berhasil ditambahkan' });
+                    console.log(success);
+                    navigateTo("/mo/staff");
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+            
         }
         setFormErrors({});
         console.log(parsedStaff);
         console.log(formErrors);
-        console.log(parsedStaff.data.username);
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-full max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className="p-4 mt-8 mb-2 w-full max-w-screen-lg ">
+
                 <div className="mb-1 flex flex-col gap-3">
+                    <div className="md:flex justify-center md:gap-[30px]">
+                        <img src={picture ? picture : "https://t4.ftcdn.net/jpg/04/10/43/77/360_F_410437733_hdq4Q3QOH9uwh0mcqAhRFzOKfrCR24Ta.jpg"} className="w-[150px] h-[150px] rounded-full shadow-md" />
+                        <div className="mt-14 flex justify-center h-10 px-3 py-1 border-[1px] border-gray-600 text-black cursor-pointer " onClick={() => img.current.click()}>
+                            Pilih Gambar
+                        </div>
+                    </div>
                     <div className="md:flex justify-start md:gap-[30px]">
                         <div>
                             <Typography variant="h6" color="blue-gray" className="mb-3">
@@ -114,7 +139,7 @@ export function AddStaff() {
                                 Jabatan
                             </Typography>
                             <select
-                                name="nama_role"
+                                name="jabatan"
                                 size="lg"
                                 className=" md:w-[70vh] w-full rounded border-[#acacac] border-[1px]  h-11 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
                                 labelProps={{
@@ -126,9 +151,9 @@ export function AddStaff() {
                                     <option value={item}>{item}</option>)
                                 )}
                             </select>
-                            {formErrors.nama_role && (
+                            {formErrors.jabatan && (
                                 <p className="text-red-600 font-medium">
-                                    {formErrors.nama_role}
+                                    {formErrors.jabatan}
                                 </p>
                             )}
 
@@ -194,7 +219,7 @@ export function AddStaff() {
                             {formErrors.no_telp}
                         </p>
                     )}
-
+                    <input name="foto_profile" ref={img} type="file" hidden accept="image/*" onChange={(e) => { let pic = URL.createObjectURL(e.target.files[0]); setPicture(pic); }} />
                     <Button type="submit" className="mt-6" fullWidth>
                         Save
                     </Button>

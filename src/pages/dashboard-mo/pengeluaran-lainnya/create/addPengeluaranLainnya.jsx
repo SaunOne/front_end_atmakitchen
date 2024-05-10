@@ -5,15 +5,17 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import { pengeluaranLainnya } from "../../../../validations/validation";
 import { useNavigate } from "react-router-dom";
-
+import { GlobalContext } from "@/context/context";
+import { CreatePengeluaranLain } from "@/api/pengeluaranLainApi";
 
 export function AddPengeluaranLainnya() {
     const [formErrors, setFormErrors] = useState({});
     const navigateTo = useNavigate();
 
+    const { setSuccess, success } = useContext(GlobalContext);
 
 
     const handleSubmit = (e) => {
@@ -34,7 +36,17 @@ export function AddPengeluaranLainnya() {
             return setFormErrors(newErrors);
 
         } else {
-            navigateTo('/mo/pengeluaran-lain-lain');
+            CreatePengeluaranLain(parsedPengeluaran.data)
+                .then((response) => {
+                    console.log(response);
+                    setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil ditambahkan' });
+                    console.log(success);
+                    navigateTo('/mo/pengeluaran-lain-lain');
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+            
         }
         setFormErrors({});
         console.log(formErrors);
@@ -42,8 +54,8 @@ export function AddPengeluaranLainnya() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-[50%] max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className="p-4 mt-8 mb-2 w-[50%] max-w-screen-lg ">
                 <Typography variant="h6" color="blue-gray" className="mb-3">
                     Peruntukan Pengeluaran
                 </Typography>

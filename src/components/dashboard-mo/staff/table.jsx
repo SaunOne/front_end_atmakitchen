@@ -3,6 +3,9 @@ import { staffTableData } from "@/data";
 import { UpdateStaff, DeleteStaff } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "@/context/context";
+import  {GetAllStaff} from "@/api/staffApi";
+import {getImage} from "@/api/index";
+import {Avatar } from "@material-tailwind/react";
 
 export default function StaffTable() {
     const [data, setData] = useState([]);
@@ -11,7 +14,15 @@ export default function StaffTable() {
     const rowsPerPage = 5;
 
     useEffect(() => {
-        setData(staffTableData);
+        GetAllStaff()
+            .then((response) => {
+                console.log(response)
+                setData(response);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
     }, []);
 
     console.log(search);
@@ -33,7 +44,7 @@ export default function StaffTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan", "Aksi"].map(
+                        {["No","Foto", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -65,7 +76,7 @@ export default function StaffTable() {
                                 item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
-                        .map(({ id, username, nama_lengkap, no_telp, email, gender, tanggal_lahir, nama_role }, index) => {
+                        .map(({ id, username,foto_profile, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan }, index) => {
                             const className = `py-1 px-2 border-r  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -77,6 +88,11 @@ export default function StaffTable() {
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
                                             {rowNumber}
                                         </Typography>
+                                    </td>
+                                    <td className={className}>
+                                        <div className="flex items-center gap-4 rounded-full">
+                                            <Avatar src={getImage(foto_profile)} alt={foto_profile} size="sm" variant="rounded-[50px]" />
+                                        </div>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
@@ -110,7 +126,7 @@ export default function StaffTable() {
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
-                                            {nama_role}
+                                            {jabatan}
                                         </Typography>
                                     </td>
                                     <td className={className}>

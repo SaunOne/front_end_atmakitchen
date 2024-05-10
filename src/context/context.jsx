@@ -3,10 +3,15 @@ import React, { createContext, useEffect, useState } from "react";
 const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
+    const [selectedTabValue, setSelectedTabValue] = useState("Semua");
     const [search, setSearch] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState({bool: false, message: ""});
     const [isLogin, setIsLogin] = useState(false);
+
+    const [jenisProduk, setJenisProduk] = useState("");
+    const [jenisStok, setJenisStok] = useState("");
+    const [jenisProdukTitipan, setJenisProdukTitipan] = useState("");
 
     const userData = {
         id: 1,
@@ -52,6 +57,7 @@ const GlobalContextProvider = ({ children }) => {
     return (
         <GlobalContext.Provider
             value={{
+                selectedTabValue, setSelectedTabValue,
                 search, setSearch,
                 error, setError,
                 success, setSuccess,

@@ -101,7 +101,7 @@ export function EditPengeluaranBahanBaku() {
                 })
                 .catch((err) => {
                     console.log(err);
-                });
+                }); 
 
         }
         setFormErrors({});
@@ -110,8 +110,8 @@ export function EditPengeluaranBahanBaku() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-[50%] max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className=" p-4 mt-8 mb-2 w-[50%] max-w-screen-lg ">
                 <div className="mb-1 flex flex-col gap-3">
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">

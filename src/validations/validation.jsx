@@ -182,7 +182,7 @@ export const staff = z
         tanggal_lahir: z
             .string()
             .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
-        nama_role: z
+        jabatan: z
             .string({
                 invalid_type_error:
                     "Jabatan Wajib Diisi",
@@ -297,3 +297,53 @@ export const editProfile = z
             .min(1, { message: "Tahun Wajib Diisi!" })
             .refine((value) => parseFloat(value) > 0, { message: "Tahun Tidak Valid!" }),
     })
+
+export const bahanBakuAdmin = z
+    .object({
+        nama_bahan: z
+            .string({
+                required_error: "Nama Bahan wajib diisi",
+                invalid_type_error:
+                    "Nama Bahan wajib diisi!",
+            })
+            .min(1, { message: "Nama Bahan wajib diisi!" }),
+        satuan: z
+            .string({
+                required_error: "Satuan wajib diisi!",
+                invalid_type_error:
+                    "Satuan wajib diisi!",
+            })
+            .min(1, { message: "Satuan wajib diisi!" }),
+    });
+
+export const resepAdmin = z
+    .object({
+        jenis_produk: z
+            .string({
+                required_error: "Jenis Produk wajib diisi",
+                invalid_type_error:
+                    "Jenis Produk wajib diisi!",
+            })
+            .min(1, { message: "Jenis Produk wajib diisi!" }),
+        nama_resep: z
+            .string({
+                required_error: "Nama Resep wajib diisi",
+                invalid_type_error:
+                    "Nama Resep wajib diisi!",
+            })
+            .min(1, { message: "Nama Resep wajib diisi!" }),
+        jumlah_kebutuhan: z
+            .string({
+                invalid_type_error:
+                    "Jumlah Kebutuhan Wajib Diisi!",
+            })
+            .min(1, { message: "Jumlah Kebutuhan Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Jumlah Kebutuhan harus lebih dari 0" }),
+        bahan: z
+            .string({
+                required_error: "Bahan wajib diisi!",
+                invalid_type_error:
+                    "Bahan wajib diisi!",
+            })
+            .min(1, { message: "Bahan wajib diisi!" }),
+    });
