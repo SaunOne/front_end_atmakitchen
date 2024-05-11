@@ -1,58 +1,85 @@
 import React, { useState } from "react";
+import { useEffect, useContext } from "react";
 import { Card, Input, Button, Typography, Select, Option } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { resepAdmin } from "@/validations/validation";
 import { useParams } from "react-router-dom";
 import { resepTableData } from "@/data";
+import { useNavigate } from "react-router-dom";
+import { GetResepById , DeleteResepById, GetResepByProduct } from "@/api/resepApi";
+import { GetAllBahanBaku, GetBahanBakuById } from "@/api/bahanBakuApi";
+
 
 export function EditResep() {
     const { id } = useParams();
-    const [values, setValues] = useState({});
+    const [values, setValues] = useState([{}]);
     const navigateTo = useNavigate();
     const [inputs, setInputs] = useState([{ bahan: "", jumlah: "" }]);
     const [formErrors, setFormErrors] = useState({});
+    const [bahan,setBahan] = useState([{}]);
+    const [selectedBahan, setSelectedBahan] = useState([]);
+
+    const handleLoadData = (id) => {
+        GetResepByProduct(id).then((res) => {
+           setSelectedBahan(res);
+           
+    
+        }).catch((err) => {
+            console.log('Gagal : ' + err);
+        });
+
+        GetAllBahanBaku().then((res) => {
+            setBahan(res);
+            console.log('Berhasil : ' + res);
+        }).catch((err) => {
+            console.log('Gagal : ' + err);
+        });
+    }    
 
     useEffect(() => {
-        const data = resepTableData.find(item => item.id_resep === id);
-        if (data) {
-            setValues({
-                nama_resep: data.nama_resep,
-                bahan: data.bahan,
-                jumlah: data.jumlah,
-                stok: data.stok,
-            });
-        }
-        console.log(values);
-    }, [id]);
+        handleLoadData(id);
+
+        console.log(values[0]['satuan']);
+    }, []);
+
+    const handleChange = (index, field, value) => {
+        const newInputs = inputs.map((input, i) => {
+            if (i === index) {
+                return { ...input, [field]: value };
+            }
+            return input;
+        });
+        setInputs(newInputs);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
         const formDataObject = Object.fromEntries(formData.entries());
         console.log(formDataObject);
-        const parsedResep = resepAdmin.safeParse(formDataObject);
-        if (!parsedResep.success) {
-            const error = parsedResep.error;
-            let newErrors = {};
-            for (const issue of error.issues) {
-                newErrors = {
-                    ...newErrors,
-                    [issue.path[0]]: issue.message,
-                };
-            }
-            return setFormErrors(newErrors);
+        // const parsedResep = resepAdmin.safeParse(formDataObject);
+        // if (!parsedResep.success) {
+        //     const error = parsedResep.error;
+        //     let newErrors = {};
+        //     for (const issue of error.issues) {
+        //         newErrors = {
+        //             ...newErrors,
+        //             [issue.path[0]]: issue.message,
+        //         };
+        //     }
+        //     return setFormErrors(newErrors);
 
-        } else {
-            navigateTo('/admin/resep');
-        }
+        // } else {
+        //     navigate('/admin/resep');
+        // }
         setFormErrors({});
         console.log(formErrors);
         console.log(parsedResep.data.name);
     };
 
     const handleAddInput = () => {
-        setInputs([...inputs, { bahan: "", jumlah: "" }]);
+        setInputs([...inputs, { bahan: "", jumlah: "" ,satuan : ""}]);
     };
 
     const handleRemoveInput = (index) => {
@@ -64,77 +91,50 @@ export function EditResep() {
         <Card color="white" shadow={false}>
             <div className="border rounded-xl border-gray-400 p-4 shadow-md">
                 <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                        <div>
-                            <Typography variant="h6" color="blue-gray" className="mb-2">
-                                Jenis Produk
-                            </Typography>
-                            <select defaultValue={values.jenis_produk} name="jenis_produk" size="lg" placeholder="Pilih Jenis Produk" className=" md:w-[77vh] w-full rounded border-[#acacac] border-[1px]  h-11 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800">
-                                <option value="produk utama">Produk Utama</option>
-                                <option value="produk titipan">Produk Titipan</option>
-                                <option value="produk hampers">Produk Hampers</option>
-                            </select>
-                            {formErrors.jenis_produk && (
-                                <p className="text-red-600 font-medium">
-                                    {formErrors.jenis_produk}
-                                </p>
-                            )}
-                        </div>
-                        <div>
-                            <Typography variant="h6" color="blue-gray" className="mb-2">
-                                Nama Resep
-                            </Typography>
-                            <Input defaultValue={values.nama_resep} name="nama_resep" size="lg" placeholder="Masukkan Nama Resep" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
-                            {formErrors.nama_resep && (
-                                <p className="text-red-600 font-medium">
-                                    {formErrors.nama_resep}
-                                </p>
-                            )}
-                        </div>
-                    </div>
-                    {/* Dynamic Inputs */}
-                    {inputs.map((input, index) => (
+                    {/* Inputs */}
+                    {values.map((input, index) => (
                         <div key={index} className="grid grid-cols-1 md:grid-cols-4 gap-6">
                             <div className="md:col-span-2">
-                                <Typography variant="h6" color="blue-gray" className="mb-2">
-                                    Bahan
-                                </Typography>
-                                <Input defaultValue={values.bahan} type="text" name="bahan" size="lg"  placeholder="Masukkan Bahan" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
-                                {formErrors.bahan && (
-                                    <p className="text-red-600 font-medium">
-                                        {formErrors.bahan}
-                                    </p>
-                                )}
+                                <Typography variant="h6" color="blue-gray" className="mb-2">Bahan</Typography>
+                                <select
+                                    className="w-full rounded text-black border-[1px] h-11"
+                                    
+                                    onChange={(e) => handleChange(index, 'bahan', e.target.value)}
+                                    required
+                                >
+                                    <option value="">Pilih Bahan</option>
+                                    {bahan.map((item) => (
+                                        <option key={item.id_bahan} value={item.id_bahan} selected={selectedBahan[index].nama_bahan === item.nama_bahan ? true : false}>{item.nama_bahan}</option>
+                                    ))}
+                                </select>
                             </div>
                             <div className="md:col-span-2">
-                                <Typography variant="h6" color="blue-gray" className="mb-2">
-                                    Jumlah Kebutuhan
-                                </Typography>
-                                <Input defaultValue={values.jumlah_kebutuhan} name="jumlah_kebutuhan" type="number" size="lg"  placeholder="Masukkan Jumlah" className="!border-t-blue-gray-200 focus:!border-t-gray-900" />
-                                {formErrors.jumlah_kebutuhan && (
-                                    <p className="text-red-600 font-medium">
-                                        {formErrors.jumlah_kebutuhan}
-                                    </p>
-                                )}
+                                <Typography variant="h6" color="blue-gray" className="mb-2">Jumlah</Typography>
+                                <Input
+                                    type="number"
+                                    name="jumlah_bahan"
+                                    value={input.jumlah_bahan}
+                                    onChange={(e) => handleChange(index, 'jumlah', e.target.value)}
+                                    placeholder="Masukkan Jumlah"
+                                    size="lg"
+                                />
                             </div>
                             <div className="md:col-span-4 flex justify-end">
                                 {inputs.length > 1 && (
-                                    <button onClick={() => handleRemoveInput(index)} className="mr-2 border-none">
+                                    <Button onClick={() => handleRemoveInput(index)} color="red">
                                         <FontAwesomeIcon icon={faMinus} />
-                                    </button>
+                                    </Button>
                                 )}
                                 {index === inputs.length - 1 && (
-                                    <button onClick={handleAddInput} className=" border-none">
+                                    <Button onClick={handleAddInput} color="green">
                                         <FontAwesomeIcon icon={faPlus} />
-                                    </button>
+                                    </Button>
                                 )}
                             </div>
                         </div>
                     ))}
                     <div className="flex justify-end">
-                        <Button type="submit" className="mt-6">
-                            Save
-                        </Button>
+                        <Button type="submit" className="mt-6">Save</Button>
                     </div>
                 </form>
             </div>

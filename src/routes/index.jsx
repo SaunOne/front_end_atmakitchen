@@ -183,7 +183,7 @@ const routes = [
         element : <AddResep/>,
       },
       {
-        path : "/admin/resep/editResep",
+        path : "/admin/resep/editResep/:id",
         element : <EditResep/>,
       },
       {

@@ -20,6 +20,7 @@ import { resepTableData } from "@/data";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/context";
+import { GetAllResep , DeleteResepById} from "@/api/resepApi";
 
 export function ResepTable() {
   const navigate = useNavigate();
@@ -27,10 +28,24 @@ export function ResepTable() {
   const [data, setData] = useState([]);
   const { search } = useContext(GlobalContext);
   const [currentPage, setCurrentPage] = useState(1);
+  
+
   const rowsPerPage = 5;
 
+  const loadData = () =>{
+    GetAllResep().then((res) => {
+      console.log("isi resep " + res.length);
+      setData(res);
+    }).catch((err) => { 
+      console.log("err : " + err);
+    });
+  }
+
+
   useEffect(() => {
-    setData(resepTableData);
+    loadData();
+    
+    // setData(resepTableData);
   }, []);
 
   console.log(search);
@@ -42,9 +57,16 @@ export function ResepTable() {
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
   const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+  const handleDelete = (id_produk) => {
+    DeleteResepById(id_produk).then((res) => {
+      console.log('berhasil : ' + res);
+    }).catch((err) => {
+      console.log('gagal ' + err);
+    });
+    
   };
 
   return (
@@ -52,7 +74,7 @@ export function ResepTable() {
       <table className="w-full min-w-[640px] table-auto">
         <thead>
           <tr>
-            {["No", "Nama Resep", "Bahan", "Jumlah Kebutuhan", "Stok", ""].map(
+            {["Id Produk", "Nama Produk", "Bahan", "Jumlah Kebutuhan", "Action"].map(
               (el) => (
                 <th
                   key={el}
@@ -75,24 +97,27 @@ export function ResepTable() {
                 const lowerCaseSearch = search.toLowerCase();
                 return(
                     lowerCaseSearch === "" ||
-                    item.nama_resep.toLowerCase().includes(lowerCaseSearch) ||
-                    item.bahan.some(b => b.toLowerCase().includes(lowerCaseSearch)) ||
-                    item.jumlah.some(j => j.toLowerCase().includes(lowerCaseSearch)) ||
-                    item.stok.some(s => s.toLowerCase().includes(lowerCaseSearch))
+                    item.nama_produk.toLowerCase().includes(lowerCaseSearch) ||
+                    (item.id_produk).toString().toLowerCase().includes(lowerCaseSearch) 
+                    
                 );
             }).map(
-            ({ id_resep, nama_resep, bahan, jumlah_kebutuhan, stok }, index) => {
+            ({ id_produk, nama_produk, resep }, index) => {
+              console.log('resep : ' + resep)
               const className = `text-center py-3 px-5 ${
                 index === resepTableData.length - 1
                   ? ""
                   : "border-b border-blue-gray-50"
               }`;
-
               return (
                 <tr key={index}>
                   <td className={className}>
+                    {
+              
+
+                    }
                     <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {id_resep}
+                      {id_produk}
                     </Typography>
                   </td>
                   <td className={className}>
@@ -103,29 +128,23 @@ export function ResepTable() {
                           color="blue-gray"
                           className="font-semibold"
                         >
-                          {nama_resep}
+                          {nama_produk}
                         </Typography>
                       </div>
                     </div>
                   </td>
                   <td className={className}>
-                    {bahan.map((item, index) => (
+                    
+                    {resep.map((item, index) => (
                       <Typography key={index} className="text-xs font-semibold text-blue-gray-600">
-                        {item}
+                        {item.nama_bahan}
                       </Typography>
                     ))}
                   </td>
                   <td className={className}>
-                    {jumlah_kebutuhan.map((item, index) => (
+                    {resep.map((item, index) => (
                       <Typography key={index} className="text-xs font-semibold text-blue-gray-600">
-                        {item}
-                      </Typography>
-                    ))}
-                  </td>
-                  <td className={className}>
-                    {stok.map((item, index) => (
-                      <Typography key={index} className="text-xs font-semibold text-blue-gray-600">
-                        {item}
+                        {item.jumlah_bahan + ' ' + item.satuan} 
                       </Typography>
                     ))}
                   </td>
@@ -134,9 +153,17 @@ export function ResepTable() {
                       as="a"
                       href=""
                       className="text-xs font-semibold text-blue-gray-600"
-                      onClick={() => navigate("/admin/resep/editResep")}
+                      onClick={() => navigate("/admin/resep/editResep/" + id_produk)}
                     >
                       Edit
+                    </Typography>
+                    <Typography
+                      as="a"
+                      href=""
+                      className="mt-5 text-xs font-semibold text-blue-gray-600"
+                      onClick={() => handleDelete(id_produk)}
+                    >
+                      Hapus   
                     </Typography>
                   </td>
                 </tr>
