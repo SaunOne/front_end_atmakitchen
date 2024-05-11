@@ -57,6 +57,13 @@ import DashboardOwner from "../pages/dashboard-owner/layout/layout-owner";
 import HomeOwner from "../pages/dashboard-owner/home";
 import Gaji from "../pages/dashboard-owner/gaji/gaji";
 import AddGaji from "../pages/dashboard-owner/gaji/create/addGaji";
+import ListCustomer from "@/pages/dashboard-admin/customer/customer";
+import { HistoryPesananCustomer } from "@/pages/dashboard-admin/customer/history";
+import { EditGaji } from "@/pages/dashboard-owner/gaji/update/editGaji";
+import { EditAdmin } from "@/pages/dashboard-admin/admin/admin-settings";
+import { EditMO } from "@/pages/dashboard-mo/mo/mo-settings";
+import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
+
 
 // Konfigurasi router
 const routes = [
@@ -171,6 +178,18 @@ const routes = [
         element : <ListPesanan/>,
       },
       {
+        path : "/admin/customer",
+        element : <ListCustomer/>,
+      },
+      {
+        path : "/admin/history",
+        element : <HistoryPesananCustomer/>,
+      },
+      {
+        path : "/admin/settings",
+        element : <EditAdmin/>,
+      },
+      {
         path : "/admin/product/add",
         element : <AddProduk/>,
       },
@@ -249,6 +268,10 @@ const routes = [
         path: "/mo/pengeluaran-lain-lain/edit/:id",
         element: <EditPengeluaranLainnyaMO />,
       },
+      {
+        path: "/mo/settings",
+        element: <EditMO />,
+      },
     ],
   },
 
@@ -269,6 +292,14 @@ const routes = [
       {
         path: "/owner/gaji/add",
         element: <AddGaji />,
+      },
+      {
+        path: "/owner/gaji/editGaji/:id",
+        element: <EditGaji />,
+      },
+      {
+        path: "/owner/settings",
+        element: <EditOwner />,
       },
     ],
   },

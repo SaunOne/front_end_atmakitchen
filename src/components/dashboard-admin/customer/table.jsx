@@ -1,20 +1,19 @@
 import { Typography } from "@material-tailwind/react";
-import { staffTableData } from "@/data";
-import { UpdateStaff, DeleteStaff } from "../button";
+import { salaryTableData } from "@/data";
+import { UpdateGaji, DeleteGaji } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "@/context/context";
-import  {GetAllStaff} from "@/api/staffApi";
-import {getImage} from "@/api/index";
-import {Avatar } from "@material-tailwind/react";
 
-export default function StaffTable() {
+import { GlobalContext } from "@/context/context";
+import { GetAllCustomers } from "@/api/customersApi";
+
+export default function TableCustomer() {
     const [data, setData] = useState([]);
     const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
     useEffect(() => {
-        GetAllStaff()
+        GetAllCustomers()
             .then((response) => {
                 console.log(response)
                 setData(response);
@@ -23,7 +22,7 @@ export default function StaffTable() {
                 console.log(err);
                 setError(err.message);
             });
-    }, []);
+      }, []);
 
     console.log(search);
 
@@ -44,7 +43,7 @@ export default function StaffTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No","Foto", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan", "Aksi"].map(
+                        {["No", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -72,11 +71,10 @@ export default function StaffTable() {
                                 item.no_telp.toLowerCase().includes(lowerCaseSearch) ||
                                 item.email.toLowerCase().includes(lowerCaseSearch) ||
                                 item.gender.toLowerCase().includes(lowerCaseSearch) ||
-                                item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch) ||
                                 item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
-                        .map(({ id_user, username,foto_profile, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan }, index) => {
+                        .map(({ id, username, nama_lengkap, no_telp, email, gender, tanggal_lahir }, index) => {
                             const className = `py-1 px-2 border-r text-center  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -88,11 +86,6 @@ export default function StaffTable() {
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
                                             {rowNumber}
                                         </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <div className="flex items-center gap-4 rounded-full">
-                                            <Avatar src={getImage(foto_profile)} alt={foto_profile} size="sm" variant="rounded-[50px]" />
-                                        </div>
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-[14px] font-[400] text-blue-gray-600">
@@ -125,14 +118,9 @@ export default function StaffTable() {
                                         </Typography>
                                     </td>
                                     <td className={className}>
-                                        <Typography className="text-[14px] font-[400] text-blue-gray-600">
-                                            {jabatan}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
                                         <div className="flex gap-2 justify-center">
-                                            <UpdateStaff id={id_user} />
-                                            <DeleteStaff id={id_user} />
+                                            <UpdateGaji id={id} />
+                                            <DeleteGaji id={id} />
                                         </div>
                                     </td>
                                 </tr>

@@ -7,9 +7,11 @@ import {
 } from "@material-tailwind/react";
 import { staff } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { staffTableData } from "@/data";
+import { GetStaffById, UpdateStaff } from "@/api/staffApi";
+import { GlobalContext } from "@/context/context";
 
 export function EditStaff() {
     const { id } = useParams();
@@ -17,24 +19,21 @@ export function EditStaff() {
     const [values, setValues] = useState({});
     const navigateTo = useNavigate();
     const role = ["Manajer Operasi", "Admin", "Karyawan Biasa"];
+    const [data, setData] = useState({});
+    const {setSuccess, success} = useContext(GlobalContext);
+
+    useEffect(() => {
+        GetStaffById(id) // Fungsi API untuk mengambil data
+          .then((response) => {
+            setData(response);
+            console.log(response);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }, [id]);
 
     console.log(id);
-    useEffect(() => {
-        const data = staffTableData.find(item => item.id === id);
-        if (data) {
-            setValues({
-                username: data.username,
-                email: data.email,
-                nama_lengkap: data.nama_lengkap,
-                nama_role: data.nama_role,
-                no_telp: data.no_telp,
-                gender: data.gender,
-                tanggal_lahir: data.tanggal_lahir,
-            });
-        }
-        console.log(values);
-    }, [id]);
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -43,22 +42,34 @@ export function EditStaff() {
         console.log(formDataObject);
         const parsedStaff = staff.safeParse(formDataObject);
         if (!parsedStaff.success) {
-            const error = parsedStaff.error;
-            let newErrors = {};
-            for (const issue of error.issues) {
-                newErrors = {
-                    ...newErrors,
-                    [issue.path[0]]: issue.message,
-                };
-            }
-            return setFormErrors(newErrors);
-
+        const error = parsedStaff.error;
+        let newErrors = {};
+        for (const issue of error.issues) {
+            newErrors = {
+            ...newErrors,
+            [issue.path[0]]: issue.message,
+            };
+        }
+        console.log(newErrors);
+        console.log(parsedStaff);
+        return setFormErrors(newErrors);
         } else {
-            navigateTo('/mo/staff');
+            parsedStaff.data.id_user = id;
+            console.log(parsedStaff);
+            UpdateStaff(parsedStaff.data)
+            .then((response) => {
+                console.log(response); 
+                setSuccess({bool: true, message: 'Staff berhasil diubah'});
+                console.log(success);
+                navigateTo('/mo/staff');
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         }
         setFormErrors({});
         console.log(formErrors);
-        
+        console.log(parsedStaff.data.nama_lengkap);  
     }
 
     return (
@@ -79,7 +90,7 @@ export function EditStaff() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                defaultValue={values.username}
+                                defaultValue={data.username}
                             />
                             {formErrors.username && (
                                 <p className="text-red-600 font-medium">
@@ -100,7 +111,7 @@ export function EditStaff() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                defaultValue={values.email}
+                                defaultValue={data.email}
                             />
                             {formErrors.email && (
                                 <p className="text-red-600 font-medium">
@@ -123,7 +134,7 @@ export function EditStaff() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                defaultValue={values.nama_lengkap}
+                                defaultValue={data.nama_lengkap}
                             />
                             {formErrors.nama_lengkap && (
                                 <p className="text-red-600 font-medium">
@@ -137,18 +148,18 @@ export function EditStaff() {
                                 Jabatan
                             </Typography>
                             <select
-                                name="nama_role"
+                                name="jabatan"
                                 size="lg"
                                 className=" md:w-[70vh] w-full rounded border-[#acacac] border-[1px]  h-11 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                defaultValue={values.nama_role}
+                                defaultValue={data.jabatan}
 
                             >
                                 <option value="">Pilih Jabatan</option>
                                 {role.map((item) => (
-                                    <option value={item} selected={values.nama_role === item ? true : false}>{item}</option>)
+                                    <option value={item} selected={data.jabatan === item}>{item}</option>)
                                 )}
                             </select>
                             {formErrors.nama_role && (
@@ -171,12 +182,11 @@ export function EditStaff() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                defaultValue={values.gender}
-
+                                defaultValue={data.gender}
                             >
                                 <option value="">Pilih Jenis Kelamin</option>
-                                <option value="Laki-laki" selected={values.gender === 'Laki-laki' ? true : false}>Laki-laki</option>
-                                <option value="Perempuan" selected={values.gender === 'Perempuan' ? true : false}>Perempuan</option>
+                                <option value="Laki-laki" selected={data.gender === 'Male' ? true : false}>Laki-laki</option>
+                                <option value="Perempuan" selected={values.gender === 'Female' ? true : false}>Perempuan</option>
                             </select>
                             {formErrors.gender && (
                                 <p className="text-red-600 font-medium">
@@ -195,7 +205,7 @@ export function EditStaff() {
                                 labelProps={{
                                     className: "before:content-none after:content-none",
                                 }}
-                                defaultValue={values.tanggal_lahir}
+                                defaultValue={data.tanggal_lahir}
                             />
                             {formErrors.tanggal_lahir && (
                                 <p className="text-red-600 font-medium">
@@ -216,7 +226,7 @@ export function EditStaff() {
                         labelProps={{
                             className: "before:content-none after:content-none",
                         }}
-                        defaultValue={values.no_telp}
+                        defaultValue={data.no_telp}
                     />
                     {formErrors.no_telp && (
                         <p className="text-red-600 font-medium">

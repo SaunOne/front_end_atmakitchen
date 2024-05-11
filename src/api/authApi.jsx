@@ -79,3 +79,19 @@ export const ResetPassword = async (data) => { //data diisi dengan maping atau o
     throw error.response;
   }
 };
+
+export const UpdatePassword = async (data) => {
+    const token = localStorage.getItem('token'); // Ambil token dari localStorage
+    try {
+        const response = await useAxios.post("/update-password", data, {
+            headers: {
+              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+              "Content-Type": "application/json"
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating password:', error.response.data);
+        throw error.response.data;
+    }
+};

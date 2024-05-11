@@ -93,7 +93,7 @@ export function AddBahanBaku() {
               <Typography variant="h6" color="blue-gray" className="mb-3">
                 Nama Bahan 
               </Typography>
-              <Input
+              <Input 
                 type="text"
                 size="lg"
                 name="nama_bahan"

@@ -94,21 +94,21 @@ export const addNewPassword = z
             .string({
                 required_error: "Password wajib diisi",
                 invalid_type_error:
-                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+                    "Password wajib terdiri dari minimal 8 karakter & maksimal 20 karakter!",
             })
-            .min(6, { message: "Password minimal 6 karakter" })
+            .min(8, { message: "Password minimal 8 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
 
         password_confirmation: z.string()
-            .min(6, { message: "Password minimal 6 karakter" })
+            .min(8, { message: "Password minimal 8 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
     })
     .superRefine(({ password, password_confirmation }, ctx) => {
         if (password !== password_confirmation) {
             ctx.addIssue({
                 code: "custom",
-                path: ["confirmPassword"],
-                message: "Tidak sesuai dengan Password yang diinputkan! ",
+                path: ["password_confirmation"],
+                message: "Password Tidak Sesuai",
             });
         }
     });
@@ -346,4 +346,22 @@ export const resepAdmin = z
                     "Bahan wajib diisi!",
             })
             .min(1, { message: "Bahan wajib diisi!" }),
+    });
+
+export const gajiKaryawan = z
+    .object({
+        gaji: z
+            .string({
+                invalid_type_error:
+                    "Gaji Wajib Diisi!",
+            })
+            .min(1, { message: "Gaji Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Gaji harus lebih dari 0" }),
+        bonus_gaji: z
+            .string({
+                invalid_type_error:
+                    "Bonus Gaji Wajib Diisi!",
+            })
+            .min(1, { message: "Bonus Gaji Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Bonus Gaji harus lebih dari 0" }),
     });

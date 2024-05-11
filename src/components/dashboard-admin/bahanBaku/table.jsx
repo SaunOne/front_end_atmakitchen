@@ -63,7 +63,7 @@ export function BahanBakuTable() {
             {["No", "Nama Bahan", "Stok", "Satuan", "Aksi"].map((el) => (
               <th
                 key={el}
-                className="border-b border-blue-gray-50 py-3 px-5 text-left"
+                className="border-b border-blue-gray-50 py-3 px-5 text-left border-r"
               >
                 <Typography
                   variant="small"
@@ -82,7 +82,7 @@ export function BahanBakuTable() {
               return (
                 lowerCaseSearch === "" ||
                 item.nama_bahan.toLowerCase().includes(lowerCaseSearch) ||
-                item.stok_bahan.toLowerCase().includes(lowerCaseSearch) ||
+                item.stok_bahan.toString().toLowerCase().includes(lowerCaseSearch) ||
                 item.satuan.toLowerCase().includes(lowerCaseSearch)
               );
             }).map(
@@ -129,7 +129,7 @@ export function BahanBakuTable() {
                       <DeleteBahanBaku id={id_bahan} />
                     </div>
                   </td>
-                </tr>
+                </tr> 
               );
             }
           )}

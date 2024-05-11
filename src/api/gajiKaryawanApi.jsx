@@ -1,10 +1,6 @@
-// apiController.js
+import useAxios from "."; 
 
-import { UNSTABLE_REVALIDATE_RENAME_ERROR } from "next/dist/lib/constants";
-import useAxios from "."; // Sesuaikan dengan path sesuai struktur proyek Anda
-
-// Menampilkan semua deposit
-export const GetAllStaff = async () => {
+export const GetAllKaryawan = async () => {
     try {
         const response = await useAxios.get("/karyawan", {
             headers: {
@@ -19,8 +15,7 @@ export const GetAllStaff = async () => {
     }
 };
 
-// Menampilkan deposit berdasarkan ID
-export const GetStaffById = async (id) => {
+export const GetKaryawanById = async (id) => {
     try {
         console.log(id);
         const response = await useAxios.get(`/karyawan/${id}`, {
@@ -36,25 +31,10 @@ export const GetStaffById = async (id) => {
     }
 };
 
-
-export const CreateStaff = async (data) => {
-    try {
-        const response = await useAxios.post("/karyawan", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-            },
-        });
-        return response.data.data;
-    } catch (error) {
-        throw error.response.data;
-    }
-};
-
-export const UpdateStaff = async (data) => {
+export const UpdateGajiKaryawan = async (data) => {
     try {
         console.log(data);
-        const response = await useAxios.put(`/karyawan/${data.id_user}`, data, {
+        const response = await useAxios.post(`/karyawan/update_gaji_bonus/${data.id_user}`, data, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -66,8 +46,7 @@ export const UpdateStaff = async (data) => {
     }
 };
 
-
-export const DeleteStaffById = async (id) => {
+export const DeleteKaryawanById = async (id) => {
     console.log(id);
     try {
         
@@ -82,4 +61,3 @@ export const DeleteStaffById = async (id) => {
         throw error.response.data;
     }
 };
-
