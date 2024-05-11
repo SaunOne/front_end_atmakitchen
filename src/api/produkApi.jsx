@@ -98,10 +98,12 @@ export const CreateProduk = async (data) => {
 
 export const UpdateProduk = async (data) => {
     try {
-        console.log(data);
-        const response = await useAxios.put(`/produk/${data.id_penitip}`, data, {
+        console.log(data.id_produk);
+
+
+        const response = await useAxios.post(`/produk/${data.id_produk}`, data, {
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });
@@ -115,7 +117,7 @@ export const UpdateProduk = async (data) => {
 export const DeleteProdukById = async (id) => {
     console.log(id);
     try {
-        
+
         const response = await useAxios.delete(`/produk/${id}`, {
             headers: {
                 "Content-Type": "application/json",

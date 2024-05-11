@@ -10,19 +10,20 @@ import { GlobalContext } from '@/context/context';
 
 export default function FormEditHampers() {
     const [inputs, setInputs] = useState([{ id_produk: "", jumlah_produk: "" }]);
+    const [values, setValues] = useState({})
     const [produkUtama, setProdukUtama] = useState([]);
     const [packaging, setPackaging] = useState([]);
     const navigateTo = useNavigate();
-    const{success, setSuccess} = useContext(GlobalContext);
-    const {id} = useParams();
+    const { success, setSuccess } = useContext(GlobalContext);
+    const { id } = useParams();
 
 
     useEffect(() => {
-        GetProdukById(id)
-        then((response) => {
-            console.log(response)
-            setPenitip(response);
-        })
+        GetProdukById(id).
+            then((response) => {
+                console.log(response)
+                setValues(response);
+            })
             .catch((err) => {
                 console.log(err);
                 setError(err.message);
@@ -72,7 +73,8 @@ export default function FormEditHampers() {
         const formDataObject = Object.fromEntries(formData.entries());
         formDataObject.jenis_produk = "Hampers";
         formDataObject.quantity = 1;
-        formDataObject.detail_hampers = inputs.map(({ id_produk, jumlah }) => ({ id_produk, jumlah }));
+        formDataObject.id_produk = id;
+        // formDataObject.detail_hampers = inputs.map(({ id_produk, jumlah }) => ({ id_produk, jumlah }));
         console.log(formDataObject);
 
         UpdateProduk(formDataObject)
@@ -91,6 +93,7 @@ export default function FormEditHampers() {
 
     return (
         <>
+            <h1 className="text-black text-[25px] font-bold mb-5 -mt-3">Edit Produk Hampers</h1>
             <form onSubmit={handleSubmit}>
                 <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-1">
                     <div>
@@ -106,6 +109,7 @@ export default function FormEditHampers() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.nama_produk}
                             required
                         />
                     </div>
@@ -122,6 +126,24 @@ export default function FormEditHampers() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.harga}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <Typography variant="h6" color="blue-gray" className="mb-3">
+                            Quantity
+                        </Typography>
+                        <Input
+                            name='quantity'
+                            type='number'
+                            size="lg"
+                            placeholder=""
+                            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
+                            labelProps={{
+                                className: "before:content-none after:content-none",
+                            }}
+                            defaultValue={values.quantity}
                             required
                         />
                     </div>
@@ -138,6 +160,7 @@ export default function FormEditHampers() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.deskripsi}
                             required
                         />
                     </div>
@@ -154,10 +177,10 @@ export default function FormEditHampers() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
-                            required
+                            defaultValue={values.image_produk}
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Packaging
                         </Typography>
@@ -225,7 +248,7 @@ export default function FormEditHampers() {
                                 )}
                             </div>
                         </div>
-                    ))}
+                    ))} */}
                 </div>
                 <div className="flex justify-end">
                     <Button type="submit" className="mt-6">

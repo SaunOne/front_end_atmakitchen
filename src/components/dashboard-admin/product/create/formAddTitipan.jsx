@@ -97,6 +97,7 @@ export function FormAddTitipanBaru() {
                             required
                         />
                     </div>
+                    
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Jumlah Produk
@@ -136,7 +137,7 @@ export function FormAddTitipanBaru() {
                         </Typography>
                         <Input
                             name='satuan'
-                            type='number'
+                            type='text'
                             size="lg"
                             placeholder="loyang, pcs, dll"
                             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
@@ -191,7 +192,7 @@ export function FormAddTitipanBaru() {
 export function FormAddTitipanLama() {
     const [produkTitipan, setProdukTitipan] = useState([]);
     const navigateTo = useNavigate();
-    const { setError, setSuccess } = useContext(GlobalContext);
+    const { success, setSuccess } = useContext(GlobalContext);
 
 
     useEffect(() => {

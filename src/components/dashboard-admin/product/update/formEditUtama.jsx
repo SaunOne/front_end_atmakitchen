@@ -15,16 +15,17 @@ import { GlobalContext } from '@/context/context';
 
 export default function FormEditUtama() {
     const { success, setSuccess } = useContext(GlobalContext);
+    const [values, setValues] = useState({});
     const navigateTo = useNavigate();
     const [packaging, setPackaging] = useState([{}]);
     const { id } = useParams();
 
     useEffect(() => {
-        GetProdukById(id)
-        then((response) => {
-            console.log(response)
-            setPenitip(response);
-        })
+        GetProdukById(id).
+            then((response) => {
+                console.log(response)
+                setValues(response);
+            })
             .catch((err) => {
                 console.log(err);
                 setError(err.message);
@@ -46,6 +47,7 @@ export default function FormEditUtama() {
         const formDataObject = Object.fromEntries(formData.entries());
 
         formDataObject.jenis_produk = "Utama";
+        formDataObject.id_produk = id;
         console.log(formDataObject);
 
         UpdateProduk(formDataObject)
@@ -61,9 +63,10 @@ export default function FormEditUtama() {
     }
     return (
         <>
+            <h1 className="text-black text-[25px] font-bold mb-5 -mt-3">Edit Produk Utama</h1>
             <form onSubmit={handleSubmit} >
                 <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-2">
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Nama Produk Stok
                         </Typography>
@@ -78,7 +81,7 @@ export default function FormEditUtama() {
                             }}
                             required
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Nama Jual Produk
@@ -92,6 +95,7 @@ export default function FormEditUtama() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.nama_produk}
                             required
                         />
                     </div>
@@ -108,10 +112,11 @@ export default function FormEditUtama() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.quantity}
                             required
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Satuan
                         </Typography>
@@ -126,8 +131,8 @@ export default function FormEditUtama() {
                             }}
                             required
                         />
-                    </div>
-                    <div>
+                    </div> */}
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Kategori Produk
                         </Typography>
@@ -142,7 +147,7 @@ export default function FormEditUtama() {
                             }}
                             required
                         />
-                    </div>
+                    </div> */}
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Harga
@@ -156,6 +161,7 @@ export default function FormEditUtama() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.harga}
                             required
                         />
                     </div>
@@ -173,10 +179,11 @@ export default function FormEditUtama() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
-                            required
+                            defaultValue={values.image_produk}
+                    
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Packaging
                         </Typography>
@@ -192,7 +199,7 @@ export default function FormEditUtama() {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                 </div>
                 <div>
                     <Typography variant="h6" color="blue-gray" className="mb-3">
@@ -203,7 +210,9 @@ export default function FormEditUtama() {
                         size="lg"
                         class="form-control !border-t-blue-gray-200 focus:!border-t-gray-900"
                         rows="3"
-                        id="textarea">
+                        id="textarea"
+                        defaultValue={values.deskripsi}>
+                            
                     </Textarea>
                 </div>
                 <div className="flex justify-end">

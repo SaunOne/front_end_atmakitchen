@@ -1,6 +1,7 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { DeleteBahanBakuById } from "@/api/bahanBakuApi";
+import { DeleteProdukById } from "@/api/produkApi";
 import { useContext } from "react";
 import { GlobalContext } from "@/context/context";
 
@@ -38,9 +39,28 @@ export function UpdateProduct({ id }) {
 }
 
 export function DeleteProduct({ id }) {
+    const { setSuccess, success } = useContext(GlobalContext);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(id);
+        DeleteProdukById(id)
+            .then((response) => {
+                console.log(response);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                setSuccess({ bool: true, message: 'Bahan Baku berhasil dihapus' });
+
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
+    }
     return (
-        <form >
-            <button className="rounded-md border-[#e8e8e8] p-2 hover:bg-gray-100">
+        <form onSubmit={handleSubmit} >
+            <button type="submit" className="rounded-md border-[#e8e8e8] p-2 hover:bg-gray-100">
                 <span className="sr-only">Delete</span>
                 <TrashIcon className="w-5" />
             </button>

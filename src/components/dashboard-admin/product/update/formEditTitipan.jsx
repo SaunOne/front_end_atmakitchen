@@ -8,7 +8,7 @@ import {
     Textarea
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { GetAllPenitip } from '@/api/penitipApi';
 import { GetAllProdukTitipan, GetProdukById, UpdateProduk } from '@/api/produkApi';
@@ -16,17 +16,18 @@ import { GlobalContext } from '@/context/context';
 import { set } from 'zod';
 
 export default function FormEditTitipan() {
+    const [values, setValues] = useState({})
     const [penitip, setPenitip] = useState([]);
     const navigateTo = useNavigate();
     const { success, setSuccess } = useContext(GlobalContext);
     const { id } = useParams();
 
     useEffect(() => {
-        GetProdukById(id)
-        then((response) => {
-            console.log(response)
-            setPenitip(response);
-        })
+        GetProdukById(id).
+            then((response) => {
+                console.log(response)
+                setValues(response);
+            })
             .catch((err) => {
                 console.log(err);
                 setError(err.message);
@@ -51,10 +52,11 @@ export default function FormEditTitipan() {
         const formDataObject = Object.fromEntries(formData.entries());
         formDataObject.quantity = 1;
         formDataObject.jenis_produk = "Titipan";
+        formDataObject.id_produk = id;
         console.log(formDataObject);
 
 
-        UpdateProduk(formDataObject)
+        UpdateProduk(id)
             .then((response) => {
                 console.log(response);
                 setSuccess({ bool: true, message: 'Produk Titipan berhasil diedit' });
@@ -69,9 +71,10 @@ export default function FormEditTitipan() {
 
     return (
         <>
+            <h1 className="text-black text-[25px] font-bold mb-5 -mt-3">Edit Produk Titipan</h1>
             <form onSubmit={handleSubmit} >
                 <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-2">
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Nama Penitip
                         </Typography>
@@ -91,7 +94,7 @@ export default function FormEditTitipan() {
                                 </option>
                             ))}
                         </select>
-                    </div>
+                    </div> */}
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Nama Produk
@@ -105,10 +108,11 @@ export default function FormEditTitipan() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.nama_produk}
                             required
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Jumlah Produk
                         </Typography>
@@ -123,7 +127,7 @@ export default function FormEditTitipan() {
                             }}
                             required
                         />
-                    </div>
+                    </div> */}
 
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
@@ -138,10 +142,11 @@ export default function FormEditTitipan() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
+                            defaultValue={values.harga}
                             required
                         />
                     </div>
-                    <div>
+                    {/* <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Satuan
                         </Typography>
@@ -156,7 +161,7 @@ export default function FormEditTitipan() {
                             }}
                             required
                         />
-                    </div>
+                    </div> */}
 
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
@@ -172,7 +177,7 @@ export default function FormEditTitipan() {
                             labelProps={{
                                 className: "before:content-none after:content-none",
                             }}
-                            required
+                            defaultValue={values.image_produk}
                         />
                     </div>
                     <div>
@@ -185,7 +190,10 @@ export default function FormEditTitipan() {
                             size="lg"
                             class="form-control !border-t-blue-gray-200 focus:!border-t-gray-900"
                             rows="3"
-                            id="textarea">
+                            id="textarea"
+                            defaultValue={values.deskripsi}
+                            >
+                            
                         </Textarea>
                     </div>
                 </div>

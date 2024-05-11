@@ -65,8 +65,8 @@ export default function ProductTable() {
                                 return (
                                     lowerCaseSearch === "" ||
                                     el.nama_produk.toLowerCase().includes(search.toLowerCase()) ||
-                                    el.harga.includes(search.toLowerCase()) ||
-                                    el.jumlah_stok.includes(search.toLowerCase()) ||
+                                    el.harga.toString().includes(search.toLowerCase()) ||
+                                    el.jumlah_stok.toString().includes(search.toLowerCase()) ||
                                     el.deskripsi.toLowerCase().includes(search.toLowerCase())
                                 );
 

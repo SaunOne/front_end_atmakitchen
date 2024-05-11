@@ -40,8 +40,8 @@ export default function FormAddHampers() {
 
 
 
-    const handleInputChange = (e, index) => {
-        const { name, value } = e.target;
+    const handleInputChange = (e, name , index) => {
+        const { value } = e.target;
         const newInputs = [...inputs];
         newInputs[index][name] = value;
         setInputs(newInputs);
@@ -62,7 +62,7 @@ export default function FormAddHampers() {
         const formDataObject = Object.fromEntries(formData.entries());
         formDataObject.jenis_produk = "Hampers";
         formDataObject.quantity = 1;
-        formDataObject.detail_hampers = inputs.map(({ id_produk, jumlah }) => ({ id_produk, jumlah }));
+        formDataObject.detail_hampers = inputs.map(({ id_produk, jumlah_produk }) => ({ id_produk, jumlah_produk }));
         console.log(formDataObject);
 
         CreateProduk(formDataObject)
@@ -172,8 +172,8 @@ export default function FormAddHampers() {
                                 </Typography>
                                 <select
                                     className="w-full rounded text-black border-[#acacac] border-[1px] h-11 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
-                                    value={inputs.id_produk}
-                                    onChange={(e) => handleInputChange(e, index)}
+                                    value={input.id_produk}
+                                    onChange={(e) => handleInputChange(e, 'id_produk', index)}
                                     required
                                 >
                                     <option value="">Pilih Produk</option>
@@ -189,7 +189,6 @@ export default function FormAddHampers() {
                                     Jumlah
                                 </Typography>
                                 <Input
-                                    name='jumlah_produk'
                                     type='number'
                                     size="lg"
                                     placeholder=""
@@ -197,8 +196,8 @@ export default function FormAddHampers() {
                                     labelProps={{
                                         className: "before:content-none after:content-none",
                                     }}
-                                    value={inputs[index].jumlah_produk}
-                                    onChange={(e) => handleInputChange(e, index)}
+                                    value={input.jumlah_produk}
+                                    onChange={(e) => handleInputChange(e,'jumlah_produk', index)}
                                     required
                                 />
                             </div>

@@ -6,7 +6,7 @@ import {
     Textarea,
     Select
 } from "@material-tailwind/react";
-import { useNavigate,  useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { GetAllPackaging } from '@/api/packagingApi';
 import { GetAllReadyStock, CreateProduk } from '@/api/produkApi';
@@ -208,6 +208,7 @@ export function FormAddUtamaBaru() {
 
 export function FormAddUtamaLama() {
     const [produkStok, setProdukStok] = useState([{}]);
+    const [packaging, setPackaging] = useState([{}]);
     const { success, setSuccess } = useContext(GlobalContext);
     const navigateTo = useNavigate();
 
@@ -220,6 +221,16 @@ export function FormAddUtamaLama() {
             .catch((err) => {
                 console.log(err);
                 setError(err.message);
+            });
+
+            
+        GetAllPackaging()
+            .then((response) => {
+                console.log(response)
+                setPackaging(response);
+            })
+            .catch((err) => {
+                console.log(err);
             });
     }, []);
 
@@ -332,6 +343,23 @@ export function FormAddUtamaLama() {
                             }}
                             required
                         />
+                    </div>
+                    <div>
+                        <Typography variant="h6" color="blue-gray" className="mb-3">
+                            Packaging
+                        </Typography>
+                        <select
+                            name='id_packaging'
+                            className="w-full rounded text-black border-[#acacac] border-[1px] h-11 placeholder:text-sm placeholder:tracking-wide text-base font-medium placeholder:font-normal outline-none bg-transparent placeholder:text-gray-800"
+                            required
+                        >
+                            <option value="">Pilih Packaging</option>
+                            {packaging.map((item) => (
+                                <option key={item.id_packaging} value={item.id_packaging} className='text-black'>
+                                    {item.nama_packaging}
+                                </option>
+                            ))}
+                        </select>
                     </div>
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
