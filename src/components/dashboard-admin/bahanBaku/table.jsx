@@ -82,7 +82,7 @@ export function BahanBakuTable() {
               return (
                 lowerCaseSearch === "" ||
                 item.nama_bahan.toLowerCase().includes(lowerCaseSearch) ||
-                item.stok_bahan.toLowerCase().includes(lowerCaseSearch) ||
+                item.stok_bahan.toString().toLowerCase().includes(lowerCaseSearch) ||
                 item.satuan.toLowerCase().includes(lowerCaseSearch)
               );
             }).map(

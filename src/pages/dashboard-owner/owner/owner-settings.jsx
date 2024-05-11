@@ -12,7 +12,7 @@ import { UpdatePassword } from "@/api/authApi";
 import { GlobalContext } from "@/context/context";
 import { useNavigate } from "react-router-dom";
 
-export function EditAdmin() {
+export function EditOwner() {
   const {success, setSuccess  } = useContext(GlobalContext);
   const navigateTo = useNavigate();
     const [formData, setFormData] = useState({
@@ -42,7 +42,7 @@ export function EditAdmin() {
                 console.log(response); 
                 setSuccess({bool: true, message: 'Password berhasil diubah'});
                 console.log(success);
-                navigateTo('/admin/home');
+                navigateTo('/owner/home');
             })
             .catch((err) => {
                 console.error(err);

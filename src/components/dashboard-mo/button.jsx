@@ -5,6 +5,7 @@ import { DeletePengeluaranBahanBakuById } from "@/api/pengeluaranBahanBakuApi";
 import { useContext } from "react";
 import { GlobalContext } from "@/context/context";
 import { DeletePengeluaranLainById } from "@/api/pengeluaranLainApi";
+import { DeleteStaffById } from "@/api/staffApi";
 
 
 export function UpdatePenitip({ id }) {
@@ -60,9 +61,28 @@ export function UpdateStaff({ id }) {
 }
 
 export function DeleteStaff({ id }) {
+    const { setSuccess, success } = useContext(GlobalContext);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(id);
+        DeleteStaffById(id)
+            .then((response) => {
+                console.log(response);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+                setSuccess({ bool: true, message: 'Karyawan berhasil dihapus' });
+
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
+    }
     return (
-        <form >
-            <button className="rounded-md border-[#e8e8e8] p-2 hover:bg-gray-100">
+        <form onSubmit={handleSubmit} >
+            <button type="submit" className="rounded-md border-[#e8e8e8] p-2 hover:bg-gray-100">
                 <span className="sr-only">Delete</span>
                 <TrashIcon className="w-5" />
             </button>

@@ -48,7 +48,7 @@ export default function StaffTable() {
                             (el) => (
                                 <th
                                     key={el}
-                                    className="border-b border-r border-blue-gray-50 py-3 px-5 text-left"
+                                    className="border-b border-r border-blue-gray-50 py-3 px-5 text-center"
                                 >
                                     <Typography
                                         variant="small"
@@ -76,8 +76,8 @@ export default function StaffTable() {
                                 item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
-                        .map(({ id, username,foto_profile, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan }, index) => {
-                            const className = `py-1 px-2 border-r  ${index === currentRows.length - 1
+                        .map(({ id_user, username,foto_profile, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan }, index) => {
+                            const className = `py-1 px-2 border-r text-center  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
                                 }`;
@@ -130,10 +130,9 @@ export default function StaffTable() {
                                         </Typography>
                                     </td>
                                     <td className={className}>
-                                        <div className="flex gap-2">
-                                            <UpdateStaff id={id} />
-                                            <DeleteStaff id={id} />
-
+                                        <div className="flex gap-2 justify-center">
+                                            <UpdateStaff id={id_user} />
+                                            <DeleteStaff id={id_user} />
                                         </div>
                                     </td>
                                 </tr>

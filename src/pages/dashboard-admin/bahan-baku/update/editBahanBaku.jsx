@@ -96,7 +96,6 @@ export function EditBahanBaku() {
     } else {
          parsedBahanBaku.data.id_bahan = id;
          console.log(parsedBahanBaku);
-        // parsedBahanBaku.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedBahanBaku.data.nama_bahan).id_bahan;
         UpdateBahanBakuAdmin(parsedBahanBaku.data)
         .then((response) => {
             console.log(response); 

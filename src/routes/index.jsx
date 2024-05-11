@@ -61,6 +61,9 @@ import ListCustomer from "@/pages/dashboard-admin/customer/customer";
 import { HistoryPesananCustomer } from "@/pages/dashboard-admin/customer/history";
 import { EditGaji } from "@/pages/dashboard-owner/gaji/update/editGaji";
 import { EditAdmin } from "@/pages/dashboard-admin/admin/admin-settings";
+import { EditMO } from "@/pages/dashboard-mo/mo/mo-settings";
+import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
+
 
 // Konfigurasi router
 const routes = [
@@ -265,6 +268,10 @@ const routes = [
         path: "/mo/pengeluaran-lain-lain/edit/:id",
         element: <EditPengeluaranLainnyaMO />,
       },
+      {
+        path: "/mo/settings",
+        element: <EditMO />,
+      },
     ],
   },
 
@@ -289,6 +296,10 @@ const routes = [
       {
         path: "/owner/gaji/editGaji/:id",
         element: <EditGaji />,
+      },
+      {
+        path: "/owner/settings",
+        element: <EditOwner />,
       },
     ],
   },

@@ -1,5 +1,6 @@
 // apiController.js
 
+import { UNSTABLE_REVALIDATE_RENAME_ERROR } from "next/dist/lib/constants";
 import useAxios from "."; // Sesuaikan dengan path sesuai struktur proyek Anda
 
 // Menampilkan semua deposit
@@ -22,7 +23,7 @@ export const GetAllStaff = async () => {
 export const GetStaffById = async (id) => {
     try {
         console.log(id);
-        const response = await useAxios.get(`/karyawan/${id.id}`, {
+        const response = await useAxios.get(`/karyawan/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -53,7 +54,7 @@ export const CreateStaff = async (data) => {
 export const UpdateStaff = async (data) => {
     try {
         console.log(data);
-        const response = await useAxios.put(`/karyawan/${data.id_penitip}`, data, {
+        const response = await useAxios.put(`/karyawan/${data.id_user}`, data, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -81,3 +82,4 @@ export const DeleteStaffById = async (id) => {
         throw error.response.data;
     }
 };
+

@@ -26,8 +26,23 @@ import {
   ordersOverviewData,
 } from "../../data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "@/context/context";
+import { toast } from "react-toastify";
 
 export function Home_owner() {
+  const {success, setSuccess  } = useContext(GlobalContext);
+
+  useEffect(() => {
+      console.log(success);
+      if (success.bool) {
+          toast.success(success.message);
+
+          setTimeout(() => {
+              setSuccess({ bool: false, message: '' });
+          }, 1000);
+      }
+  }, [success]);
   return (
     <div className="mt-12">
       <div className="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
