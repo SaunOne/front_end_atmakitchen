@@ -10,8 +10,25 @@ import {
 import StaffTable from "@/components/dashboard-mo/staff/table";
 import { useNavigate } from "react-router-dom";
 import Search from "@/components/dashboard-mo/search";
+import { useContext, useEffect } from "react";
+import { GlobalContext } from "@/context/context";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function StaffMO() {
+    const { success, setSuccess } = useContext(GlobalContext);
+
+    useEffect(() => {
+        console.log(success);
+        if (success.bool) {
+            toast.success(success.message);
+
+            setTimeout(() => {
+                setSuccess({ bool: false, message: '' });
+            }, 1000);
+        }
+    }, [success]);
+
     const navigate = useNavigate();
 
     return (
