@@ -318,34 +318,22 @@ export const bahanBakuAdmin = z
 
 export const resepAdmin = z
     .object({
-        jenis_produk: z
-            .string({
-                required_error: "Jenis Produk wajib diisi",
-                invalid_type_error:
-                    "Jenis Produk wajib diisi!",
-            })
-            .min(1, { message: "Jenis Produk wajib diisi!" }),
-        nama_resep: z
+  
+        nama_bahan: z
             .string({
                 required_error: "Nama Resep wajib diisi",
                 invalid_type_error:
                     "Nama Resep wajib diisi!",
             })
             .min(1, { message: "Nama Resep wajib diisi!" }),
-        jumlah_kebutuhan: z
+        jumlah_bahan: z
             .string({
                 invalid_type_error:
                     "Jumlah Kebutuhan Wajib Diisi!",
             })
             .min(1, { message: "Jumlah Kebutuhan Wajib Diisi!" })
             .refine((value) => parseFloat(value) > 0, { message: "Jumlah Kebutuhan harus lebih dari 0" }),
-        bahan: z
-            .string({
-                required_error: "Bahan wajib diisi!",
-                invalid_type_error:
-                    "Bahan wajib diisi!",
-            })
-            .min(1, { message: "Bahan wajib diisi!" }),
+
     });
 
 export const gajiKaryawan = z

@@ -17,7 +17,9 @@ import {  useNavigate } from "react-router-dom"; //Link,
 import { RegisterApi , CekVerify} from "../../api/authApi";
 import "./style.css";
 import { useInterval } from "../../utility/useInterval";
-
+import { useContext } from "react";
+import { GlobalContext } from "@/context/context";
+import { toast } from "react-toastify"; 
 
 const Register = () => {
   const [formErrors, setFormErrors] = useState({});
@@ -27,6 +29,8 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [id, setId] = useState(null);
+  const { success, setSuccess } = useContext(GlobalContext);
+  
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -43,6 +47,9 @@ const Register = () => {
             setIsActive(res);
             if(isActive === 1){
                 navigate('/login');
+                setTimeout(() => {
+                  toast.success("Verfikasi Berhasil..");
+                }, 1500);
             }
         }).catch((err)=>{
             console.log("Error", err);
@@ -75,9 +82,21 @@ const Register = () => {
 
     RegisterApi(formData).then((res) => {
         console.log("Masuk");
-        console.log("res : " );
-        console.log(res.id_user);
-        setId(res.id_user);
+        console.log(res.status);
+        if(res.status !== 200){
+          console.log("masuk error : ");
+          toast.error(res.Message);
+
+          setTimeout(() => {
+              setSuccess({ bool: false, message: '' });
+          }, 1000);
+
+        } else {
+          console.log(res.status);
+          toast.success("Berhasil Mengirim Verifikasi..Silahkan Periksa Email Anda!!");
+        }
+        console.log(res.data.id_user);
+        setId(res.data.id_user);
         setLoading(false);
       }).catch((err) => {
           console.log("Error", err);
