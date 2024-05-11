@@ -79,7 +79,9 @@ const Login = () => {
                 setLoading(false);
             })
             .catch((err) => {
-                console.log("Error", err);
+                console.log("Error", err.message);
+                toast.error("Email atau Password Salah");
+        
                 
                 setLoading(false);
             });
