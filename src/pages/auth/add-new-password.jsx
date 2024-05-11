@@ -3,6 +3,8 @@ import { FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { addNewPassword } from "../../validations/validation";
 import { ResetPassword } from "../../api/authApi";
 import { useLocation } from 'react-router-dom';
+import { toast } from "react-toastify"; 
+import { useNavigate } from "react-router-dom";
 
 const formReducer = (state, event) => {
     return {
@@ -20,6 +22,7 @@ const AddNewPassword = () => {
     const [showPassword2, setShowPassword2] = useState(false);
     const [formErrors, setFormErrors] = useState({});
     const location = useLocation(true);
+    const navigate = useNavigate();
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -60,8 +63,15 @@ const AddNewPassword = () => {
         setFormData({ target: { name: 'token', value: token } });
         setFormErrors({});
         ResetPassword(formData).then((res) => {
+            setTimeout(() => {
+                toast.success("Berhasil reset Password");
+                },2000)
+                navigate('/login');
             console.log("data " + res);
         }).catch((err) => {
+            setTimeout(() => {
+                toast.error("Gagal reset Password");
+                },2000)
             console.log("err " + err);
         });
     };
