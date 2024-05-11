@@ -32,11 +32,11 @@ export const RegisterApi = async (data) => { //data diisi dengan maping atau obj
     console.log(data);  
     const response = await useAxios.post("/register", data);
 
-    console.log("Response:", response);
+    console.log("Response:", response.data);
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
-    throw error.response.data;
+    throw error.response;
   }
 };
 

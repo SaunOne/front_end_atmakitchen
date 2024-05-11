@@ -5,8 +5,9 @@ import { Button } from "@material-tailwind/react";
 import { LoginApi } from "../../api/authApi";
 import {  useNavigate } from "react-router-dom"; //Link,
 import { GlobalContext } from "../../context/context";
-import { Toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { set } from "zod";
+import { GlobalContext } from "../../context/context";
 //import { Navigate } from "react-router-dom";
 
 const formReducer = (state, event) => {
@@ -73,6 +74,7 @@ const Login = () => {
                     console.log("Masuk Sebagai Customer");
                     navigate("/user");
                 }
+                setSuccess({bool: true, message: 'Berhasil Login...'});
                 setIsLogin(true);
                 setLoading(false);
             })
