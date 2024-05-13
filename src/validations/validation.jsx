@@ -284,18 +284,9 @@ export const editProfile = z
         gender: z
             .string()
             .min(1, { message: "Jenis Kelamin harus dipilih" }),
-        day: z
+        tanggal_lahir: z
             .string()
-            .min(1, { message: "Tanggal Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Tanggal Tidak Valid!" }),
-        month: z
-            .string()
-            .min(1, { message: "Bulan Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Bulan Tidak Valid!" }),
-        year: z
-            .string()
-            .min(1, { message: "Tahun Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Tahun Tidak Valid!" }),
+            .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
     })
 
 export const bahanBakuAdmin = z

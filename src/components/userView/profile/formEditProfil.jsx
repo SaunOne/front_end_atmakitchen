@@ -2,15 +2,29 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { editProfile } from "@/validations/validation";
 import { GlobalContext } from '@/context/context';
+import { GetUserProfile, UpdateProfile } from "@/api/customersApi";
 
 export const FormEditProfil = () => {
     const { user } = useContext(GlobalContext);
-   
     const [formErrors, setFormErrors] = useState({});
     const navigateTo = useNavigate();
     const [picture, setPicture] = useState(null);
     const img = useRef();
+    const [data, setData] = useState({});
+    const {setSuccess, success} = useContext(GlobalContext);
+
     console.log(user);
+
+    useEffect(() => {
+        GetUserProfile()
+          .then((response) => {
+            setData(response.data);
+            console.log(response.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -29,7 +43,17 @@ export const FormEditProfil = () => {
             }
             return setFormErrors(newErrors);
         } else {
-            navigateTo('/user/profile');
+            console.log(parsedUser.data);
+            UpdateProfile(parsedUser.data)
+              .then((response) => {
+                console.log(response); 
+                setSuccess({bool: true, message: 'Profile berhasil diupdate'});
+                console.log(success);
+                navigateTo('/user/profile');
+            })
+            .catch((err) => {
+                console.error(err);
+            });
         }
         setFormErrors({});
         console.log(formErrors);
@@ -46,7 +70,7 @@ export const FormEditProfil = () => {
                             name="username"
                             type="text"
                             className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[300px]"
-                            defaultValue={user.username}
+                            defaultValue={data.username}
                         />
                     </div>
                     {formErrors.username && (
@@ -60,8 +84,7 @@ export const FormEditProfil = () => {
                             name="nama_lengkap"
                             type="text"
                             className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[300px]"
-                            defaultValue={user.nama_lengkap}
-
+                            defaultValue={data.nama_lengkap}
                         />
 
                     </div>
@@ -76,7 +99,7 @@ export const FormEditProfil = () => {
                             name="email"
                             type="email"
                             className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[300px]"
-                            defaultValue={user.email}
+                            defaultValue={data.email}
 
                         />
 
@@ -92,10 +115,9 @@ export const FormEditProfil = () => {
                             name="no_telp"
                             type="number"
                             className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[300px]"
-                            defaultValue={user.no_telp}
+                            defaultValue={data.no_telp}
 
                         />
-
                     </div>
                     {formErrors.no_telp && (
                         <p className="text-red-600 font-medium">
@@ -110,8 +132,7 @@ export const FormEditProfil = () => {
                                     id="pending"
                                     name="gender"
                                     type="radio"
-                                    value="Male"
-                                    defaultChecked={user.gender === 'Male'}
+                                    defaultChecked={data.gender === "Male"}
                                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                                 />
                                 <label
@@ -126,8 +147,7 @@ export const FormEditProfil = () => {
                                     id="paid"
                                     name="gender"
                                     type="radio"
-                                    value="Female"
-                                    defaultChecked={user.gender === 'Female'}
+                                    defaultChecked={data.gender === "Female"}
                                     className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                                 />
                                 <label
@@ -140,52 +160,25 @@ export const FormEditProfil = () => {
                         </div>
                     </div>
 
-                    <div className="md:flex  justify-between mt-5  ">
-                        <label className="text-gray-800 font-semibold ">Tanggal Lahir</label>
-                        <div className="md:flex gap-2 ">
-                            <input
-                                name="day"
-                                type="number"
-                                className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[85px]"
-                                placeholder="DD"
-                                defaultValue={user.tanggal_lahir.split("-")[2]}
-                            />
-                            <input
-                                name="month"
-                                type="number"
-                                className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[85px]"
-                                placeholder="MM"
-                                defaultValue={user.tanggal_lahir.split("-")[1]}
-                            />
-                            <input
-                                name="year"
-                                type="number"
-                                className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[110px]"
-                                placeholder="YYYY"
-                                defaultValue={user.tanggal_lahir.split("-")[0]}
-                            />
-                        </div>
+                    <div className="md:flex  justify-between mt-5 gap-5">
+                        <label className="text-gray-800 font-semibold">Tanggal Lahir</label>
+                        <input
+                            name="tanggal_lahir"
+                            type="date"
+                            className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[300px]"
+                            defaultValue={data.no_telp}
+                        />
                     </div>
-                    {formErrors.day && (
+                    {formErrors.tanggal_lahir && (
                         <p className="text-red-600 font-medium">
-                            {formErrors.day}
-                        </p>
-                    )}
-                    {formErrors.month && (
-                        <p className="text-red-600 font-medium">
-                            {formErrors.month}
-                        </p>
-                    )}
-                    {formErrors.year && (
-                        <p className="text-red-600 font-medium">
-                            {formErrors.year}
+                            {formErrors.tanggal_lahir}
                         </p>
                     )}
                 </div>
 
                 <div className="md:flex md:justify-end w-full">
                     <div>
-                        <img src={picture ? picture : user.img} className="w-[150px] h-[150px] rounded-full shadow-md" />
+                        <img src={picture ? picture : data.img} className="w-[150px] h-[150px] rounded-full shadow-md" />
                         <div className="mt-4 flex justify-center px-3 py-1 border-[1px] border-gray-600 text-black cursor-pointer " onClick={() => img.current.click()}>
                             Pilih Gambar
                         </div>
