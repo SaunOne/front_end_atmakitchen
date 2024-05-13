@@ -61,7 +61,7 @@ export default function FormAddHampers() {
         const formData = new FormData(e.target);
         const formDataObject = Object.fromEntries(formData.entries());
         formDataObject.jenis_produk = "Hampers";
-        formDataObject.quantity = 1;
+        formDataObject.quantity = 1
         formDataObject.detail_hampers = inputs.map(({ id_produk, jumlah_produk }) => ({ id_produk, jumlah_produk }));
         console.log(formDataObject);
 
