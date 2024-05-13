@@ -29,8 +29,21 @@ export default function Page() {
 
 
     console.log(user);
+    const [data, setData] = useState([]);
 
-
+    useEffect(() => {
+        GetAllTransaksi()
+            .then((response) => {
+                console.log(response.data[0].detail_transaksi[0].produk.nama_produk);
+                
+                setData(response.data);
+            })
+            .catch((err) => {
+                console.log(err);
+                setError(err.message);
+            });
+      }, []);
+    
     return (
         <div className=" px-8 ">
             <h1 className="text-gray-800 mt-5 mb-3 font-bold text-[30px]">Daftar Transaksi</h1>

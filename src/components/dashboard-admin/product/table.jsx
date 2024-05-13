@@ -12,7 +12,7 @@ import { GetAllProduk } from "@/api/produkApi";
 import { getImage } from "@/api";
 
 export default function ProductTable() {
-    const { search, selectedTabValue, } = useContext(GlobalContext);
+    const { search, selectedTabValue } = useContext(GlobalContext);
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 

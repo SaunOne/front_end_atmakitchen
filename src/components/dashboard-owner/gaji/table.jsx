@@ -74,7 +74,7 @@ export default function SalaryTable() {
                                 item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch) ||
                                 item.jabatan.toLowerCase().includes(lowerCaseSearch) ||
                                 item.gaji.toString().includes(lowerCaseSearch) ||
-                                item.gaji.toString().includes(lowerCaseSearch) 
+                                item.bonus_gaji.toString().includes(lowerCaseSearch)
                             );
                         })
                         .map(({ id_user, username, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan, gaji, bonus_gaji }, index) => {
