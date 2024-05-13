@@ -37,7 +37,7 @@ export default function Page() {
 
             <div className="ml-8 relative mt-6 flex justify-start gap-3 flex-1 flex-shrink-0">
                 <Search placeholder="Cari transaksi" />
-                <DropdownProduct />
+                {/* <DropdownProduct /> */}
             </div>
 
             <div className="ml-8 relative mt-3 flex justify-start gap-6 ">
