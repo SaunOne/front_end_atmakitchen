@@ -63,6 +63,7 @@ import { EditGaji } from "@/pages/dashboard-owner/gaji/update/editGaji";
 import { EditAdmin } from "@/pages/dashboard-admin/admin/admin-settings";
 import { EditMO } from "@/pages/dashboard-mo/mo/mo-settings";
 import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
+import JarakPengiriman from "@/pages/dashboard-admin/jarak-pengiriman/jarakPengiriman";
 
 
 // Konfigurasi router
@@ -176,6 +177,10 @@ const routes = [
       {
         path : "/admin/listPesanan",
         element : <ListPesanan/>,
+      },
+      {
+        path : "/admin/jarakPengiriman",
+        element : <JarakPengiriman/>,
       },
       {
         path : "/admin/customer",

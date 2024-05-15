@@ -23,26 +23,7 @@ export default function Page() {
                 setError(err.message);
             });
     }, []);
-
-
-
-
-
     console.log(user);
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        GetAllTransaksi()
-            .then((response) => {
-                console.log(response.data[0].detail_transaksi[0].produk.nama_produk);
-                
-                setData(response.data);
-            })
-            .catch((err) => {
-                console.log(err);
-                setError(err.message);
-            });
-      }, []);
     
     return (
         <div className=" px-8 ">
@@ -99,7 +80,6 @@ export default function Page() {
                             </div>
                         </div>
                     </div>
-
                 ))}
             </div>
 

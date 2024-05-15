@@ -4,6 +4,7 @@ const GlobalContext = createContext();
 
 const GlobalContextProvider = ({ children }) => {
     const [selectedTabValue, setSelectedTabValue] = useState("Utama");
+    const [selectedTabValue2, setSelectedTabValue2] = useState("Input Jarak");
     const [search, setSearch] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState({ bool: false, message: "" });
@@ -57,6 +58,7 @@ const GlobalContextProvider = ({ children }) => {
         <GlobalContext.Provider
             value={{
                 selectedTabValue, setSelectedTabValue,
+                selectedTabValue2, setSelectedTabValue2,
                 search, setSearch,
                 error, setError,
                 success, setSuccess,

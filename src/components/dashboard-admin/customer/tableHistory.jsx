@@ -31,11 +31,18 @@ export function TableHistory() {
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
 
-  const handleStatus = (status) => {
-    if(status == "Sudah Dibayar" || status == "Diproses" || status == "Pembayaran Valid" || status == "Sedang di kirim" || status == "Siap Di Pick Up" || status == "Selesai") {
-        return true;
-    } else {
-        return false;
+  const handleStatusColor = (status) => {
+    switch(status) {
+        case "Sudah Dibayar":
+        case "Pembayaran Valid":
+        case "Selesai":
+            return "green";
+        case "Diproses":
+        case "Sedang di kirim":
+        case "Siap Di Pick Up":
+            return "orange";
+        default:
+            return "red";
     }
   }
 
@@ -150,7 +157,7 @@ export function TableHistory() {
                         <td className="flex justify-center my-5">
                         <Chip
                             variant="gradient"
-                            color={handleStatus(status_transaksi) ? "green" : "red"}
+                            color={handleStatusColor(status_transaksi)}
                             value={status_transaksi}
                             size="sm"
                             className="py-0.5 px-2 text-white flex justify-center"
