@@ -1,10 +1,10 @@
-import   { useState, useReducer, useContext } from "react";
+import { useState, useReducer, useContext } from "react";
 import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from "react-icons/fa";
 import { userLogin } from "../../validations/validation";
 import { Button } from "@material-tailwind/react";
 import { LoginApi } from "../../api/authApi";
-import {  useNavigate } from "react-router-dom"; //Link,
-import { GlobalContext } from "../../context/context";
+import { useNavigate } from "react-router-dom"; //Link,
+import { GlobalContext } from "../../context/global_context";
 import { toast } from "react-toastify";
 import { set } from "zod";
 // import { GlobalContext } from "../../context/context";
@@ -18,11 +18,11 @@ const formReducer = (state, event) => {
 };
 
 const Login = () => {
-    const {setIsLogin, success, setSuccess} = useContext(GlobalContext);
+    const { setIsLogin, success, setSuccess } = useContext(GlobalContext);
     const [formData, setFormData] = useReducer(formReducer, {});
     const [showPassword, setShowPassword] = useState(false);
     const [formErrors, setFormErrors] = useState({});
-    
+
     const [data, setData] = useState({
         email: "",
         password: "",
@@ -52,7 +52,7 @@ const Login = () => {
         setFormErrors({});
         setLoading(true);
         setData(formData);
-        console.log( data);
+        console.log(data);
         console.log("formData", formData);
         LoginApi(formData)
             .then((res) => {
@@ -74,15 +74,15 @@ const Login = () => {
                     console.log("Masuk Sebagai Customer");
                     navigate("/user");
                 }
-                setSuccess({bool: true, message: 'Berhasil Login...'});
+                setSuccess({ bool: true, message: 'Berhasil Login...' });
                 setIsLogin(true);
                 setLoading(false);
             })
             .catch((err) => {
                 console.log("Error", err.message);
                 toast.error("Email atau Password Salah");
-        
-                
+
+
                 setLoading(false);
             });
     };

@@ -14,7 +14,7 @@ import Register from "../pages/auth/register";
 import Home from "../pages/userViews/home";
 import Contact from "../pages/userViews/contact";
 import About from "../pages/userViews/about";
-import Product from "../pages/userViews/product";
+import Product from "../pages/userViews/product/product";
 import EditProfile from "../pages/userViews/profile/edit-profile";
 import ForgotPassword from "../pages/auth/forgot-password";
 import LayoutProduct from "../pages/userViews/layout.jsx/produk/layout-product";
@@ -29,7 +29,10 @@ import AddPenitip from "@/pages/dashboard-mo/penitip/create/addPenitip";
 import DashboardMO from "../pages/dashboard-mo/layout/layout-MO";
 import PenitipMO from "@/pages/dashboard-mo/penitip/penitip";
 import EditPenitip from "@/pages/dashboard-mo/penitip/update/editPenitip";
-import { GlobalContextProvider } from "../context/context";
+import { GlobalContextProvider } from "../context/global_context";
+import ProductProvider from "@/context/product_context";
+import CartProvider from "@/context/cart_context";
+
 import StaffMO from "@/pages/dashboard-mo/staff/staff";
 import EditStaff from "@/pages/dashboard-mo/staff/update/editStaff";
 import AddStaff from "@/pages/dashboard-mo/staff/create/addStaff";
@@ -63,6 +66,9 @@ import { EditGaji } from "@/pages/dashboard-owner/gaji/update/editGaji";
 import { EditAdmin } from "@/pages/dashboard-admin/admin/admin-settings";
 import { EditMO } from "@/pages/dashboard-mo/mo/mo-settings";
 import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
+import { Cart } from "@/pages/userViews/transaction/cart";
+import { DetailTransaksi } from "@/pages/userViews/transaction/detail_transaksi";
+import DetailProduk from "@/pages/userViews/product/detail_produk";
 
 
 // Konfigurasi router
@@ -80,15 +86,30 @@ const routes = [
         path: "/",
         element: <Home />,
       },
-
       {
         element: <LayoutProduct />,
         children: [
           {
-            path: "/product",
+            path: "/product/",
+            element: <Product />,
+          },
+          {
+            path: "/product/:jenis",
             element: <Product />,
           },
         ],
+      },
+      {
+        path: "/product/detail/:id",
+        element: <DetailProduk />,
+      },
+      {
+        path: "/contact",
+        element: <Contact />,
+      },
+      {
+        path: "/about",
+        element: <About />,
       },
       //Nanti masuk ke User
       {
@@ -154,64 +175,64 @@ const routes = [
         element: <ProductAdmin />,
       },
       {
-        path : "/admin/resep",
-        element : <Resep/>,
+        path: "/admin/resep",
+        element: <Resep />,
       },
       {
-        path : "/admin/bahanBaku",
-        element : <BahanBaku/>,
+        path: "/admin/bahanBaku",
+        element: <BahanBaku />,
       },
       {
-        path : "/admin/listPesanan",
-        element : <ListPesanan/>,
+        path: "/admin/listPesanan",
+        element: <ListPesanan />,
       },
       {
-        path : "/admin/resep",
-        element : <Resep/>,
+        path: "/admin/resep",
+        element: <Resep />,
       },
       {
-        path : "/admin/bahanBaku",
-        element : <BahanBaku/>,
+        path: "/admin/bahanBaku",
+        element: <BahanBaku />,
       },
       {
-        path : "/admin/listPesanan",
-        element : <ListPesanan/>,
+        path: "/admin/listPesanan",
+        element: <ListPesanan />,
       },
       {
-        path : "/admin/customer",
-        element : <ListCustomer/>,
+        path: "/admin/customer",
+        element: <ListCustomer />,
       },
       {
-        path : "/admin/history",
-        element : <HistoryPesananCustomer/>,
+        path: "/admin/history",
+        element: <HistoryPesananCustomer />,
       },
       {
-        path : "/admin/settings",
-        element : <EditAdmin/>,
+        path: "/admin/settings",
+        element: <EditAdmin />,
       },
       {
-        path : "/admin/product/add",
-        element : <AddProduk/>,
+        path: "/admin/product/add",
+        element: <AddProduk />,
       },
       {
-        path : "/admin/product/editProduk/:id",
-        element : <EditProduk/>,
+        path: "/admin/product/editProduk/:id",
+        element: <EditProduk />,
       },
       {
-        path : "/admin/resep/addResep",
-        element : <AddResep/>,
+        path: "/admin/resep/addResep",
+        element: <AddResep />,
       },
       {
-        path : "/admin/resep/editResep/:id",
-        element : <EditResep/>,
+        path: "/admin/resep/editResep/:id",
+        element: <EditResep />,
       },
       {
-        path : "/admin/bahanBaku/addBahanBaku",
-        element : <AddBahanBaku/>,
+        path: "/admin/bahanBaku/addBahanBaku",
+        element: <AddBahanBaku />,
       },
       {
-        path : "/admin/bahanBaku/editBahanBaku/:id",
-        element : <EditBahanBaku/>,
+        path: "/admin/bahanBaku/editBahanBaku/:id",
+        element: <EditBahanBaku />,
       },
     ],
   },
@@ -279,11 +300,11 @@ const routes = [
 
   {
     path: "/owner",
-    element: <DashboardOwner/>,
+    element: <DashboardOwner />,
     children: [
       {
         path: "/owner/home",
-        element: <HomeOwner/>
+        element: <HomeOwner />
       },
       {
         path: "/owner/gaji",
@@ -319,17 +340,16 @@ const routes = [
         element: <Home />,
       },
       {
-        element: <LayoutProduct />,
-        children: [
-          {
-            path: "/user/product",
-            element: <Product />,
-          },
-        ],
-      },
-      {
         path: "/user/about",
         element: <About />,
+      },
+      {
+        path: "/user/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/user/transaksi",
+        element: <DetailTransaksi />,
       },
       {
         path: "/user/contact",
@@ -360,9 +380,13 @@ const AppRouter = () => {
 
 
       <GlobalContextProvider>
-        <RouterProvider router={router} />
-        <ToastContainer />
-      </GlobalContextProvider>
+        <ProductProvider>
+          <CartProvider>
+            <RouterProvider router={router} />
+            <ToastContainer />
+          </CartProvider>
+        </ProductProvider>
+      </GlobalContextProvider >
     </>
   );
 };

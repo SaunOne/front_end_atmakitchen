@@ -10,12 +10,12 @@ import { penitip } from "../../../../validations/validation";
 // import { Dashboard } from "@/layouts";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CreatePenitip} from "@/api/penitipApi";
+import { CreatePenitip } from "@/api/penitipApi";
 import { useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 export function AddPenitip() {
-    const {setSuccess, success} = useContext(GlobalContext);
+    const { setSuccess, success } = useContext(GlobalContext);
     const [formErrors, setFormErrors] = useState({});
     const navigateTo = useNavigate();
 
@@ -35,22 +35,22 @@ export function AddPenitip() {
                 };
             }
             return setFormErrors(newErrors);
-            
-        }else{
+
+        } else {
             navigateTo('/mo/penitip');
         }
         setFormErrors({});
         console.log(formErrors);
         CreatePenitip(parsedPenitip.data)
-        .then((response) => {
-            console.log(response);
-            setSuccess({bool: true, message: 'Penitip berhasil ditambahkan'});
-            console.log(success);
-            navigateTo("/mo/penitip");
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+            .then((response) => {
+                console.log(response);
+                setSuccess({ bool: true, message: 'Penitip berhasil ditambahkan' });
+                console.log(success);
+                navigateTo("/mo/penitip");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
 
     }
 

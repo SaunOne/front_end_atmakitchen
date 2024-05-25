@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GetAllProdukUtama, CreateProduk } from '@/api/produkApi';
 import { useNavigate } from 'react-router-dom';
 import { GetAllPackaging } from '@/api/packagingApi';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 
 
 export default function FormAddHampers() {
@@ -13,7 +13,7 @@ export default function FormAddHampers() {
     const [produkUtama, setProdukUtama] = useState([]);
     const [packaging, setPackaging] = useState([]);
     const navigateTo = useNavigate();
-    const{success, setSuccess} = useContext(GlobalContext);
+    const { success, setSuccess } = useContext(GlobalContext);
 
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function FormAddHampers() {
 
 
 
-    const handleInputChange = (e, name , index) => {
+    const handleInputChange = (e, name, index) => {
         const { value } = e.target;
         const newInputs = [...inputs];
         newInputs[index][name] = value;
@@ -197,7 +197,7 @@ export default function FormAddHampers() {
                                         className: "before:content-none after:content-none",
                                     }}
                                     value={input.jumlah_produk}
-                                    onChange={(e) => handleInputChange(e,'jumlah_produk', index)}
+                                    onChange={(e) => handleInputChange(e, 'jumlah_produk', index)}
                                     required
                                 />
                             </div>

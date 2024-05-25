@@ -4,7 +4,7 @@ import {
     Avatar,
     Button,
 } from "@material-tailwind/react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { productTableData } from "@/data";
 import { DeleteProduct, UpdateProduct } from "../button";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/outline";
@@ -35,7 +35,7 @@ export default function ProductTable() {
 
     return (
         <>
-            {isLoading ? ( 
+            {isLoading ? (
                 <div>Loading...</div>
             ) : (
                 <table className="w-full min-w-[640px] table-auto">
@@ -77,7 +77,7 @@ export default function ProductTable() {
                                     }`;
                                 return (
                                     <tr key={id_produk}>
-                                        <td className={className}>{index+1}</td>
+                                        <td className={className}>{index + 1}</td>
                                         <td className={className}>
                                             <div className="flex items-center gap-4">
                                                 <Avatar src={getImage(image_produk)} alt={nama_produk} size="sm" variant="rounded" />

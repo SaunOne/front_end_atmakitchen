@@ -11,11 +11,11 @@ import { useNavigate } from "react-router-dom";
 import { GetAllBahanBaku } from "@/api/bahanBakuApi";
 
 import { CreatePengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 export function AddPengeluaranBahanBaku() {
     const [formErrors, setFormErrors] = useState({});
-    const {setSuccess, success} = useContext(GlobalContext);
+    const { setSuccess, success } = useContext(GlobalContext);
     const [bahan, setBahan] = useState([]);
     const [satuan, setSatuan] = useState("");
     const [selectedBahan, setSelectedBahan] = useState("");
@@ -67,20 +67,20 @@ export function AddPengeluaranBahanBaku() {
             parsedPengeluaran.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedPengeluaran.data.nama_bahan).id_bahan;
             console.log(parsedPengeluaran.data.id_bahan)
             CreatePengeluaranBahanBaku(parsedPengeluaran.data)
-            .then((response) => {
-                console.log(response); 
-                setSuccess({bool: true, message: 'Pengadaan Bahan Baku berhasil ditambahkan'});
-                console.log(success);
-                navigateTo('/mo/pengeluaran-bahan-baku');
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-            
+                .then((response) => {
+                    console.log(response);
+                    setSuccess({ bool: true, message: 'Pengadaan Bahan Baku berhasil ditambahkan' });
+                    console.log(success);
+                    navigateTo('/mo/pengeluaran-bahan-baku');
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+
         }
         setFormErrors({});
         console.log(formErrors);
-        
+
     }
 
     return (

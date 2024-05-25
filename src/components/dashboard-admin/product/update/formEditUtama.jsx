@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { GetAllPackaging } from '@/api/packagingApi';
 import { GetAllReadyStock, UpdateProduk, GetProdukById } from '@/api/produkApi';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 
 
 export default function FormEditUtama() {
@@ -180,7 +180,7 @@ export default function FormEditUtama() {
                                 className: "before:content-none after:content-none",
                             }}
                             defaultValue={values.image_produk}
-                    
+
                         />
                     </div>
                     {/* <div>
@@ -212,7 +212,7 @@ export default function FormEditUtama() {
                         rows="3"
                         id="textarea"
                         defaultValue={values.deskripsi}>
-                            
+
                     </Textarea>
                 </div>
                 <div className="flex justify-end">

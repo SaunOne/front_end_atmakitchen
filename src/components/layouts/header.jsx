@@ -9,14 +9,16 @@ import { FaShoppingCart, FaUserCircle, FaBell } from "react-icons/fa";
 import { navBarUserList } from "../../constants/index.js";
 import "../fonts.css";
 import "./style.css";
+import { CartContext } from "@/context/cart_context";
+import { useContext } from "react";
 
 const Header = () => {
+    const { itemAmount } = useContext(CartContext);
     const [showMenu, setShowMenu] = useState(true);
     const [sidenav, setSidenav] = useState(false);
     const [category, setCategory] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const [showDropdown2, setShowDropdown2] = useState(false);
-    const [products, setProducts] = useState([{ nama: "kevin" }, { nama: "kevin" }, { nama: "kevin" }]);
     const location = useLocation();
     const [isLogin, setIsLogin] = useState(false);
 
@@ -29,7 +31,7 @@ const Header = () => {
             if (window.innerWidth < 768) {
                 setShowMenu(false);
                 setShowDropdown(false);
-                setProducts([{ nama: "kevin" }, { nama: "kevin" }])
+                
             } else {
                 setShowDropdown2(false);
                 setShowMenu(true);
@@ -60,12 +62,12 @@ const Header = () => {
                     <div className=" w-[85%] ">
                         <div className="hidden mb-2 md:flex md:justify-end items-end md:h-[35px] md:border-b-[1px] md:border-[#9694ae]  mr-[60px] gap-6">
                             <FaBell className="text-gray-800 w-5 h-5 mb-2" />
-                            <Link to="/cart">
+                            <Link to="/user/cart">
                                 <div className="relative">
                                     <FaShoppingCart className="text-gray-800 w-5 h-5 mb-2" />
-                                    {products.length > 0 && (
+                                    {itemAmount > 0 && (
                                         <span className="absolute geologica-400 font-titleFont top-3 -right-2 text-[12px]  w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white bg-[#ff2e2e]">
-                                            {products.length}
+                                            {itemAmount}
                                         </span>
                                     )}
                                 </div>
@@ -113,9 +115,9 @@ const Header = () => {
                                 <Link to="/cart">
                                     <div className="relative inline-block md:hidden">
                                         <FaShoppingCart className="text-gray-800 w-5 h-5 mb-2" />
-                                        {products.length > 0 && (
+                                        {itemAmount > 0 && (
                                             <span className="absolute geologica-400 font-titleFont top-3 -right-2 text-[12px]  w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white bg-[#ff2e2e]">
-                                                {products.length}
+                                                {itemAmount}
                                             </span>
                                         )}
                                     </div>

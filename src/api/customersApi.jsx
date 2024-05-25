@@ -34,8 +34,8 @@ export const UpdateProfile = async (data) => {
     try {
         const response = await useAxios.post("/user/update-profile", data, {
             headers: {
-              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-              "Content-Type": "application/json"
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+                "Content-Type": "application/json"
             }
         });
         return response.data;

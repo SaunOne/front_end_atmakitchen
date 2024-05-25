@@ -19,7 +19,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { bahanBakuTableData } from "@/data";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { GetAllBahanBaku } from "@/api/bahanBakuApi";
 import { UpdateBahanBaku, DeleteBahanBaku } from "../button";
 
@@ -31,15 +31,15 @@ export function BahanBakuTable() {
 
   useEffect(() => {
     GetAllBahanBaku()
-        .then((response) => {
-            console.log(response)
-            setData(response);
-        })
-        .catch((err) => {
-            console.log(err);
-            setError(err.message);
-        });
-  }, []); 
+      .then((response) => {
+        console.log(response)
+        setData(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+      });
+  }, []);
 
   console.log(search);
 
@@ -86,67 +86,66 @@ export function BahanBakuTable() {
                 item.satuan.toLowerCase().includes(lowerCaseSearch)
               );
             }).map(
-            ({ id_bahan, nama_bahan, stok_bahan, satuan }, index) => {
-              const className = `py-3 px-5 text-center border-r ${
-                index === bahanBakuTableData.length - 1
-                  ? ""
-                  : "border-b border-blue-gray-50"
-              }`;
-              const rowNumber = (currentPage - 1) * rowsPerPage + index + 1;
-              return (
-                <tr key={index}>
-                  <td className={className}>
-                    <div className="text-xs font-semibold text-blue-gray-600">
-                      <div>
-                        <Typography
-                          variant="small"
-                          color="blue-gray"
-                          className="font-semibold"
-                        >
-                          {rowNumber}
-                        </Typography>
+              ({ id_bahan, nama_bahan, stok_bahan, satuan }, index) => {
+                const className = `py-3 px-5 text-center border-r ${index === bahanBakuTableData.length - 1
+                    ? ""
+                    : "border-b border-blue-gray-50"
+                  }`;
+                const rowNumber = (currentPage - 1) * rowsPerPage + index + 1;
+                return (
+                  <tr key={index}>
+                    <td className={className}>
+                      <div className="text-xs font-semibold text-blue-gray-600">
+                        <div>
+                          <Typography
+                            variant="small"
+                            color="blue-gray"
+                            className="font-semibold"
+                          >
+                            {rowNumber}
+                          </Typography>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                  <td className={className}>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {nama_bahan}
-                    </Typography>
-                  </td>
-                  <td className={className}>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {stok_bahan}
-                    </Typography>
-                  </td>
-                  <td className={className}>
-                    <Typography className="text-xs font-semibold text-blue-gray-600">
-                      {satuan}
-                    </Typography>
-                  </td>
-                  <td className={className}>
-                    <div className="flex justify-center ">
-                      <UpdateBahanBaku id={id_bahan} />
-                      <DeleteBahanBaku id={id_bahan} />
-                    </div>
-                  </td>
-                </tr> 
-              );
-            }
-          )}
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {nama_bahan}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {stok_bahan}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <Typography className="text-xs font-semibold text-blue-gray-600">
+                        {satuan}
+                      </Typography>
+                    </td>
+                    <td className={className}>
+                      <div className="flex justify-center ">
+                        <UpdateBahanBaku id={id_bahan} />
+                        <DeleteBahanBaku id={id_bahan} />
+                      </div>
+                    </td>
+                  </tr>
+                );
+              }
+            )}
         </tbody>
       </table>
       <div className="flex justify-center">
-            {Array.from({ length: totalPages }, (_, index) => (
-                <button
-                    key={index}
-                    className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"
-                        }`}
-                    onClick={() => handlePageChange(index + 1)}
-                >
-                    {index + 1}
-                </button>
-            ))}
-        </div>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"
+              }`}
+            onClick={() => handlePageChange(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { DeletePenitipById } from "@/api/penitipApi";
 import { DeletePengeluaranBahanBakuById } from "@/api/pengeluaranBahanBakuApi";
 import { useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { DeletePengeluaranLainById } from "@/api/pengeluaranLainApi";
 import { DeleteStaffById } from "@/api/staffApi";
 

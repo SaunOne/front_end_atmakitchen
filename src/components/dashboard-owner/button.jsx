@@ -1,7 +1,7 @@
 import { PencilIcon, PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { DeleteKaryawanById } from "@/api/gajiKaryawanApi";
 
 export function UpdateGaji({ id }) {

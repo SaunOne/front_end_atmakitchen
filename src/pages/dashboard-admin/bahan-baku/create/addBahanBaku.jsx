@@ -12,7 +12,7 @@ import { bahanBakuAdmin } from "../../../../validations/validation";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import { GetAllBahanBaku, CreateBahanBaku } from "@/api/bahanBakuApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 export function AddBahanBaku() {
   const [formErrors, setFormErrors] = useState({});
@@ -20,32 +20,32 @@ export function AddBahanBaku() {
   const [bahan, setBahan] = useState([]);
   const [satuan, setSatuan] = useState("");
   const [selectedBahan, setSelectedBahan] = useState("");
-  const {setSuccess, success} = useContext(GlobalContext);
+  const { setSuccess, success } = useContext(GlobalContext);
 
   useEffect(() => {
     GetAllBahanBaku()
-        .then((response) => {
-            console.log(response)
-            setBahan(response);
-        })
-        .catch((err) => {
-            console.log(err);
-            setError(err.message);
-        });
+      .then((response) => {
+        console.log(response)
+        setBahan(response);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+      });
   }, []);
 
   useEffect(() => {
-      const selectedBahanObj = bahan.find((item) => item.nama_bahan === selectedBahan);
-      if (selectedBahanObj) {
-          setSatuan(selectedBahanObj.satuan);
-      } else {
-          setSatuan("");
-      }
+    const selectedBahanObj = bahan.find((item) => item.nama_bahan === selectedBahan);
+    if (selectedBahanObj) {
+      setSatuan(selectedBahanObj.satuan);
+    } else {
+      setSatuan("");
+    }
   }, [selectedBahan]);
 
   const handleBahanChange = (e) => {
-      setSelectedBahan(e.target.value);
-  }; 
+    setSelectedBahan(e.target.value);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -66,17 +66,17 @@ export function AddBahanBaku() {
       console.log(parsedBahanBaku);
       return setFormErrors(newErrors);
     } else {
-        // parsedBahanBaku.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedBahanBaku.data.nama_bahan).id_bahan;
-        // console.log(parsedBahanBaku.data.id_bahan)
-        CreateBahanBaku(parsedBahanBaku.data)
+      // parsedBahanBaku.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedBahanBaku.data.nama_bahan).id_bahan;
+      // console.log(parsedBahanBaku.data.id_bahan)
+      CreateBahanBaku(parsedBahanBaku.data)
         .then((response) => {
-            console.log(response); 
-            setSuccess({bool: true, message: 'Bahan Baku berhasil ditambahkan'});
-            console.log(success);
-            navigateTo('/admin/bahanBaku');
+          console.log(response);
+          setSuccess({ bool: true, message: 'Bahan Baku berhasil ditambahkan' });
+          console.log(success);
+          navigateTo('/admin/bahanBaku');
         })
         .catch((err) => {
-            console.error(err);
+          console.error(err);
         });
     }
     setFormErrors({});
@@ -91,9 +91,9 @@ export function AddBahanBaku() {
           <div className="mb-1 gap-6 grid grid-cols-1 md:grid-cols-3">
             <div>
               <Typography variant="h6" color="blue-gray" className="mb-3">
-                Nama Bahan 
+                Nama Bahan
               </Typography>
-              <Input 
+              <Input
                 type="text"
                 size="lg"
                 name="nama_bahan"

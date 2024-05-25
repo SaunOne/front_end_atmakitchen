@@ -1,10 +1,22 @@
-import React, { useContext } from "react"; // Importing useContext correctly
-import { GlobalContext } from '@/context/context';
+import React, { useEffect, useState } from "react"; // Importing useContext correctly
+import { GlobalContext } from '@/context/global_context';
 import { FaWallet, FaTrophy } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-
+import { GetUserProfile } from "@/api/customersApi";
 const Sidebar = () => {
-    const { user } = useContext(GlobalContext); // Using useContext hook correctly
+
+    const [user, setUser] = useState({}); // Using useContext hook correctly
+    useEffect(() => {
+        GetUserProfile()
+            .then((response) => {
+                setUser(response.data);
+                console.log(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
+    // const { user } = useContext(GlobalContext); // Using useContext hook correctly
     console.log(user);
 
 

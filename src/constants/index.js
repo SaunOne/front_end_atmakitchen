@@ -25,24 +25,29 @@ export const navBarUserList = [
 
 export const navBarUserProduct = [
     {
+        _id: 1000,
+        title: "Semua",
+        link: "/product",
+    },
+    {
         _id: 1001,
         title: "Cake",
-        link: "/cake",
+        link: "/product/cake",
     },
     {
         _id: 1002,
         title: "Roti",
-        link: "/roti",
+        link: "/product/roti",
     },
     {
         _id: 1003,
-        title: "Tentang Kami",
-        link: "/about",
+        title: "Minuman",
+        link: "/product/minuman",
     },
     {
         _id: 1004,
-        title: "Kontak",
-        link: "/contact",
+        title: "Hampers",
+        link: "/product/hampers",
     },
 
 ];

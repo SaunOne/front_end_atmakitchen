@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';

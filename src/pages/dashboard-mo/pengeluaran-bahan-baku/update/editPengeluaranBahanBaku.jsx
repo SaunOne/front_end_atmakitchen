@@ -10,7 +10,7 @@ import { bahanBaku } from "../../../../validations/validation";
 import { useNavigate } from "react-router-dom";
 import { GetAllBahanBaku, GetBahanBakuById } from "@/api/bahanBakuApi";
 import { GetPengeluaranBahanBakuById, UpdatePengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { useParams } from "react-router-dom";
 
 
@@ -102,7 +102,7 @@ export function EditPengeluaranBahanBaku() {
                 })
                 .catch((err) => {
                     console.log(err);
-                }); 
+                });
 
         }
         setFormErrors({});

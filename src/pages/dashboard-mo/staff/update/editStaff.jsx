@@ -11,7 +11,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { staffTableData } from "@/data";
 import { GetStaffById, UpdateStaff } from "@/api/staffApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 export function EditStaff() {
     const { id } = useParams();
@@ -20,18 +20,18 @@ export function EditStaff() {
     const navigateTo = useNavigate();
     const role = ["Manajer Operasi", "Admin", "Karyawan Biasa"];
     const [data, setData] = useState({});
-    const {setSuccess, success} = useContext(GlobalContext);
+    const { setSuccess, success } = useContext(GlobalContext);
 
     useEffect(() => {
         GetStaffById(id) // Fungsi API untuk mengambil data
-          .then((response) => {
-            setData(response);
-            console.log(response);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }, [id]);
+            .then((response) => {
+                setData(response);
+                console.log(response);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, [id]);
 
     console.log(id);
 
@@ -42,34 +42,34 @@ export function EditStaff() {
         console.log(formDataObject);
         const parsedStaff = staff.safeParse(formDataObject);
         if (!parsedStaff.success) {
-        const error = parsedStaff.error;
-        let newErrors = {};
-        for (const issue of error.issues) {
-            newErrors = {
-            ...newErrors,
-            [issue.path[0]]: issue.message,
-            };
-        }
-        console.log(newErrors);
-        console.log(parsedStaff);
-        return setFormErrors(newErrors);
+            const error = parsedStaff.error;
+            let newErrors = {};
+            for (const issue of error.issues) {
+                newErrors = {
+                    ...newErrors,
+                    [issue.path[0]]: issue.message,
+                };
+            }
+            console.log(newErrors);
+            console.log(parsedStaff);
+            return setFormErrors(newErrors);
         } else {
             parsedStaff.data.id_user = id;
             console.log(parsedStaff);
             UpdateStaff(parsedStaff.data)
-            .then((response) => {
-                console.log(response); 
-                setSuccess({bool: true, message: 'Staff berhasil diubah'});
-                console.log(success);
-                navigateTo('/mo/staff');
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+                .then((response) => {
+                    console.log(response);
+                    setSuccess({ bool: true, message: 'Staff berhasil diubah' });
+                    console.log(success);
+                    navigateTo('/mo/staff');
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
         }
         setFormErrors({});
         console.log(formErrors);
-        console.log(parsedStaff.data.nama_lengkap);  
+        console.log(parsedStaff.data.nama_lengkap);
     }
 
     return (

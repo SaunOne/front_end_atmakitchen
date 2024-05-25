@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { DeleteBahanBakuById } from "@/api/bahanBakuApi";
 import { DeleteProdukById } from "@/api/produkApi";
 import { useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 export function UpdateGaji({ id }) {
     return (
