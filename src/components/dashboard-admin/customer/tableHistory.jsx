@@ -31,25 +31,32 @@ export function TableHistory() {
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 
-    const handleStatus = (status) => {
-        if (status == "Sudah Dibayar" || status == "Diproses" || status == "Pembayaran Valid" || status == "Sedang di kirim" || status == "Siap Di Pick Up" || status == "Selesai") {
-            return true;
-        } else {
-            return false;
-        }
+  const handleStatusColor = (status) => {
+    switch(status) {
+        case "Sudah Dibayar":
+        case "Pembayaran Valid":
+        case "Selesai":
+            return "green";
+        case "Diproses":
+        case "Sedang di kirim":
+        case "Siap Di Pick Up":
+            return "orange";
+        default:
+            return "red";
     }
+  }
 
-    useEffect(() => {
-        GetAllTransaksiAdmin()
-            .then((response) => {
-                console.log(response.data);
-                setData(response.data);
-            })
-            .catch((err) => {
-                console.log(err);
-                setError(err.message);
-            });
-    }, []);
+  useEffect(() => {
+    GetAllTransaksiAdmin()
+        .then((response) => {
+            console.log(response.data);
+            setData(response.data);
+        })
+        .catch((err) => {
+            console.log(err);
+            setError(err.message)
+        });
+  }, []);
 
     // Calculate total pages
     const totalPages = Math.ceil(data.length / rowsPerPage);
@@ -104,75 +111,75 @@ export function TableHistory() {
                                 : "border-b border-blue-gray-50"
                                 }`;
 
-                            return (
-                                <tr key={index}>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {rowNumber}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {id_transaksi}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {nama_lengkap}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {jenis_pesanan}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {total_harga_transaksi}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {biaya_pengiriman}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {jumlah_pembayaran}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {jenis_pengiriman}
-                                        </Typography>
-                                    </td>
-                                    <td className="flex justify-center my-5">
-                                        <Chip
-                                            variant="gradient"
-                                            color={handleStatus(status_transaksi) ? "green" : "red"}
-                                            value={status_transaksi}
-                                            size="sm"
-                                            className="py-0.5 px-2 text-white flex justify-center"
-                                        />
-                                    </td>
-                                </tr>
-                            );
-                        }
-                    )}
-                </tbody>
-            </table>
-            <div className="flex justify-center">
-                {Array.from({ length: totalPages }, (_, index) => (
-                    <button
-                        key={index}
-                        className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"
-                            }`}
-                        onClick={() => handlePageChange(index + 1)}
-                    >
-                        {index + 1}
-                    </button>
-                ))}
-            </div>
+                    return (
+                    <tr key={index}>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {rowNumber}
+                            </Typography>
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {id_transaksi}
+                            </Typography>
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {nama_lengkap}
+                            </Typography>
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {jenis_pesanan}
+                            </Typography>  
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {total_harga_transaksi}
+                            </Typography>  
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {biaya_pengiriman}
+                            </Typography>  
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {jumlah_pembayaran}
+                            </Typography>
+                        </td>
+                        <td className={className}>
+                            <Typography className="text-xs font-semibold text-blue-gray-600">
+                                {jenis_pengiriman}
+                            </Typography>
+                        </td>
+                        <td className="flex justify-center my-5">
+                        <Chip
+                            variant="gradient"
+                            color={handleStatusColor(status_transaksi)}
+                            value={status_transaksi}
+                            size="sm"
+                            className="py-0.5 px-2 text-white flex justify-center"
+                        />
+                        </td>
+                    </tr>
+                    );
+                }
+                )}
+            </tbody>
+        </table>
+        <div className="flex justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+                <button
+                    key={index}
+                    className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"
+                        }`}
+                    onClick={() => handlePageChange(index + 1)}
+                >
+                    {index + 1}
+                </button>
+            ))}
         </div>
-    );
+    </div>
+  );
 }

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react"; // Importing useContext corr
 import { GlobalContext } from '@/context/global_context';
 import { FaWallet, FaTrophy } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
+import { useEffect } from "react";
 import { GetUserProfile } from "@/api/customersApi";
+import NotaModal from "./nota-modal";
 import { getImage } from "@/api";
 const Sidebar = () => {
 
@@ -20,6 +22,23 @@ const Sidebar = () => {
     // const { user } = useContext(GlobalContext); // Using useContext hook correctly
     console.log(user);
 
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        GetUserProfile()
+          .then((response) => {
+            setData(response.data);
+            console.log(response.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }, []);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const toggleModal = () => {
+        setIsModalOpen(!isModalOpen);
+    };
 
     return (
         <>
@@ -28,8 +47,8 @@ const Sidebar = () => {
                     <div className="lg:flex lg:p-7 p-4 justify-start gap-6">
                         <img className="rounded-[50px] w-[95px] h-[95px]" src={getImage(user.img)} alt="User Profile"></img>
                         <div>
-                            <h1 className="text-black mt-5 font-bold text-[18px]">{user.nama_lengkap}</h1>
-                            <h1 className="text-black mt-2 font-semibold text-[12px]">{user.email}</h1>
+                            <h1 className="text-black mt-5 font-bold text-[18px]">{data.nama_lengkap}</h1>
+                            <h1 className="text-black mt-2 font-semibold text-[12px]">{data.email}</h1>
                         </div>
                     </div>
                     <div className="border-b-[1px] border-gray-400"></div>
@@ -78,7 +97,7 @@ const Sidebar = () => {
                         </div>
                         <div className="mt-2 ml-4">
                             <NavLink
-                                to="/user/profile/edit"
+                                to="/user/profile/alamat"
                                 className="text-black font-semibold text-[14px]  hover:text-blue-500"
                             >
                                 Alamat
@@ -107,7 +126,7 @@ const Sidebar = () => {
 
                         <div className="mt-4 ml-4">
                             <NavLink
-                                to="/user/profile/edit"
+                                to=""
                                 className="text-black font-semibold text-[14px]  hover:text-blue-500"
                             >
                                 About us
@@ -115,15 +134,21 @@ const Sidebar = () => {
                         </div>
                         <div className="mt-2 ml-4">
                             <NavLink
-                                to="/user/profile/edit"
+                                to=""
                                 className="text-black font-semibold text-[14px]  hover:text-blue-500"
                             >
                                 Contact us
                             </NavLink>
                         </div>
+                        <div className="mt-2 ml-4">
+                            <button onClick={toggleModal} className="text-black font-semibold text-[14px] hover:text-blue-500">
+                                Nota
+                            </button> 
+                        </div>
                     </div>
                 </div>
             </div>
+            {isModalOpen && <NotaModal isOpen={isModalOpen} toggleModal={toggleModal} />}
         </>
     );
 }

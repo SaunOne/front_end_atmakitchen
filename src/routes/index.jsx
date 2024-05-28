@@ -16,6 +16,9 @@ import Contact from "../pages/userViews/contact";
 import About from "../pages/userViews/about";
 import Product from "../pages/userViews/product/product";
 import EditProfile from "../pages/userViews/profile/edit-profile";
+import Alamat from "../pages/userViews/profile/alamat";
+import AddAlamat from "../pages/userViews/profile/addAlamat";
+import EditAlamat from "../pages/userViews/profile/editAlamat";
 import ForgotPassword from "../pages/auth/forgot-password";
 import LayoutProduct from "../pages/userViews/layout.jsx/produk/layout-product";
 import LayoutProfile from "@/pages/userViews/layout.jsx/profile/layout-profile";
@@ -66,6 +69,7 @@ import { EditGaji } from "@/pages/dashboard-owner/gaji/update/editGaji";
 import { EditAdmin } from "@/pages/dashboard-admin/admin/admin-settings";
 import { EditMO } from "@/pages/dashboard-mo/mo/mo-settings";
 import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
+import JarakPengiriman from "@/pages/dashboard-admin/jarak-pengiriman/jarakPengiriman";
 import { Cart } from "@/pages/userViews/transaction/cart";
 import { DetailTransaksi } from "@/pages/userViews/transaction/detail_transaksi";
 import DetailProduk from "@/pages/userViews/product/detail_produk";
@@ -122,6 +126,18 @@ const routes = [
           {
             path: "/user/profile/edit",
             element: <EditProfile />,
+          },
+          {
+            path: "/user/profile/alamat",
+            element: <Alamat />,
+          },
+          {
+            path: "/user/profile/addAlamat",
+            element: <AddAlamat />,
+          },
+          {
+            path: "/user/profile/editAlamat/:id",
+            element: <EditAlamat />,
           },
           {
             path: "/user/profile/histori-withdraw",
@@ -197,6 +213,14 @@ const routes = [
       {
         path: "/admin/listPesanan",
         element: <ListPesanan />,
+      },
+      {
+        path : "/admin/jarakPengiriman",
+        element : <JarakPengiriman/>,
+      },
+      {
+        path : "/admin/jarakPengiriman",
+        element : <JarakPengiriman/>,
       },
       {
         path: "/admin/customer",
