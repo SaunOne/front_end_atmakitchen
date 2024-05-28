@@ -39,7 +39,7 @@ export default function Page() {
     }, []);
 
     const handleButtonClick = (user) => {
-        if (user.status_transaksi === "Menunggu Pembayaran") {
+        if (user.status_transaksi === "menunggu pembayaran") {
             setIsBayarModalOpen(!isBayarModalOpen);// Buka modal
         } else {
             console.log("Showing details for order ID:", user.id_transaksi);
@@ -117,7 +117,7 @@ export default function Page() {
                                 )}
                                 <button className="bg-gray-800 p-2" onClick={() => handleButtonClick(user)}>
                                     <h1 className="text-white font-semibold text-[14px]">
-                                        {user.status_transaksi === "Menunggu Pembayaran" ? "Bayar" : "Detail Pesanan"}
+                                        {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : "Detail Pesanan"}
                                     </h1>
                                 </button>
                             </div>

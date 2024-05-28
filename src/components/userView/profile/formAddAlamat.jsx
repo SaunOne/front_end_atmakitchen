@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { editAlamat, editProfile } from "@/validations/validation";
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 import { GetUserProfile, UpdateProfile } from "@/api/customersApi";
 import { CreateAlamat } from "@/api/alamatApi";
 

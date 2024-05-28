@@ -21,7 +21,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { listPesananData } from "@/data";
 import { useState, useEffect, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { ConfirmJarak } from "@/components/dashboard-admin/button";
 import { DeleteJarak } from "@/components/dashboard-admin/button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

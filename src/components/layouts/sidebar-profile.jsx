@@ -2,23 +2,13 @@ import React, { useEffect, useState } from "react"; // Importing useContext corr
 import { GlobalContext } from '@/context/global_context';
 import { FaWallet, FaTrophy } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
+
 import { GetUserProfile } from "@/api/customersApi";
 import NotaModal from "./nota-modal";
 import { getImage } from "@/api";
 const Sidebar = () => {
 
     const [user, setUser] = useState({}); // Using useContext hook correctly
-    useEffect(() => {
-        GetUserProfile()
-            .then((response) => {
-                setUser(response.data);
-                console.log(response.data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
-    }, []);
     // const { user } = useContext(GlobalContext); // Using useContext hook correctly
     console.log(user);
 
@@ -26,14 +16,14 @@ const Sidebar = () => {
 
     useEffect(() => {
         GetUserProfile()
-          .then((response) => {
-            setData(response.data);
-            console.log(response.data);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-      }, []);
+            .then((response) => {
+                setData(response.data);
+                console.log(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }, []);
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const toggleModal = () => {
@@ -143,7 +133,7 @@ const Sidebar = () => {
                         <div className="mt-2 ml-4">
                             <button onClick={toggleModal} className="text-black font-semibold text-[14px] hover:text-blue-500">
                                 Nota
-                            </button> 
+                            </button>
                         </div>
                     </div>
                 </div>
