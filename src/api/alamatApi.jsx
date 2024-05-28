@@ -1,8 +1,8 @@
 import useAxios from ".";
 
-export const GetAllCustomers = async () => {
+export const GetUserAlamat = async () => {
     try {
-        const response = await useAxios.get("/customers", {
+        const response = await useAxios.get("/alamat-user", {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
@@ -15,78 +15,63 @@ export const GetAllCustomers = async () => {
     }
 };
 
-export const GetUserProfile = async () => {
+export const GetAlamatById = async (id) => {
     try {
-        const response = await useAxios.get("/user-profile", {
+        console.log(id);
+        const response = await useAxios.get(`/alamat/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });
-        console.log(response.data);
-        return response.data;
+        console.log(response.data.data);
+        return response.data.data;
     } catch (error) {
         throw error.response.data;
     }
 };
 
-export const UpdateProfile = async (data) => {
+export const CreateAlamat = async (data) => {
     try {
-        const response = await useAxios.post("/user/update-profile", data, {
-            headers: {
-              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-              "Content-Type": "application/json"
-            }
-        });
-        return response.data;
-    } catch (error) {
-        console.error('Error updating password:', error.response.data);
-        throw error.response.data;
-    }
-};
-
-export const GetAllTransaksi = async () => {
-    try {
-        const response = await useAxios.get("/transaksi", {
+        const response = await useAxios.post("/alamat", data, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });
-        console.log(response.data);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response.data;
     }
 };
 
-export const GetAllTransaksiAdmin = async () => {
+export const UpdateAlamat = async (data) => {
     try {
-        const response = await useAxios.get("/transaksi/all", {
+        console.log(data);
+        const response = await useAxios.put(`/alamat/${data.id_alamat}`, data, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });
-        console.log(response.data);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response.data;
     }
 };
 
-export const CetakNota = async (id) => {
+export const DeleteAlamatById = async (id) => {
+    console.log(id);
     try {
-        const response = await useAxios.get(`/cetak-nota/${id}`, {
+        
+        const response = await useAxios.delete(`/alamat/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });
-        console.log(response.data);
-        return response.data;
+        return response.data.data;
     } catch (error) {
         throw error.response.data;
     }
 };
-

@@ -11,14 +11,14 @@ const Sidebar = () => {
                     <ul >
 
                         <li
-                            key={item._id}
+                            
                         >
                             <NavLink
-                                to={item.link}
+                                to={"/"}
                                 className="font-normal hover:font-bold items-center text-[15px] text-black hover:underline underline-offset-[4px] decoration-[1px] hover:text-gray-700 md:border-r-[1px] border-r-gray-300 hoverEffect last:border-r-0"
                                 state={{ data: location.pathname.split("/")[1] }}
                             >
-                                {item.title}
+                                {}
                             </NavLink>
                         </li>
 

@@ -16,6 +16,9 @@ import Contact from "../pages/userViews/contact";
 import About from "../pages/userViews/about";
 import Product from "../pages/userViews/product";
 import EditProfile from "../pages/userViews/profile/edit-profile";
+import Alamat from "../pages/userViews/profile/alamat";
+import AddAlamat from "../pages/userViews/profile/addAlamat";
+import EditAlamat from "../pages/userViews/profile/editAlamat";
 import ForgotPassword from "../pages/auth/forgot-password";
 import LayoutProduct from "../pages/userViews/layout.jsx/produk/layout-product";
 import LayoutProfile from "@/pages/userViews/layout.jsx/profile/layout-profile";
@@ -102,6 +105,18 @@ const routes = [
           {
             path: "/user/profile/edit",
             element: <EditProfile />,
+          },
+          {
+            path: "/user/profile/alamat",
+            element: <Alamat />,
+          },
+          {
+            path: "/user/profile/addAlamat",
+            element: <AddAlamat />,
+          },
+          {
+            path: "/user/profile/editAlamat/:id",
+            element: <EditAlamat />,
           },
           {
             path: "/user/profile/histori-withdraw",

@@ -166,7 +166,7 @@ export const FormEditProfil = () => {
                             name="tanggal_lahir"
                             type="date"
                             className="border-2 border-gray-200 text-black rounded-lg px-3 py-1 w-[300px]"
-                            defaultValue={data.no_telp}
+                            defaultValue={data.tanggal_lahir}
                         />
                     </div>
                     {formErrors.tanggal_lahir && (

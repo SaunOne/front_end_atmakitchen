@@ -344,3 +344,60 @@ export const gajiKaryawan = z
             .min(1, { message: "Bonus Gaji Wajib Diisi!" })
             .refine((value) => parseFloat(value) > 0, { message: "Bonus Gaji harus lebih dari 0" }),
     });
+
+export const editAlamat = z
+    .object({
+        provinsi: z
+        .string({
+            required_error: "Provinsi wajib diisi",
+            invalid_type_error:
+                "Provinsi wajib diisi!",
+        })
+        .min(1, { message: "Provinsi wajib diisi!" }),
+        kabupaten: z
+        .string({
+            required_error: "Kabupaten wajib diisi",
+            invalid_type_error:
+                "Kabupaten wajib diisi!",
+        })
+        .min(1, { message: "Kabupaten wajib diisi!" }),
+        kecamatan: z
+        .string({
+            required_error: "Kecamatan wajib diisi",
+            invalid_type_error:
+                "Kecamatan wajib diisi!",
+        })
+        .min(1, { message: "Kecamatan wajib diisi!" }),
+        kelurahan: z
+        .string({
+            required_error: "Kelurahan wajib diisi",
+            invalid_type_error:
+                "Kelurahan wajib diisi!",
+        })
+        .min(1, { message: "Kelurahan wajib diisi!" }),
+        detail_alamat: z
+        .string({
+            required_error: "Detail Alamat wajib diisi",
+            invalid_type_error:
+                "Detail Alamat wajib diisi!",
+        })
+        .min(1, { message: "Detail Alamat wajib diisi!" }),
+        kode_pos: z
+        .string({
+            required_error: "Kode Pos wajib diisi",
+            invalid_type_error:
+                "Kode Pos wajib diisi!",
+        })
+        .min(5, { message: "Kode Pos minimal 5 digit!" }),
+    });
+
+export const jarakAdmin = z
+    .object({
+        radius: z
+            .string({
+                invalid_type_error:
+                    "Jarak Wajib Diisi!",
+            })
+            .min(1, { message: "Jarak Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Jarak harus lebih dari 0" }),
+    });

@@ -66,8 +66,6 @@ export function AddBahanBaku() {
       console.log(parsedBahanBaku);
       return setFormErrors(newErrors);
     } else {
-        // parsedBahanBaku.data.id_bahan = bahan.find((item) => item.nama_bahan === parsedBahanBaku.data.nama_bahan).id_bahan;
-        // console.log(parsedBahanBaku.data.id_bahan)
         CreateBahanBaku(parsedBahanBaku.data)
         .then((response) => {
             console.log(response); 

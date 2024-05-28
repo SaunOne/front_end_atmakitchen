@@ -25,6 +25,7 @@ import Search from "@/components/dashboard-admin/search";
 import { TableJarakPengiriman } from "@/components/dashboard-admin/jarak-pengiriman/table";
 import { GlobalContext } from "@/context/context";
 import TabHeaders2 from "@/components/dashboard-admin/jarak-pengiriman/tab-headers";
+import { ToastContainer, toast } from 'react-toastify';
 
 export function JarakPengiriman() {
   const navigate = useNavigate();
