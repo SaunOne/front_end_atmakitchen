@@ -69,7 +69,7 @@ import { EditGaji } from "@/pages/dashboard-owner/gaji/update/editGaji";
 import { EditAdmin } from "@/pages/dashboard-admin/admin/admin-settings";
 import { EditMO } from "@/pages/dashboard-mo/mo/mo-settings";
 import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
-import JarakPengiriman from "@/pages/dashboard-admin/jarak-pengiriman/jarakPengiriman";
+// import JarakPengiriman from "@/pages/dashboard-admin/jarak-pengiriman/jarakPengiriman";
 import { Cart } from "@/pages/userViews/transaction/cart";
 import { DetailTransaksi } from "@/pages/userViews/transaction/detail_transaksi";
 import DetailProduk from "@/pages/userViews/product/detail_produk";
@@ -214,14 +214,14 @@ const routes = [
         path: "/admin/listPesanan",
         element: <ListPesanan />,
       },
-      {
-        path : "/admin/jarakPengiriman",
-        element : <JarakPengiriman/>,
-      },
-      {
-        path : "/admin/jarakPengiriman",
-        element : <JarakPengiriman/>,
-      },
+      // {
+      //   path : "/admin/jarakPengiriman",
+      //   element : <JarakPengiriman/>,
+      // },
+      // {
+      //   path : "/admin/jarakPengiriman",
+      //   element : <JarakPengiriman/>,
+      // },
       {
         path: "/admin/customer",
         element: <ListCustomer />,

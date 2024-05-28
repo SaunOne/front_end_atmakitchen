@@ -1,6 +1,21 @@
 
 import useAxios from ".";
 
+export const GetAllTransaction = async () => {
+    try {
+        const response = await useAxios.get("/transaksi/all", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
 export const GetAllUserTransaction = async () => {
     try {
         const response = await useAxios.get("/transaksi", {
@@ -50,15 +65,26 @@ export const Checkout= async (data) => {
     }
 };
 
-
-
-
-
 export const KonfirmasiAdmin = async (data) => {
     try {
         const response = await useAxios.post(`/konfirmasi-admin/${data.id_transaksi}`, data, {
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const BayarPesanan = async (data) => {
+    try {
+        const response = await useAxios.post(`/bayar/${data.id_transaksi}`, data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });

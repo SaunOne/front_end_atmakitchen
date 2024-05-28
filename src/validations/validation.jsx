@@ -391,13 +391,31 @@ export const editAlamat = z
         .min(5, { message: "Kode Pos minimal 5 digit!" }),
     });
 
-export const jarakAdmin = z
-    .object({
-        radius: z
-            .string({
-                invalid_type_error:
-                    "Jarak Wajib Diisi!",
+export const ValidasiRadius = z.object({
+    radius: z
+        .string({
+            invalid_type_error: "Jarak Wajib Diisi!",
+        })
+        .min(1, { message: "Jarak Wajib Diisi!" })
+        .refine((value) => parseFloat(value) > 0, { message: "Jarak harus lebih dari 0" }),
+});
+
+export const ValidasiPembayaran = z.object({
+    jumlah_pembayaran: z
+        .string({
+            invalid_type_error: "Jumlah Pembayaran Wajib Diisi!",
+        })
+        .min(1, { message: "Jumlah Pembayaran Wajib Diisi!" })
+        .refine((value) => parseFloat(value) > 0, { message: "Jumlah Pembayaran harus lebih dari 0" }),
+});
+
+export const pembayaranCustomer = z.object({
+    bukti_pembayaran: z
+        .instanceof(File)
+            .refine((file) => file.type.startsWith("image/"), {
+                message: "File harus berupa gambar",
             })
-            .min(1, { message: "Jarak Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Jarak harus lebih dari 0" }),
-    });
+            .refine((file) => file.size <= 1048576, {
+                message: "Ukuran gambar tidak boleh melebihi 1MB",
+            }),
+});

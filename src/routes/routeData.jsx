@@ -99,11 +99,11 @@ import {
           name: "Customer",
           path: "/admin/customer",
         },
-        {
-          icon: <FontAwesomeIcon icon={faList} {...icon} />,
-          name: "Jarak Pengiriman",
-          path: "/admin/jarakPengiriman",
-        },
+        // {
+        //   icon: <FontAwesomeIcon icon={faList} {...icon} />,
+        //   name: "Jarak Pengiriman",
+        //   path: "/admin/jarakPengiriman",
+        // },
         {
           icon: <FontAwesomeIcon icon={faGear} {...icon} />,
           name: "Admin Settings",

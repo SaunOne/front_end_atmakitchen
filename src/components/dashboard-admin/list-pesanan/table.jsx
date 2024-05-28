@@ -22,10 +22,10 @@ import { listPesananData } from "@/data";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/global_context";
 import { ConfirmPesanan, DeletePesanan } from "@/components/dashboard-admin/button";
-import { GetAllUserTransaction } from "@/api/transaksiApi";
+import { GetAllUserTransaction, GetAllTransaction } from "@/api/transaksiApi";
 import { PesananModal } from "@/components/layouts/pesanan-modal";
 import ModalInputJarak from "@/components/layouts/jarak-modal";
-import { jarakAdmin } from "@/validations/validation";
+import { ValidasiRadius, ValidasiPembayaran } from "@/validations/validation";
 import { KonfirmasiAdmin } from "@/api/transaksiApi";
 
 export function TableListPesanan() {
@@ -41,23 +41,39 @@ export function TableListPesanan() {
   const [isJarakModalOpen, setIsJarakModalOpen] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const {setSuccess, success} = useContext(GlobalContext);
+  const [actionType, setActionType] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObject = Object.fromEntries(formData.entries());
     
-    // Modifikasi parsedJarak.data untuk menambahkan ID yang sesuai
+    let status;
+
+    if (actionType === "inputJarak") {
+        status = "input biaya pengiriman";
+    } else {
+        status = selectedStatus;
+        console.log(selectedStatus);
+    }
+
     const dataToSend = {
         ...formDataObject,
         id_transaksi: selectedItemId,
-        status : "input biaya pengiriman"
+        status: status,
     };
 
     console.log(formDataObject);
-    const parsedJarak = jarakAdmin.safeParse(dataToSend);
-    if (!parsedJarak.success) {
-        const error = parsedJarak.error;
+    let validationSchema;
+    if (actionType === "inputJarak") {
+      validationSchema = ValidasiRadius;
+    } else {
+      validationSchema = ValidasiPembayaran;
+    }
+    const parsedData = validationSchema.safeParse(dataToSend);
+    if (!parsedData.success) {
+        const error = parsedData.error;
         let newErrors = {};
         for (const issue of error.issues) {
             newErrors = {
@@ -66,16 +82,17 @@ export function TableListPesanan() {
             };
         }
         console.log(newErrors);
-        console.log(parsedJarak);
+        console.log(parsedData);
         return setFormErrors(newErrors);
     } else {
-        console.log(parsedJarak.data);
+        console.log(parsedData.data);
         KonfirmasiAdmin(dataToSend)
             .then((response) => {
                 console.log(response); 
-                setSuccess({bool: true, message: 'Radius berhasil ditambahkan'});
+                setSuccess({ bool: true, message: actionType === "inputJarak" ? 'Radius berhasil ditambahkan' : 'Validasi berhasil' });
                 console.log(success);
                 setIsJarakModalOpen(false);
+                setModalOpen(false);
                 navigateTo("/admin/listPesanan");
             })
             .catch((err) => {
@@ -84,11 +101,10 @@ export function TableListPesanan() {
     }
     setFormErrors({});
     console.log(formErrors);
-    console.log(parsedJarak.data.nama_bahan);
 };
 
   useEffect(() => {
-    GetAllUserTransaction()
+    GetAllTransaction()
       .then((response) => {
         console.log(response);
         setData(response);
@@ -111,15 +127,24 @@ export function TableListPesanan() {
     setCurrentPage(pageNumber);
   };
 
+  const handleStatusChange = (selectedStatus) => {
+    setSelectedStatus(selectedStatus);
+    console.log(selectedStatus);
+  };
+
   const handleOpenModal = (item) => {
     setModalData(item);
     setModalOpen(true);
+    setSelectedItemId(item.id_transaksi);
+    console.log(item.id_transaksi);
   };
 
-  const handleOpenJarakModal = (item) => {
+  const handleOpenJarakModal = (item, type) => {
     setSelectedItemId(item.id_transaksi);
     setIsJarakModalOpen(true);
     setModalData(item);
+    setActionType(type);
+    console.log(type);
     console.log(item.id_transaksi);
   };
 
@@ -129,20 +154,11 @@ export function TableListPesanan() {
     setModalData({});
   };
 
-  const handleInputChange = (e) => {
-    setModalData({ ...modalData, [e.target.name]: e.target.value });
-  };
-
-  const handleSave = () => {
-    // Logic to handle save functionality
-    // Example: Save modalData to backend or state
-    handleCloseModal();
-  };
-
   const filteredRows = currentRows.filter((item) => {
     const lowerCaseSearch = search.toLowerCase();
 
     const nameExists = item.nama_lengkap && item.nama_lengkap.toLowerCase().includes(lowerCaseSearch);
+    const statusExists = item.status_transaksi && item.status_transaksi.toLowerCase().includes(lowerCaseSearch);
 
     const detailExists = item.detail_transaksi && item.detail_transaksi.some(detail =>
       detail.produk.nama_produk.toLowerCase().includes(lowerCaseSearch) ||
@@ -151,8 +167,8 @@ export function TableListPesanan() {
 
     const totalHargaExists = item.total_harga_transaksi && item.total_harga_transaksi.toString().toLowerCase().includes(lowerCaseSearch);
 
-    // const statusExists = item.status_transaksi === "Sudah Dibayar";
-    return (nameExists || detailExists || totalHargaExists);
+    // const statusExists = item.status_transaksi === "menunggu biaya pengiriman" && item.status_transaksi === "menunggu validasi pembayaran";
+    return (nameExists || detailExists || totalHargaExists || statusExists);
   });
 
   return (
@@ -232,7 +248,7 @@ export function TableListPesanan() {
                 </td>
                 <td className={className}>
                   <div className="flex gap-2 justify-center">
-                    {item.status_transaksi === "menunggu validasi pembayaran" && (
+                    {item.status_transaksi === "menunggu validasi pembayaran" || item.status_transaksi === "sudah dibayar" && (
                       <button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-black font-semibold">
                         <span className="w-5">Validasi</span>
                       </button>
@@ -241,7 +257,7 @@ export function TableListPesanan() {
                       <button
                       className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                       type="button" 
-                      onClick={() => handleOpenJarakModal(item)}
+                      onClick={() => handleOpenJarakModal(item, "inputJarak")}
                     >
                       Input Jarak
                     </button>
@@ -269,8 +285,9 @@ export function TableListPesanan() {
         modalData={modalData}
         isOpen={modalOpen}
         onClose={handleCloseModal}
-        onInputChange={handleInputChange}
-        onSave={handleSave}
+        onSubmit={handleSubmit}
+        formErrors={formErrors}
+        onSelectStatus={handleStatusChange}
       />
       <ModalInputJarak 
         isOpen={isJarakModalOpen}
