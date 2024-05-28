@@ -11,7 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 
 import { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import TabHeaders from "@/components/dashboard-admin/product/tab-headers";
 import ProductTable from "@/components/dashboard-admin/product/table";
 import Search from "@/components/dashboard-admin/search";
@@ -22,19 +22,19 @@ export function ProductAdmin() {
   const { success, setSuccess } = useContext(GlobalContext);
 
   useEffect(() => {
-      console.log(success);
-      if (success.bool) {
-          toast.success(success.message);
+    console.log(success);
+    if (success.bool) {
+      toast.success(success.message);
 
-          setTimeout(() => {
-              setSuccess({ bool: false, message: '' });
-          }, 1000);
-      }
+      setTimeout(() => {
+        setSuccess({ bool: false, message: '' });
+      }, 1000);
+    }
   }, [success]);
 
   return (
     <div className="mt-8">
-      <Search  />
+      <Search />
       <div className="mt-6 mb-8 flex flex-col gap-10">
         <TabHeaders />
         <Card>

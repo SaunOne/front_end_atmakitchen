@@ -5,10 +5,10 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import { pengeluaranLainnya } from "../../../../validations/validation";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { CreatePengeluaranLain } from "@/api/pengeluaranLainApi";
 
 export function AddPengeluaranLainnya() {
@@ -46,7 +46,7 @@ export function AddPengeluaranLainnya() {
                 .catch((err) => {
                     console.error(err);
                 });
-            
+
         }
         setFormErrors({});
         console.log(formErrors);

@@ -3,12 +3,12 @@ import { UpdatePengeluaranBahan, DeletePengeluaranBahan } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 
 
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { GetAllPengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
 
 export default function PengeluaranBahanTable() {
     const [data, setData] = useState([]);
-    const { search} = useContext(GlobalContext);
+    const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
     const rowsPerPage = 5;
 

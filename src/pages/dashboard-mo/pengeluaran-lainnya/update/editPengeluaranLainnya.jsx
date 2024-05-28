@@ -5,15 +5,15 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import React, { useState, useEffect, useContext} from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { pengeluaranLainnya } from "../../../../validations/validation";
 import { useNavigate, useParams } from "react-router-dom";
-import { GetPengeluaranLainById, UpdatePengeluaranLain} from "@/api/pengeluaranLainApi";
-import { GlobalContext } from "@/context/context";
+import { GetPengeluaranLainById, UpdatePengeluaranLain } from "@/api/pengeluaranLainApi";
+import { GlobalContext } from "@/context/global_context";
 
 
 export function EditPengeluaranLainnya() {
-    const { setSuccess} = useContext(GlobalContext);
+    const { setSuccess } = useContext(GlobalContext);
     const { id } = useParams();
     const [values, setValues] = useState({});
     const [formErrors, setFormErrors] = useState({});
@@ -66,15 +66,15 @@ export function EditPengeluaranLainnya() {
             parsedPengeluaran.data.id_pengeluaran_lain_lain = id;
             console.log(parsedPengeluaran.data);
             UpdatePengeluaranLain(parsedPengeluaran.data)
-            .then((response) => {
-                setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil diubah' });
-                console.log(response);
-                navigateTo('/mo/pengeluaran-lain-lain');
-            })
-            .catch((err) => {
-                console.log(err);
-            }); 
-            
+                .then((response) => {
+                    setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil diubah' });
+                    console.log(response);
+                    navigateTo('/mo/pengeluaran-lain-lain');
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+
         }
         setFormErrors({});
         console.log(formErrors);

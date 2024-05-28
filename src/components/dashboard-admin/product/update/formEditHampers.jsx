@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { GetAllProdukUtama, UpdateProduk, GetProdukById } from '@/api/produkApi';
 import { useNavigate, useParams } from 'react-router-dom';
 import { GetAllPackaging } from '@/api/packagingApi';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 
 
 export default function FormEditHampers() {

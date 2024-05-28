@@ -8,17 +8,17 @@ import {
     Textarea
 } from "@material-tailwind/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate,  useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { GetAllPenitip } from '@/api/penitipApi';
-import { GetAllProdukTitipan, CreateProduk} from '@/api/produkApi';
-import { GlobalContext } from '@/context/context';
+import { GetAllProdukTitipan, CreateProduk } from '@/api/produkApi';
+import { GlobalContext } from '@/context/global_context';
 import { set } from 'zod';
 
 export function FormAddTitipanBaru() {
     const [penitip, setPenitip] = useState([]);
     const navigateTo = useNavigate();
-    const {success, setSuccess} = useContext(GlobalContext);
+    const { success, setSuccess } = useContext(GlobalContext);
 
     useEffect(() => {
         GetAllPenitip()
@@ -44,15 +44,15 @@ export function FormAddTitipanBaru() {
 
 
         CreateProduk(formDataObject)
-        .then((response) => {
-            console.log(response);
-            setSuccess({ bool: true, message: 'Produk Titipan berhasil ditambahkan' });
-            console.log(success);
-            navigateTo("/admin/product");
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+            .then((response) => {
+                console.log(response);
+                setSuccess({ bool: true, message: 'Produk Titipan berhasil ditambahkan' });
+                console.log(success);
+                navigateTo("/admin/product");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
 
     }
 
@@ -97,7 +97,7 @@ export function FormAddTitipanBaru() {
                             required
                         />
                     </div>
-                    
+
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">
                             Jumlah Produk
@@ -219,15 +219,15 @@ export function FormAddTitipanLama() {
 
 
         CreateProduk(formDataObject)
-        .then((response) => {
-            console.log(response);
-            setSuccess({ bool: true, message: 'Produk Titipan berhasil ditambahkan' });
-            console.log(success);
-            navigateTo("/admin/product");
-        })
-        .catch((err) => {
-            console.error(err);
-        });
+            .then((response) => {
+                console.log(response);
+                setSuccess({ bool: true, message: 'Produk Titipan berhasil ditambahkan' });
+                console.log(success);
+                navigateTo("/admin/product");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
 
     }
     return (

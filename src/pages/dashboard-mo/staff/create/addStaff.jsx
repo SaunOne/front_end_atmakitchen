@@ -10,12 +10,12 @@ import { staff } from "../../../../validations/validation";
 import React, { useState, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CreateStaff } from "@/api/staffApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 
 export function AddStaff() {
     const [formErrors, setFormErrors] = useState({});
-    const {success, setSuccess} = useContext(GlobalContext);
+    const { success, setSuccess } = useContext(GlobalContext);
     const [picture, setPicture] = useState(null);
     const img = useRef();
     const navigateTo = useNavigate();
@@ -40,7 +40,7 @@ export function AddStaff() {
             return setFormErrors(newErrors);
 
         } else {
-            
+
             parsedStaff.data.foto_profile = formDataObject.foto_profile;
             CreateStaff(parsedStaff.data)
                 .then((response) => {
@@ -52,7 +52,7 @@ export function AddStaff() {
                 .catch((err) => {
                     console.error(err);
                 });
-            
+
         }
         setFormErrors({});
         console.log(parsedStaff);

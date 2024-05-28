@@ -10,7 +10,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { GetAllPackaging } from '@/api/packagingApi';
 import { GetAllReadyStock, CreateProduk } from '@/api/produkApi';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 
 
 export function FormAddUtamaBaru() {
@@ -223,7 +223,7 @@ export function FormAddUtamaLama() {
                 setError(err.message);
             });
 
-            
+
         GetAllPackaging()
             .then((response) => {
                 console.log(response)

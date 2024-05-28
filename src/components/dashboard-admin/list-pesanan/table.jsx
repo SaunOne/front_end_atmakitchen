@@ -20,7 +20,7 @@ import { NavLink } from "react-router-dom";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { listPesananData } from "@/data";
 import { useNavigate } from "react-router-dom";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { ConfirmPesanan, DeletePesanan } from "@/components/dashboard-admin/button";
 import { GetAllUserTransaction } from "@/api/transaksiApi";
 import { PesananModal } from "@/components/layouts/pesanan-modal";
@@ -141,16 +141,16 @@ export function TableListPesanan() {
 
   const filteredRows = currentRows.filter((item) => {
     const lowerCaseSearch = search.toLowerCase();
-    
+
     const nameExists = item.nama_lengkap && item.nama_lengkap.toLowerCase().includes(lowerCaseSearch);
-    
+
     const detailExists = item.detail_transaksi && item.detail_transaksi.some(detail =>
       detail.produk.nama_produk.toLowerCase().includes(lowerCaseSearch) ||
       detail.jumlah_produk.toString().toLowerCase().includes(lowerCaseSearch)
     );
-    
+
     const totalHargaExists = item.total_harga_transaksi && item.total_harga_transaksi.toString().toLowerCase().includes(lowerCaseSearch);
-    
+
     // const statusExists = item.status_transaksi === "Sudah Dibayar";
     return (nameExists || detailExists || totalHargaExists);
   });
@@ -178,9 +178,8 @@ export function TableListPesanan() {
         <tbody>
           {filteredRows.map((item, index) => {
             const rowNumber = (currentPage - 1) * rowsPerPage + index + 1;
-            const className = `py-3 px-5 text-center ${
-              index === listPesananData.length - 1 ? "" : "border-b border-blue-gray-50"
-            }`;
+            const className = `py-3 px-5 text-center ${index === listPesananData.length - 1 ? "" : "border-b border-blue-gray-50"
+              }`;
 
             return (
               <tr key={index}>
@@ -235,7 +234,7 @@ export function TableListPesanan() {
                   <div className="flex gap-2 justify-center">
                     {item.status_transaksi === "menunggu validasi pembayaran" && (
                       <button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-black font-semibold">
-                          <span className="w-5">Validasi</span>
+                        <span className="w-5">Validasi</span>
                       </button>
                     )}
                     {item.status_transaksi === "menunggu biaya pengiriman" && (

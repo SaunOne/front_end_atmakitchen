@@ -25,11 +25,11 @@ import {
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import PropTypes from "prop-types";
 import { useContext, useEffect } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { toast } from "react-toastify";
 
 export function HomeMO() {
-    const {success, setSuccess  } = useContext(GlobalContext);
+    const { success, setSuccess } = useContext(GlobalContext);
 
     useEffect(() => {
         console.log(success);
@@ -146,8 +146,8 @@ export function HomeMO() {
                                 {projectsTableData.map(
                                     ({ img, name, members, budget, completion }, key) => {
                                         const className = `py-3 px-5 ${key === projectsTableData.length - 1
-                                                ? ""
-                                                : "border-b border-blue-gray-50"
+                                            ? ""
+                                            : "border-b border-blue-gray-50"
                                             }`;
 
                                         return (
@@ -237,8 +237,8 @@ export function HomeMO() {
                                 <div key={title} className="flex items-start gap-4 py-3">
                                     <div
                                         className={`relative p-1 after:absolute after:-bottom-6 after:left-2/4 after:w-0.5 after:-translate-x-2/4 after:bg-blue-gray-50 after:content-[''] ${key === ordersOverviewData.length - 1
-                                                ? "after:h-0"
-                                                : "after:h-4/6"
+                                            ? "after:h-0"
+                                            : "after:h-4/6"
                                             }`}
                                     >
                                         {React.createElement(icon, {

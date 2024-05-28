@@ -2,7 +2,7 @@ import { Typography } from "@material-tailwind/react";
 import { penitipTableData } from "@/data";
 import { UpdatePenitip, DeletePenitip } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { GetAllPenitip } from "@/api/penitipApi";
 
 
@@ -67,12 +67,12 @@ export default function PenitipTable() {
                             const lowerCaseSearch = search.toLowerCase();
                             return (
                                 lowerCaseSearch === "" ||
-                                item.nama_penitip.toLowerCase().includes(lowerCaseSearch ) ||
+                                item.nama_penitip.toLowerCase().includes(lowerCaseSearch) ||
                                 item.no_telp_penitip.toLowerCase().includes(lowerCaseSearch) ||
-                                item.alamat.toLowerCase().includes(lowerCaseSearch) 
+                                item.alamat.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
-                        .map(({ id_penitip,  nama_penitip, no_telp_penitip, alamat, produk }, index) => {
+                        .map(({ id_penitip, nama_penitip, no_telp_penitip, alamat, produk }, index) => {
                             const className = `py-3 px-5 border-r  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"
@@ -101,7 +101,7 @@ export default function PenitipTable() {
                                         </Typography>
                                     </td>
                                     <td className={className}>
-                                        {produk.map(({ id_produk, nama_produk,  harga, jumlah_stok }, key) => {
+                                        {produk.map(({ id_produk, nama_produk, harga, jumlah_stok }, key) => {
                                             const className2 = `py-3 px-5 ${key === produk.length - 1
                                                 ? ""
                                                 : "border-b border-blue-gray-50"

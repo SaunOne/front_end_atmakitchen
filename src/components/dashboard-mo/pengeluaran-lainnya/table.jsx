@@ -2,7 +2,7 @@ import { Typography } from "@material-tailwind/react";
 import { pengeluaranLainTableData } from "@/data";
 import { UpdatePengeluaranLain, DeletePengeluaranLain } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 import { GetAllPengeluaranLain } from "@/api/pengeluaranLainApi";
 

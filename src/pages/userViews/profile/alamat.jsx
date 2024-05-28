@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 import { FormEditAlamat } from "@/components/userView/profile/formEditAlamat";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";

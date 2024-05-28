@@ -2,7 +2,7 @@ import React from 'react';
 import { Tabs, Tab, TabsHeader, Button } from '@material-tailwind/react';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 
 
 export default function TabHeaders() {

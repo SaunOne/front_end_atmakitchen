@@ -9,11 +9,11 @@ import { penitip } from "../../../../validations/validation";
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdatePenitip, GetPenitipById } from "@/api/penitipApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 
 
 export function EditPenitip() {
-    const {setSuccess} = useContext(GlobalContext);
+    const { setSuccess } = useContext(GlobalContext);
     const { id } = useParams();
     const [formErrors, setFormErrors] = useState({});
     const [values, setValues] = useState({});
@@ -61,9 +61,9 @@ export function EditPenitip() {
             parsedPenitip.data.id_penitip = id;
             UpdatePenitip(parsedPenitip.data)
                 .then((response) => {
-                    setSuccess({bool: true, message: 'Penitip berhasil diubah'});
+                    setSuccess({ bool: true, message: 'Penitip berhasil diubah' });
                     console.log(response);
-                    
+
                 })
                 .catch((err) => {
                     console.log(err);

@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 import { TableListPesanan } from "@/components/dashboard-admin/list-pesanan/table";
 import Search from "@/components/dashboard-admin/search";
 import { TableJarakPengiriman } from "@/components/dashboard-admin/jarak-pengiriman/table";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import TabHeaders2 from "@/components/dashboard-admin/jarak-pengiriman/tab-headers";
 import { ToastContainer, toast } from 'react-toastify';
 

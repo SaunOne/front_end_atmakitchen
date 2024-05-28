@@ -2,10 +2,10 @@ import { Typography } from "@material-tailwind/react";
 import { staffTableData } from "@/data";
 import { UpdateStaff, DeleteStaff } from "../button";
 import React, { useEffect, useState, useContext } from "react";
-import { GlobalContext } from "@/context/context";
-import  {GetAllStaff} from "@/api/staffApi";
-import {getImage} from "@/api/index";
-import {Avatar } from "@material-tailwind/react";
+import { GlobalContext } from "@/context/global_context";
+import { GetAllStaff } from "@/api/staffApi";
+import { getImage } from "@/api/index";
+import { Avatar } from "@material-tailwind/react";
 
 export default function StaffTable() {
     const [data, setData] = useState([]);
@@ -44,7 +44,7 @@ export default function StaffTable() {
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
-                        {["No","Foto", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan", "Aksi"].map(
+                        {["No", "Foto", "Username", "Nama Lengkap", "Nomor Telepon", "Email", "Gender", "Tanggal Lahir", "Jabatan", "Aksi"].map(
                             (el) => (
                                 <th
                                     key={el}
@@ -76,7 +76,7 @@ export default function StaffTable() {
                                 item.tanggal_lahir.toLowerCase().includes(lowerCaseSearch)
                             );
                         })
-                        .map(({ id_user, username,foto_profile, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan }, index) => {
+                        .map(({ id_user, username, foto_profile, nama_lengkap, no_telp, email, gender, tanggal_lahir, jabatan }, index) => {
                             const className = `py-1 px-2 border-r text-center  ${index === currentRows.length - 1
                                 ? ""
                                 : "border-b border-blue-gray-50"

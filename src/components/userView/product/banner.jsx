@@ -2,7 +2,7 @@ import { Carousel, IconButton } from "@material-tailwind/react";
 
 export const Banner = () => {
     return <>
-        <Carousel transition={{ duration: 2 }} className="rounded-xl h-[200px] md:h-[300px] "
+        <Carousel transition={{ duration: 2 }} className="rounded-xl h-[150px] md:h-[250px] "
             prevArrow={({ handlePrev }) => (
                 <IconButton
                     variant="text"

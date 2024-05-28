@@ -11,7 +11,7 @@ import PenitipTable from "@/components/dashboard-mo/penitip/table";
 import { useNavigate } from "react-router-dom";
 import Search from "@/components/dashboard-mo/search";
 import { useContext, useEffect } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

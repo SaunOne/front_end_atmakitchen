@@ -3,14 +3,14 @@ import { salaryTableData } from "@/data";
 import { UpdateGaji, DeleteGaji } from "../button";
 import React, { useEffect, useState, useContext } from "react";
 
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { GetAllKaryawan } from "@/api/gajiKaryawanApi";
 
 export default function SalaryTable() {
     const [data, setData] = useState([]);
     const { search } = useContext(GlobalContext);
     const [currentPage, setCurrentPage] = useState(1);
-    const rowsPerPage = 5; 
+    const rowsPerPage = 5;
 
     useEffect(() => {
         GetAllKaryawan()
@@ -22,7 +22,7 @@ export default function SalaryTable() {
                 console.log(err);
                 setError(err.message);
             });
-      }, []); 
+    }, []);
 
     console.log(search);
 

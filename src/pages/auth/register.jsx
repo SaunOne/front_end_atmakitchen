@@ -12,14 +12,14 @@ import {
 } from "react-icons/fa";
 import { userRegistration } from "../../validations/validation";
 import { Button } from "@material-tailwind/react";
-import {  useNavigate } from "react-router-dom"; //Link,
+import { useNavigate } from "react-router-dom"; //Link,
 //import { Navigate } from "react-router-dom";
-import { RegisterApi , CekVerify} from "../../api/authApi";
+import { RegisterApi, CekVerify } from "../../api/authApi";
 import "./style.css";
 import { useInterval } from "../../utility/useInterval";
 import { useContext } from "react";
-import { GlobalContext } from "@/context/context";
-import { toast } from "react-toastify"; 
+import { GlobalContext } from "@/context/global_context";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [formErrors, setFormErrors] = useState({});
@@ -30,7 +30,7 @@ const Register = () => {
   const [isActive, setIsActive] = useState(false);
   const [id, setId] = useState(null);
   const { success, setSuccess } = useContext(GlobalContext);
-  
+
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -41,30 +41,30 @@ const Register = () => {
 
   useInterval(() => {
     console.log("id " + id);
-    if(id!==null){
-        CekVerify(id).then((res) => {
-            console.log("res : ",res);
-            setIsActive(res);
-            if(isActive === 1){
-                navigate('/login');
-                setTimeout(() => {
-                  toast.success("Verfikasi Berhasil..");
-                }, 1500);
-            }
-        }).catch((err)=>{
-            console.log("Error", err);
-        });
+    if (id !== null) {
+      CekVerify(id).then((res) => {
+        console.log("res : ", res);
+        setIsActive(res);
+        if (isActive === 1) {
+          navigate('/login');
+          setTimeout(() => {
+            toast.success("Verfikasi Berhasil..");
+          }, 1500);
+        }
+      }).catch((err) => {
+        console.log("Error", err);
+      });
     } else {
-        console.log("gak masuk");
+      console.log("gak masuk");
     }
-    
-  },1000 * 3);
+
+  }, 1000 * 3);
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target); 
-    const formDataObject = Object.fromEntries(formData.entries()); 
+    const formData = new FormData(e.target);
+    const formDataObject = Object.fromEntries(formData.entries());
     console.log(formDataObject);
     const parsedUser = userRegistration.safeParse(formDataObject);
     if (!parsedUser.success) {
@@ -81,27 +81,27 @@ const Register = () => {
     setFormErrors({});
 
     RegisterApi(formData).then((res) => {
-        console.log("Masuk");
+      console.log("Masuk");
+      console.log(res.status);
+      if (res.status !== 200) {
+        console.log("masuk error : ");
+        toast.error(res.Message);
+
+        setTimeout(() => {
+          setSuccess({ bool: false, message: '' });
+        }, 1000);
+
+      } else {
         console.log(res.status);
-        if(res.status !== 200){
-          console.log("masuk error : ");
-          toast.error(res.Message);
-
-          setTimeout(() => {
-              setSuccess({ bool: false, message: '' });
-          }, 1000);
-
-        } else {
-          console.log(res.status);
-          toast.success("Berhasil Mengirim Verifikasi..Silahkan Periksa Email Anda!!");
-        }
-        console.log(res.data.id_user);
-        setId(res.data.id_user);
-        setLoading(false);
-      }).catch((err) => {
-          console.log("Error", err);
-          setLoading(false);
-      });
+        toast.success("Berhasil Mengirim Verifikasi..Silahkan Periksa Email Anda!!");
+      }
+      console.log(res.data.id_user);
+      setId(res.data.id_user);
+      setLoading(false);
+    }).catch((err) => {
+      console.log("Error", err);
+      setLoading(false);
+    });
 
   };
 
@@ -221,9 +221,8 @@ const Register = () => {
                 <a
                   href="#"
                   onClick={toggleShowPassword}
-                  className={`absolute inset-y-0 right-0 flex items-center text-sm leading-5 bg-transparent text-black no-underline hover:text-neutral-950 ${
-                    formErrors.password ? "mb-[-5px]" : "mb-[-30px]"
-                  }`}
+                  className={`absolute inset-y-0 right-0 flex items-center text-sm leading-5 bg-transparent text-black no-underline hover:text-neutral-950 ${formErrors.password ? "mb-[-5px]" : "mb-[-30px]"
+                    }`}
                 >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </a>
@@ -253,9 +252,8 @@ const Register = () => {
                 <a
                   href="#"
                   onClick={toggleShowPassword2}
-                  className={`absolute inset-y-0 right-0 flex items-center text-sm leading-5 bg-transparent text-black no-underline hover:text-neutral-950 ${
-                    formErrors.confirmPassword ? "mb-[-5px]" : "mb-[-30px]"
-                  }`}
+                  className={`absolute inset-y-0 right-0 flex items-center text-sm leading-5 bg-transparent text-black no-underline hover:text-neutral-950 ${formErrors.confirmPassword ? "mb-[-5px]" : "mb-[-30px]"
+                    }`}
                 >
                   {showPassword2 ? <FaEyeSlash /> : <FaEye />}
                 </a>
@@ -306,18 +304,18 @@ const Register = () => {
               </div>
             </div>
             <div className="flex justify-center mt-2">
-                            <div>
-                                Sudah memiliki akun?
-                                <a
-                                    href="/login"
-                                    className="text-xs ml-2 text-neutral-700 hover:text-neutral-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
-                                >
-                                    Login
-                                </a>
-                            </div>
-                        </div>
+              <div>
+                Sudah memiliki akun?
+                <a
+                  href="/login"
+                  className="text-xs ml-2 text-neutral-700 hover:text-neutral-950 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:text-neutral-950"
+                >
+                  Login
+                </a>
+              </div>
+            </div>
             <div className="flex items-center justify-center gap-4">
-              <Button className="w-full mt-5"type="submit" loading={loading}>
+              <Button className="w-full mt-5" type="submit" loading={loading}>
                 {loading ? "Loading" : "Daftar"}
               </Button>
             </div>

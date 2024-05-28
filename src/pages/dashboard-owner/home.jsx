@@ -27,21 +27,21 @@ import {
 } from "../../data";
 import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { useContext, useEffect } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { toast } from "react-toastify";
 
 export function Home_owner() {
-  const {success, setSuccess  } = useContext(GlobalContext);
+  const { success, setSuccess } = useContext(GlobalContext);
 
   useEffect(() => {
-      console.log(success);
-      if (success.bool) {
-          toast.success(success.message);
+    console.log(success);
+    if (success.bool) {
+      toast.success(success.message);
 
-          setTimeout(() => {
-              setSuccess({ bool: false, message: '' });
-          }, 1000);
-      }
+      setTimeout(() => {
+        setSuccess({ bool: false, message: '' });
+      }, 1000);
+    }
   }, [success]);
   return (
     <div className="mt-12">
@@ -141,11 +141,10 @@ export function Home_owner() {
               <tbody>
                 {projectsTableData.map(
                   ({ img, name, members, budget, completion }, key) => {
-                    const className = `py-3 px-5 ${
-                      key === projectsTableData.length - 1
+                    const className = `py-3 px-5 ${key === projectsTableData.length - 1
                         ? ""
                         : "border-b border-blue-gray-50"
-                    }`;
+                      }`;
 
                     return (
                       <tr key={name}>
@@ -169,9 +168,8 @@ export function Home_owner() {
                                 alt={name}
                                 size="xs"
                                 variant="circular"
-                                className={`cursor-pointer border-2 border-white ${
-                                  key === 0 ? "" : "-ml-2.5"
-                                }`}
+                                className={`cursor-pointer border-2 border-white ${key === 0 ? "" : "-ml-2.5"
+                                  }`}
                               />
                             </Tooltip>
                           ))}
@@ -234,11 +232,10 @@ export function Home_owner() {
               ({ icon, color, title, description }, key) => (
                 <div key={title} className="flex items-start gap-4 py-3">
                   <div
-                    className={`relative p-1 after:absolute after:-bottom-6 after:left-2/4 after:w-0.5 after:-translate-x-2/4 after:bg-blue-gray-50 after:content-[''] ${
-                      key === ordersOverviewData.length - 1
+                    className={`relative p-1 after:absolute after:-bottom-6 after:left-2/4 after:w-0.5 after:-translate-x-2/4 after:bg-blue-gray-50 after:content-[''] ${key === ordersOverviewData.length - 1
                         ? "after:h-0"
                         : "after:h-4/6"
-                    }`}
+                      }`}
                   >
                     {React.createElement(icon, {
                       className: `!w-5 !h-5 ${color}`,

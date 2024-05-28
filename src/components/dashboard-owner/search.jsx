@@ -2,7 +2,7 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDebouncedCallback } from 'use-debounce';
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 
 export default function Search({ placeholder }) {
     const { search, setSearch } = useContext(GlobalContext);

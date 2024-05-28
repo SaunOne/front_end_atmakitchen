@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Search from "@/components/dashboard-mo/search";
 import PengeluaranBahanTable from "@/components/dashboard-mo/pengeluaran-bahan-baku/table";
 import { useContext, useEffect } from "react";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -46,10 +46,10 @@ export default function PengeluaranBahanBakuMO() {
                     </Typography>
                 </CardHeader>
                 <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
-                    <PengeluaranBahanTable/>
+                    <PengeluaranBahanTable />
                 </CardBody>
             </Card>
-            
+
         </div>
     );
 }
