@@ -40,10 +40,10 @@ export default function Page() {
 
     const handleButtonClick = (user) => {
         if (user.status_transaksi === "Menunggu Pembayaran") {
-            setIsBayarModalOpen(!isBayarModalOpen);// Buka modal
+            setIsBayarModalOpen(!isBayarModalOpen);
         } else {
             console.log("Showing details for order ID:", user.id_transaksi);
-            // Tampilkan detail pesanan, atau buka halaman detail, dll.
+            
         }
     };
 

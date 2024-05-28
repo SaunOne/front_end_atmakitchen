@@ -203,56 +203,73 @@ const handleSubmit = (e) => {
                     </td>
                         <td className={className}>
                             <div className="flex gap-2 justify-center">
-                                <button
-                                    className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                                    type="button" onClick={() => handleOpenModal(item.id_transaksi)}>
-                                    Input Jarak
-                                </button>
-                                <div className={`pointer-events-none fixed inset-0 ${isModalOpen ? 'z-[999]' : 'hidden'} grid h-screen w-screen place-items-center bg-black bg-opacity-20 ${isModalOpen ? 'opacity-100' : 'opacity-0'} transition-opacity duration-300`}>
-                                    <div className="pointer-events-auto relative mx-auto flex w-full max-w-[24rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                                        <button onClick={handleCloseModal} className=" absolute top-3 right-3 text-lg font-bold border-none">
-                                            <FontAwesomeIcon icon={faXmark}/>
-                                        </button>
-                                        <form onSubmit={handleSubmit}>
-                                            <div class="flex flex-col gap-4 p-6">
-                                                <h4 class="block font-sans text-2xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                                                    Jarak Pengiriman
-                                                </h4>
-                                                <h6 class="block -mb-2 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-left">
-                                                    Alamat
-                                                </h6>
-                                                <div class="relative h-11 w-full min-w-[200px]">
-                                                <input
-                                                    value={item.alamat?.detail_alamat || '-'}
-                                                    class="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 border-t-transparent text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                                    disabled />
-                                                </div>
-                                                <h6 class="block -mb-2 font-sans text-base antialiased font-semibold leading-relaxed tracking-normal text-left">
-                                                    Jarak Pengiriman
-                                                </h6>
-                                                <div class="relative h-11 w-full min-w-[200px]">
-                                                <input
-                                                    type="number"
-                                                    name="radius"
-                                                    class="w-full h-full px-3 py-3 font-sans text-sm font-normal transition-all bg-transparent border rounded-md peer border-blue-gray-200 text-blue-gray-700 outline outline-0 placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 focus:border-2 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"/>
-                                                {formErrors.radius && (
-                                                    <p className="text-red-600 font-medium mb-1 text-left">
-                                                        {formErrors.radius}
-                                                    </p>
-                                                )}
-                                                </div>                                            
-                                            </div>
-                                            <div class="p-6 pt-0">
-                                                <button
-                                                class="block w-full select-none rounded-lg bg-green-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 active:opacity-[0.85]"
-                                                type="submit"
-                                                >
-                                                    Save
-                                                </button>
-                                            </div>
-                                        </form>
+                            <button
+                                className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                type="button" 
+                                onClick={() => handleOpenModal(item.id_transaksi)}
+                                >
+                                Input Jarak
+                            </button>
+
+                            {isModalOpen && (
+                            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 transition-opacity duration-300">
+                                <div className="bg-white rounded-lg p-6 w-1/3">
+                                <div className="flex justify-between items-center border-b pb-2 mb-4">
+                                    <h3 className="text-lg font-semibold">Jarak Pengiriman</h3>
+                                    <button 
+                                    onClick={handleCloseModal} 
+                                    className="text-gray-600 hover:text-gray-900 border-none"
+                                    >
+                                    <FontAwesomeIcon icon={faXmark} />
+                                    </button>
+                                </div>
+                                <form onSubmit={handleSubmit}>
+                                    <div className="mb-4">
+                                    <label htmlFor="alamat" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Alamat
+                                    </label>
+                                    <input
+                                        id="alamat"
+                                        value={item.alamat?.detail_alamat || '-'}
+                                        className="w-full h-10 px-3 py-2 font-sans text-sm border border-black rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                        disabled
+                                    />
                                     </div>
-                                </div>  
+                                    <div className="mb-4">
+                                    <label htmlFor="radius" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Jarak Pengiriman
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="radius"
+                                        name="radius"
+                                        className="w-full h-10 px-3 py-2 font-sans text-sm border border-black rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                                    />
+                                    {formErrors.radius && (
+                                        <p className="text-red-600 font-medium mb-1 text-left">
+                                        {formErrors.radius}
+                                        </p>
+                                    )}
+                                    </div>
+                                    <div className="flex justify-end">
+                                    <button
+                                        onClick={handleCloseModal}
+                                        className="mr-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700"
+                                    >
+                                        Tutup
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700"
+                                    >
+                                        Simpan
+                                    </button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                            )}
+  
                                 <DeleteJarak/>
                             </div>
                             </td>

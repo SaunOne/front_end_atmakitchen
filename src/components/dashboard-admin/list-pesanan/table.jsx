@@ -24,9 +24,12 @@ import { GlobalContext } from "@/context/context";
 import { ConfirmPesanan, DeletePesanan } from "@/components/dashboard-admin/button";
 import { GetAllUserTransaction } from "@/api/transaksiApi";
 import { PesananModal } from "@/components/layouts/pesanan-modal";
+import ModalInputJarak from "@/components/layouts/jarak-modal";
+import { jarakAdmin } from "@/validations/validation";
+import { KonfirmasiAdmin } from "@/api/transaksiApi";
 
 export function TableListPesanan() {
-  const navigate = useNavigate();
+  const navigateTo = useNavigate();
   const [data, setData] = useState([]);
   const { search } = useContext(GlobalContext);
   const [currentPage, setCurrentPage] = useState(1);
@@ -34,6 +37,55 @@ export function TableListPesanan() {
   const [error, setError] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState({});
+  const [selectedItemId, setSelectedItemId] = useState(null);
+  const [isJarakModalOpen, setIsJarakModalOpen] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const {setSuccess, success} = useContext(GlobalContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formDataObject = Object.fromEntries(formData.entries());
+    
+    // Modifikasi parsedJarak.data untuk menambahkan ID yang sesuai
+    const dataToSend = {
+        ...formDataObject,
+        id_transaksi: selectedItemId,
+        status : "input biaya pengiriman"
+    };
+
+    console.log(formDataObject);
+    const parsedJarak = jarakAdmin.safeParse(dataToSend);
+    if (!parsedJarak.success) {
+        const error = parsedJarak.error;
+        let newErrors = {};
+        for (const issue of error.issues) {
+            newErrors = {
+                ...newErrors,
+                [issue.path[0]]: issue.message,
+            };
+        }
+        console.log(newErrors);
+        console.log(parsedJarak);
+        return setFormErrors(newErrors);
+    } else {
+        console.log(parsedJarak.data);
+        KonfirmasiAdmin(dataToSend)
+            .then((response) => {
+                console.log(response); 
+                setSuccess({bool: true, message: 'Radius berhasil ditambahkan'});
+                console.log(success);
+                setIsJarakModalOpen(false);
+                navigateTo("/admin/listPesanan");
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    }
+    setFormErrors({});
+    console.log(formErrors);
+    console.log(parsedJarak.data.nama_bahan);
+};
 
   useEffect(() => {
     GetAllUserTransaction()
@@ -64,8 +116,16 @@ export function TableListPesanan() {
     setModalOpen(true);
   };
 
+  const handleOpenJarakModal = (item) => {
+    setSelectedItemId(item.id_transaksi);
+    setIsJarakModalOpen(true);
+    setModalData(item);
+    console.log(item.id_transaksi);
+  };
+
   const handleCloseModal = () => {
     setModalOpen(false);
+    setIsJarakModalOpen(false);
     setModalData({});
   };
 
@@ -100,7 +160,7 @@ export function TableListPesanan() {
       <table className="w-full min-w-[640px] table-auto">
         <thead>
           <tr>
-            {["No", "Nama Pemesan", "Pesanan", "Jumlah", "Total Harga", "Status", "Aksi"].map((el) => (
+            {["No","No Transaksi", "Nama Pemesan", "Pesanan", "Jumlah", "Total Harga", "Status", "Aksi"].map((el) => (
               <th
                 key={el}
                 className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -139,6 +199,11 @@ export function TableListPesanan() {
                 </td>
                 <td className={className}>
                   <Typography className="text-xs font-semibold text-blue-gray-600">
+                    {item.id_transaksi}
+                  </Typography>
+                </td>
+                <td className={className}>
+                  <Typography className="text-xs font-semibold text-blue-gray-600">
                     {item.nama_lengkap}
                   </Typography>
                 </td>
@@ -163,7 +228,7 @@ export function TableListPesanan() {
                 </td>
                 <td className={className}>
                   <Typography className="text-xs font-semibold text-blue-gray-600">
-                    <Chip variant="gradient" value={item.status_transaksi} color="green" size="md"/>
+                    <p>{item.status_transaksi}</p>
                   </Typography>
                 </td>
                 <td className={className}>
@@ -174,9 +239,13 @@ export function TableListPesanan() {
                       </button>
                     )}
                     {item.status_transaksi === "menunggu biaya pengiriman" && (
-                      <button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-black font-semibold">
-                          <span className="w-5">Validasi</span>
-                      </button>
+                      <button
+                      className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      type="button" 
+                      onClick={() => handleOpenJarakModal(item)}
+                    >
+                      Input Jarak
+                    </button>
                     )}
                   </div>
                 </td>
@@ -203,6 +272,13 @@ export function TableListPesanan() {
         onClose={handleCloseModal}
         onInputChange={handleInputChange}
         onSave={handleSave}
+      />
+      <ModalInputJarak 
+        isOpen={isJarakModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmit}
+        item={modalData}
+        formErrors={formErrors}
       />
     </div>
   );
