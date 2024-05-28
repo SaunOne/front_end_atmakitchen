@@ -1,54 +1,43 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 import { GlobalContext } from "@/context/global_context";
+import { toast } from "react-toastify";
 
 export const CartContext = createContext();
 
 const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
-    console.log(cart)
     const [itemAmount, setItemAmount] = useState(0);
-    const [total, setTotal] = useState(0)
+    const [total, setTotal] = useState(0);
+    const { selectedTabPesanan } = useContext(GlobalContext);
+
 
     useEffect(() => {
-        const savedCart = localStorage.getItem("cart");
-        
-        if (savedCart) {
-            setCart(JSON.parse(savedCart));
-            console.log("Saved cart from local storage:", savedCart);
-        }
-    }, []);
+        const total = cart.reduce((accumulator, currentItem) => {
+            return accumulator + currentItem.harga * currentItem.jumlah_produk;
+        }, 0);
+        setTotal(total);
+    }, [cart]);
 
-    // Save cart data to local storage whenever cart state changes
+    useEffect(() => {
+        if (cart) {
+            const jumlah_produk = cart.reduce((accumulator, currentItem) => {
+                return accumulator + currentItem.jumlah_produk;
+            }, 0);
+            setItemAmount(jumlah_produk);
+        }
+    }, [cart]);
+
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
 
 
-    useEffect(() => {
-        const total = cart.reduce((accumulator, currentItem) => {
-            return accumulator + currentItem.harga * currentItem.amount
-        }, 0)
-        setTotal(total)
-
-    }, [cart])
-
-
-    useEffect(() => {
-        if (cart) {
-            const amount = cart.reduce((accumulator, currentItem) => {
-                return accumulator + currentItem.amount
-            }, 0)
-            setItemAmount(amount)
-        }
-    }, [cart])
 
     const addToCart = (product, id_produk) => {
-        // console.log(product)
-        // console.log(`Item ${product.title } Added to the Cart`)
-        if (product.jenis_produk === "Titipan" && product.jumlah_stok < product.amount + 1) {
-
+        if (product.jenis_produk === "Titipan" && product.jumlah_stok < product.jumlah_produk + 1) {
+            toast.error("Jumlah melebihi stok yang tersedia!");
         } else {
-            const newItem = { ...product, amount: 1 };
+            const newItem = { ...product, jumlah_produk: 1 };
 
             const cartItem = cart.find((item) => {
                 return item.id_produk === id_produk;
@@ -57,47 +46,55 @@ const CartProvider = ({ children }) => {
             if (cartItem) {
                 const newCart = [...cart].map((item) => {
                     if (item.id_produk === id_produk) {
-                        return { ...item, amount: cartItem.amount + 1 };
+                        return { ...item, jumlah_produk: cartItem.jumlah_produk + 1 };
                     } else {
                         return item;
                     }
                 });
                 setCart(newCart);
-
             } else {
                 setCart([...cart, newItem]);
-
             }
+
         }
     };
 
-    const addToCartWithAmount = (product, id_produk, amount) => {
-        // console.log(product)
-        // console.log(`Item ${product.title } Added to the Cart`)
-        const newItem = { ...product, amount: amount };
+    const addToCartWithAmount = (product, id_produk, jumlah_produk) => {
 
-        const cartItem = cart.find((item) => {
-            return item.id_produk === id_produk;
-        });
-
-        if (cartItem) {
-            const newCart = [...cart].map((item) => {
-                if (item.id_produk === id_produk) {
-                    return { ...item, amount: cartItem.amount + amount };
-                } else {
-                    return item;
-                }
-            });
-            setCart(newCart);
+        if (product.jenis_produk === "Titipan" && product.jumlah_stok < product.jumlah_produk + jumlah_produk) {
+            toast.error("Jumlah melebihi stok yang tersedia!");
+        } else if (selectedTabPesanan === "Pre-Order" && product.jumlah_sisa < product.jumlah_produk + jumlah_produk) {
+            toast.error("Jumlah melebihi kuota harian yang tersedia!");
         } else {
-            setCart([...cart, newItem]);
+            const newItem = { ...product, jumlah_produk: jumlah_produk };
+
+            const cartItem = cart.find((item) => {
+                return item.id_produk === id_produk;
+            });
+         
+            if (cartItem) {
+                const newCart = [...cart].map((item) => {
+                    if (item.id_produk === id_produk) {
+                        return { ...item, jumlah_produk: cartItem.jumlah_produk + jumlah_produk };
+                        
+                    } else {
+                        return item;
+                      
+                    }
+                });
+                setCart(newCart);
+            } else {
+                setCart([...cart, newItem]);
+            }
         }
+
     };
 
     const removeFromCart = (id_produk) => {
         const newCart = cart.filter((item) => {
             return item.id_produk !== id_produk;
         });
+
         setCart(newCart);
     };
 
@@ -117,7 +114,7 @@ const CartProvider = ({ children }) => {
         if (cartItem) {
             const newCart = cart.map((item) => {
                 if (item.id_produk === id_produk) {
-                    return { ...item, amount: cartItem.amount - 1 };
+                    return { ...item, jumlah_produk: cartItem.jumlah_produk - 1 };
                 } else {
                     return item;
                 }
@@ -125,7 +122,7 @@ const CartProvider = ({ children }) => {
             setCart(newCart);
         }
 
-        if (cartItem.amount < 2) {
+        if (cartItem.jumlah_produk < 2) {
             removeFromCart(id_produk);
         }
     };
@@ -142,11 +139,10 @@ const CartProvider = ({ children }) => {
                 itemAmount,
                 total,
                 addToCartWithAmount,
-
+                setCart,
             }}
         >
-            {" "}
-            {children}{" "}
+            {children}
         </CartContext.Provider>
     );
 };

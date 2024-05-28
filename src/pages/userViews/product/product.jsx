@@ -12,20 +12,13 @@ export default function Page() {
     return (
 
         <div className="w-full p-7">
-            <div className="md:flex justify-start">
-                {/* <Sidebar /> */}
-                <div className="w-full">
-                    <Banner />
-                    <div className="mt-3">
-                        {/* Tampilkan elemen h1 hanya jika query tidak kosong */}
 
-                        <ListProduct />
-
-                    </div>
+            <div className="w-full">
+                <Banner />
+                <div className="">
+                    <ListProduct />
                 </div>
             </div>
-
-
         </div>
 
     );

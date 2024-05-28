@@ -45,6 +45,11 @@ export const navBarUserProduct = [
         link: "/product/minuman",
     },
     {
+        _id: 1003,
+        title: "Titipan",
+        link: "/product/titipan",
+    },
+    {
         _id: 1004,
         title: "Hampers",
         link: "/product/hampers",

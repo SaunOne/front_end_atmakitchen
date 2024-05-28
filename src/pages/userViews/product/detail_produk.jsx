@@ -5,9 +5,14 @@ import { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "@/context/product_context";
 import { CartContext } from "@/context/cart_context";
+import { toast } from 'react-toastify';
+import { getImage } from "@/api";
+import { select } from "@material-tailwind/react";
+import { GlobalContext } from "@/context/global_context";
 
 export default function DetailProduk() {
-    const { products } = useContext(ProductContext);
+    const { products, datePO } = useContext(ProductContext);
+    const { selectedTabPesanan } = useContext(GlobalContext);
     const { addToCartWithAmount } = useContext(CartContext);
     const [isReady, setIsReady] = useState(true);
     const [amount, setAmount] = useState(1);
@@ -17,7 +22,7 @@ export default function DetailProduk() {
     const dataProduk = products.find((item) => {
         return item.id_produk === parseInt(id);
     });
-    
+
 
     useEffect(() => {
         if (dataProduk) {
@@ -34,7 +39,11 @@ export default function DetailProduk() {
     }
 
     function addCart(product, id) {
-        addToCartWithAmount(product, id, amount);
+        console.log(amount);   
+        const jumlah_produk = amount;
+        console.log(jumlah_produk);
+        addToCartWithAmount(product, id, jumlah_produk);
+        toast.success('Produk berhasil ditambahkan ke keranjang')
     }
 
     const decreaseAmount = () => {
@@ -52,12 +61,12 @@ export default function DetailProduk() {
             <h1 className="text-[30px] font-bold text-[#4B3D3D]">{dataProduk.nama_produk}</h1>
             <div className="mt-8 md:flex">
                 <div className="md:w-[60%] w-full">
-                    <img className="w-[550px] h-[350px] rounded-md" src={dataProduk.image_produk} alt="" />
+                    <img className="w-[550px] h-[350px] rounded-md" src={getImage(dataProduk.image_produk)} alt="" />
                 </div>
                 <div className="md:w-[35%] w-full md:ml-10 md:mt-0 mt-8 border-gray-600 border rounded-xl p-10">
                     <h1 className="text-[25px] font-bold text-[#4B3D3D]">Atur Jumlah</h1>
                     <div className="w-[80%]">
-                        { dataProduk.jenis_produk !== "Titipan"  && (<TabHeaderProduk openReady={isReady} />)}
+                        {dataProduk.jenis_produk !== "Titipan" && (<TabHeaderProduk openReady={isReady} />)}
                     </div>
                     <div className="mt-3 w-full flex gap-6">
                         <div className="flex mt-3 flex-1 p-2 max-w-[180px] bg-[#FFF9ED] items-center h-full border rounded-lg text-primary font-medium">
@@ -78,7 +87,14 @@ export default function DetailProduk() {
                             </div>
                         </div>
                     </div>
-                    <h1 className="text-[15px] mt-4 ml-3 font-light text-gray-600 flex gap-2">{dataProduk.jumlah_stok} Produk Ready Stock Tersisa</h1>
+                    {(selectedTabPesanan === "Pre-Order" && datePO) && (
+                        <h1 className="text-[15px] mt-4 ml-3 font-light text-gray-600 ">{dataProduk.jumlah_sisa} Kuota Produk <h1>pada {datePO}</h1></h1>
+
+                    )}
+                    {(selectedTabPesanan === "Ready Stock" || dataProduk.jenis_produk === "Titipan") && (
+                        <h1 className="text-[15px] mt-4 ml-3 font-light text-gray-600 flex gap-2">{dataProduk.jumlah_stok} Produk Ready Stok Tersisa</h1>
+                    )}
+
                     <h1 className="text-[18px] mt-4 ml-6 font-semibold text-[#4B3D3D]">Subtotal</h1>
                     <h1 className="text-[25px] mt-1 ml-6 font-bold text-[#4B3D3D]">
                         {new Intl.NumberFormat("id-ID", {

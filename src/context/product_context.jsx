@@ -18,6 +18,7 @@ const ProductProvider = ({ children }) => {
         const currentTime = format(now, "d MMMMMMMMMM y HH.mm 'WIB' ", { locale: id });
 
         const fetchProducts = async () => {
+            
             const data = GetAllProduk()
                 .then((response) => {
                     console.log(response)
@@ -33,7 +34,7 @@ const ProductProvider = ({ children }) => {
                     setIsLoadingProduct(false);
                 })
 
-            data.update_at = currentTime;
+            
 
             setProducts(data);
         };
@@ -61,8 +62,10 @@ const ProductProvider = ({ children }) => {
         };
 
         if (datePO) {
+            setIsLoadingProduct(true);
             fetchProductsPO();
         } else {
+            setIsLoadingProduct(true);
             fetchProducts();
         }
 

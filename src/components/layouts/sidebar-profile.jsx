@@ -3,6 +3,7 @@ import { GlobalContext } from '@/context/global_context';
 import { FaWallet, FaTrophy } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { GetUserProfile } from "@/api/customersApi";
+import { getImage } from "@/api";
 const Sidebar = () => {
 
     const [user, setUser] = useState({}); // Using useContext hook correctly
@@ -25,7 +26,7 @@ const Sidebar = () => {
             <div className="hidden md:block w-[40%] h-[1000px] px-5">
                 <div className="text-black h-[660px] rounded-[15px] border-gray-400 border-[3px] bg-white shadow-lg">
                     <div className="lg:flex lg:p-7 p-4 justify-start gap-6">
-                        <img className="rounded-[50px] w-[95px] h-[95px]" src={user.img} alt="User Profile"></img>
+                        <img className="rounded-[50px] w-[95px] h-[95px]" src={getImage(user.img)} alt="User Profile"></img>
                         <div>
                             <h1 className="text-black mt-5 font-bold text-[18px]">{user.nama_lengkap}</h1>
                             <h1 className="text-black mt-2 font-semibold text-[12px]">{user.email}</h1>

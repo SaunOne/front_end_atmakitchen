@@ -7,9 +7,16 @@ import { useContext } from "react";
 const Sidebar = () => {
     const { datePO, setDatePO } = useContext(ProductContext);
 
+    const minDateString = (() => {
+        const today = new Date();
+        const minDate = new Date(today);
+        minDate.setDate(today.getDate() + 3);
+        return minDate.toISOString().split('T')[0];
+    })();
+
     const handleDateChange = (event) => {
         console.log(event.target.value);
-        const date = event.target.value;    
+        const date = event.target.value;
         setDatePO(date);
     };
 
@@ -35,6 +42,7 @@ const Sidebar = () => {
                     <input
                         name="date"
                         type="date"
+                        min={minDateString}
                         value={datePO}
                         onChange={handleDateChange}
                     />

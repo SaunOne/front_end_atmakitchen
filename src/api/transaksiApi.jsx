@@ -14,3 +14,40 @@ export const GetAllUserTransaction = async () => {
         throw error.response.data;
     }
 };
+
+
+export const CheckStock = async (data) => {
+    try {
+        console.log("masuk sini");
+        const response = await useAxios.post("/cek-stok", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+
+export const Checkout= async (data) => {
+    try {
+        console.log("masuk sini");
+        const response = await useAxios.post("/check-out", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+
+

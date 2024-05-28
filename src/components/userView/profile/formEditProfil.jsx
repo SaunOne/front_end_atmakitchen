@@ -138,7 +138,7 @@ export const FormEditProfil = () => {
                                         type="radio"
                                         value="Male"
 
-                                        defaultChecked={data.gender === "Male"}
+                                        defaultChecked={data.gender === "Laki-laki"}
                                         className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                                     />
                                     <label
@@ -154,7 +154,7 @@ export const FormEditProfil = () => {
                                         name="gender"
                                         type="radio"
                                         value="Female"
-                                        defaultChecked={data.gender === "Female"}
+                                        defaultChecked={data.gender === "Perempuan"}
                                         className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                                     />
                                     <label

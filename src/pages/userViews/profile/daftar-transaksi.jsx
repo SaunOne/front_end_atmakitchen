@@ -40,49 +40,55 @@ export default function Page() {
             </div>
 
             <div className="bg-white mt-6 h-full rounded-md p-6 ">
-                {data.filter((el) => {
-                    const lowerCaseSearch = search.toLowerCase();
-                    return (
-                        lowerCaseSearch === "" ||
-                        el.detail_transaksi[0].produk.nama_produk.toLowerCase().includes(lowerCaseSearch)
-                    );
 
-                }).map((user, index) => (
-                    <div key={user.id} className="mb-3 rounded-md border border-gray-400 p-4 ">
-                        <div className="flex justify-between w-full">
-                            <div className="w-[75%]">
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">No Pesanan :  {user.id_transaksi}</h1>
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[13px]">
-                                    Tanggal Pesan {new Date(user.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} -
-                                    Ambil {new Date(user.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-                                </h1>
-                            </div>
-                            <div>
-                                <h1 className="border-l pl-3 mr-3  border-gray-400 text-gray-800 mb-3 font-semibold text-[17px]">Selesai</h1>
-                            </div>
-                        </div>
-                        <div className="flex justify-start gap-5 w-full mt-3">
+                {
+                    data && (
+                        data.filter((el) => {
+                            const lowerCaseSearch = search.toLowerCase();
+                            return (
+                                lowerCaseSearch === "" ||
+                                el.detail_transaksi[0].produk.nama_produk.toLowerCase().includes(lowerCaseSearch)
+                            );
 
-                            <img src={getImage(user.detail_transaksi[0].produk.image_produk)} className="w-[120px] h-[120px] rounded" alt="" />
-                            <div className="w-[45%]">
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].produk.nama_produk}</h1>
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].jumlah_produk}x</h1>
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px] mt-7">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.detail_transaksi[0].produk.harga * user.detail_transaksi[0].jumlah_produk)}</h1>
-                            </div>
+                        }).map((user, index) => (
+                            <div key={user.id} className="mb-3 rounded-md border border-gray-400 p-4 ">
+                                <div className="flex justify-between w-full">
+                                    <div className="w-[75%]">
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">No Pesanan :  {user.no_transaksi}</h1>
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[13px]">
+                                            Tanggal Pesan {new Date(user.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} -
+                                            Ambil {new Date(user.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                        </h1>
+                                    </div>
+                                    <div>
+                                        <h1 className="border-l pl-3 mr-3  border-gray-400 text-gray-800 mb-3 font-semibold text-[17px]">Selesai</h1>
+                                    </div>
+                                </div>
+                                <div className="flex justify-start gap-5 w-full mt-3">
+
+                                    <img src={getImage(user.detail_transaksi[0].produk.image_produk)} className="w-[120px] h-[120px] rounded" alt="" />
+                                    <div className="w-[45%]">
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].produk.nama_produk}</h1>
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].jumlah_produk}x</h1>
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px] mt-7">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.detail_transaksi[0].produk.harga * user.detail_transaksi[0].jumlah_produk)}</h1>
+                                    </div>
 
 
-                            <div>
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
-                                <div className="flex justify-end">
-                                    <button className="bg-gray-800 p-2">
-                                        <h1 className="text-white font-semibold text-[14px]  ">Detail Pesanan</h1>
-                                    </button>
+                                    <div>
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
+                                        <div className="flex justify-end">
+                                            <button className="bg-gray-800 p-2">
+                                                <h1 className="text-white font-semibold text-[14px]  ">Detail Pesanan</h1>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
 
-                ))}
+                        ))
+                    )
+                }
+
             </div>
 
 
