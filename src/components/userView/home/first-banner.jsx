@@ -8,10 +8,7 @@ export const FirstBanner = () => {
             <h1 className="geologica-600 text-black text-[50px]">Menunggu Mu</h1>
             <div className="mt-6 md:max-w-[566px]">
                 <p className="geologica-300 text-justify">
-                    Tidak seperti anggapan banyak orang, Lorem Ipsum bukanlah teks-teks yang diacak.
-                    Ia berakar dari sebuah naskah sastra latin klasik dari era 45 sebelum masehi,
-                    hingga bisa dipastikan usianya telah mencapai lebih dari 2000 tahun.
-                    Richard McCg d
+                    <b>Atma Kitchen</b> adalah bakery online yang menghadirkan kue, pastry, minuman dan camilan lainnya langsung ke pintu rumah Anda. Dibuat dengan cinta dan bahan-bahan berkualitas tinggi, setiap produk kami diolah dengan tangan ahli untuk memastikan setiap gigitan penuh dengan kelezatan yang tak tertandingi.
                 </p>
             </div>
             <div>

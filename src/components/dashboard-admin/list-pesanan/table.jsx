@@ -31,7 +31,7 @@ import { KonfirmasiAdmin } from "@/api/transaksiApi";
 export function TableListPesanan() {
   const navigateTo = useNavigate();
   const [data, setData] = useState([]);
-  const { search } = useContext(GlobalContext);
+  const { search, selectedTabStatus } = useContext(GlobalContext);
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
   const [error, setError] = useState("");
@@ -43,6 +43,8 @@ export function TableListPesanan() {
   const {setSuccess, success} = useContext(GlobalContext);
   const [actionType, setActionType] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+
+  console.log(selectedTabStatus);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,14 +117,6 @@ export function TableListPesanan() {
       });
   }, []);
 
-  // Calculate total pages
-  const totalPages = Math.ceil(data.length / rowsPerPage);
-
-  // Get current page data
-  const indexOfLastRow = currentPage * rowsPerPage;
-  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-  const currentRows = data.slice(indexOfFirstRow, indexOfLastRow);
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -154,7 +148,7 @@ export function TableListPesanan() {
     setModalData({});
   };
 
-  const filteredRows = currentRows.filter((item) => {
+  const filteredRows = data.filter((item) => {
     const lowerCaseSearch = search.toLowerCase();
 
     const nameExists = item.nama_lengkap && item.nama_lengkap.toLowerCase().includes(lowerCaseSearch);
@@ -166,10 +160,16 @@ export function TableListPesanan() {
     );
 
     const totalHargaExists = item.total_harga_transaksi && item.total_harga_transaksi.toString().toLowerCase().includes(lowerCaseSearch);
-
+    const statusTab = selectedTabStatus === "all" || item.status_transaksi === selectedTabStatus;
     // const statusExists = item.status_transaksi === "menunggu biaya pengiriman" && item.status_transaksi === "menunggu validasi pembayaran";
-    return (nameExists || detailExists || totalHargaExists || statusExists);
+    return (nameExists || detailExists || totalHargaExists || statusExists) && statusTab;
   });
+
+  const totalPages = Math.ceil(filteredRows.length / rowsPerPage);
+
+  const indexOfLastRow = currentPage * rowsPerPage;
+  const indexOfFirstRow = indexOfLastRow - rowsPerPage;
+  const currentRows = filteredRows.slice(indexOfFirstRow, indexOfLastRow);
 
   return (
     <div className="mb-2 flex flex-col gap-12">
@@ -192,7 +192,7 @@ export function TableListPesanan() {
           </tr>
         </thead>
         <tbody>
-          {filteredRows.map((item, index) => {
+          {currentRows.map((item, index) => {
             const rowNumber = (currentPage - 1) * rowsPerPage + index + 1;
             const className = `py-3 px-5 text-center ${index === listPesananData.length - 1 ? "" : "border-b border-blue-gray-50"
               }`;
@@ -249,13 +249,13 @@ export function TableListPesanan() {
                 <td className={className}>
                   <div className="flex gap-2 justify-center">
                     {item.status_transaksi === "menunggu validasi pembayaran" || item.status_transaksi === "sudah dibayar" && (
-                      <button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-black font-semibold">
+                      <button onClick={() => handleOpenModal(item)} type="button" className="rounded-md font-bold uppercase border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-blue-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                         <span className="w-5">Validasi</span>
                       </button>
                     )}
                     {item.status_transaksi === "menunggu biaya pengiriman" && (
                       <button
-                      className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      className="rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                       type="button" 
                       onClick={() => handleOpenJarakModal(item, "inputJarak")}
                     >

@@ -155,6 +155,11 @@ import {
           path: "/mo/pengeluaran-lain-lain",
         },
         {
+          icon: <FontAwesomeIcon icon={faList} {...icon} />,
+          name: "Pembelian Bahan Baku",
+          path: "/mo/pembelian-bahan-baku",
+        },
+        {
           icon: <FontAwesomeIcon icon={faGear} {...icon} />,
           name: "MO Settings",
           path: "/mo/settings",

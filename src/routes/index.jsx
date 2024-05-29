@@ -74,6 +74,8 @@ import { Cart } from "@/pages/userViews/transaction/cart";
 import { DetailTransaksi } from "@/pages/userViews/transaction/detail_transaksi";
 import DetailProduk from "@/pages/userViews/product/detail_produk";
 
+import PembelianBahanBaku from "@/pages/dashboard-mo/pembelian-bahan-baku/pembelianBahanBaku";
+
 
 // Konfigurasi router
 const routes = [
@@ -316,6 +318,10 @@ const routes = [
       {
         path: "/mo/settings",
         element: <EditMO />,
+      },
+      {
+        path: "/mo/pembelian-bahan-baku",
+        element: <PembelianBahanBaku />,
       },
     ],
   },

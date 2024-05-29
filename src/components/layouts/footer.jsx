@@ -8,12 +8,12 @@ const Footer = () => {
                     <div className="inline-block h-auto p-5 bg-[#F9E4BD] rounded-[20px]">
                         <img className="w-32 object-cover" src={logo} alt={logo} />
                     </div>
-                    <p className="mt-8 geologica-300 text-justify w-[400px]">
+                    {/* <p className="mt-8 geologica-300 text-justify w-[400px]">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem temporibus quae rerum cupiditate, maiores aliquid doloremque pariatur non. Aperiam voluptatem repudiandae a! Sapiente culpa eius qui nam repudiandae molestiae eos!
-                    </p>
+                    </p> */}
                 </div>
-                <div className="md:ml-[10%]" >
-                    <div className="md:flex md:justify-start gap-5">
+                <div className="md:ml-[10%] justify-center" >
+                    <div className="md:flex md:justify-start\ gap-5">
                         <div className="w-[210px]">
                             <h2 className="mt-9 md:mt-0 geologica-600 text-justify text-[20px] w-[400px]">Navigasi</h2>
                             <ul>
