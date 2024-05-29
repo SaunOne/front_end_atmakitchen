@@ -73,6 +73,7 @@ import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
 import { Cart } from "@/pages/userViews/transaction/cart";
 import { DetailTransaksi } from "@/pages/userViews/transaction/detail_transaksi";
 import DetailProduk from "@/pages/userViews/product/detail_produk";
+import {KonfirmasiPesanan} from "@/pages/dashboard-mo/konfirmasi-pesanan/konfirmasi-pesanan";
 
 import PembelianBahanBaku from "@/pages/dashboard-mo/pembelian-bahan-baku/pembelianBahanBaku";
 
@@ -314,6 +315,10 @@ const routes = [
       {
         path: "/mo/pengeluaran-lain-lain/edit/:id",
         element: <EditPengeluaranLainnyaMO />,
+      },
+      {
+        path: "/mo/konfirmasi-pesanan",
+        element: <KonfirmasiPesanan />,
       },
       {
         path: "/mo/settings",
