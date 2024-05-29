@@ -88,13 +88,13 @@ const NotaModal = ({ isOpen, toggleModal, notaId }) => {
                       </tr>
                     </thead>
                     <tbody>
-                      {notaData.items?.map((item, index) => (
+                      {notaData.produk?.map((item, index) => (
                         <tr key={index}>
                           <td className="border border-gray-300 p-2">{index + 1}</td>
-                          <td className="border border-gray-300 p-2">{item.produk}</td>
-                          <td className="border border-gray-300 p-2">{item.produk}</td>
-                          <td className="border border-gray-300 p-2">{item.produk}</td>
-                          <td className="border border-gray-300 p-2">{item.produk}</td>
+                          <td className="border border-gray-300 p-2">{item.nama_produk}</td>
+                          <td className="border border-gray-300 p-2">{item.jumlah_produk}</td>
+                          <td className="border border-gray-300 p-2">pcs</td>
+                          <td className="border border-gray-300 p-2">{item.jumlah_produk * item.harga}</td>
                         </tr>
                       ))}
                     </tbody>

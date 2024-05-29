@@ -12,6 +12,7 @@ const GlobalContextProvider = ({ children }) => {
     const [selectedTabPesanan, setSelectedTabPesanan] = useState("Pre-Order");
     const [data, setData] = useState({});
     const [isReady, setIsReady] = useState(true);
+    const [selectedTabMO, setSelectedTabMO ] = useState("pembayaran valid");
    
 
     return (
@@ -26,6 +27,7 @@ const GlobalContextProvider = ({ children }) => {
                 selectedTabPesanan, setSelectedTabPesanan,
                 data, setData,
                 isReady, setIsReady,
+                selectedTabMO, setSelectedTabMO 
             }}>
             {children}
         </GlobalContext.Provider>

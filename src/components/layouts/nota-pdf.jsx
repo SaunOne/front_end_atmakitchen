@@ -110,13 +110,13 @@ const NotaPDF = ({ notaData }) => (
           <Text style={styles.tableColHeader}>SATUAN</Text>
           <Text style={styles.tableColHeader}>TOTAL</Text>
         </View>
-        {notaData?.items?.map((item, index) => (
+        {notaData?.produk?.map((item, index) => (
           <View style={styles.tableRow} key={index}>
             <Text style={styles.tableCol}>{index + 1}</Text>
-            <Text style={styles.tableCol}>{item.produk}</Text>
+            <Text style={styles.tableCol}>{item.nama_produk}</Text>
             <Text style={styles.tableCol}>{item.jumlah_produk}</Text>
-            <Text style={styles.tableCol}>{item.produk.satuan}</Text>
-            <Text style={styles.tableCol}>{item.total_harga}</Text>
+            <Text style={styles.tableCol}>pcs</Text>
+            <Text style={styles.tableCol}>{item.harga * item.jumlah_produk}</Text>
           </View>
         ))}
       </View>
