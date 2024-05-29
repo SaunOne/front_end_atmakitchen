@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { GetKebutuhanBahanBakuByID } from "@/api/transaksiApi"
+import { getImage } from "@/api";
 
 export function PesananModal({ modalData, isOpen, onClose, onSubmit, formErrors, onSelectStatus }) {
   if (!isOpen) return null;
@@ -12,14 +13,14 @@ export function PesananModal({ modalData, isOpen, onClose, onSubmit, formErrors,
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-      <div className="bg-white rounded-lg p-6 w-1/3 ">
+    <div className="fixed   inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="bg-white max-h-[500px] max-w-[500px] overflow-auto   rounded-lg p-6 w-1/3 ">
         <div className="flex justify-between items-center border-b pb-2 mb-4">
           <h3 className="text-lg font-semibold">Bayar Pesanan</h3>
           <button onClick={onClose} className="text-gray-600 hover:text-gray-900 border-none"><FontAwesomeIcon icon={faXmark} /></button>
         </div>
         <div className="mb-4">
-          <img src={`/path/to/image/${modalData.bukti_pembayaran}`} alt="Bukti Pembayaran" className="w-full mb-4" />
+          <img src={getImage(modalData.bukti_pembayaran)} alt="Bukti Pembayaran" className="overflow-auto w-full mb-4" />
           <form onSubmit={onSubmit}>
             <div className="mb-4">
               <label htmlFor="jumlah_bayar" className="text-sm font-medium text-gray-700">
