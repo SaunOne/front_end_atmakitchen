@@ -31,35 +31,8 @@ export const GetAllUserTransaction = async () => {
     }
 };
 
-export const GetAllTransaction = async () => {
-    try {
-        const response = await useAxios.get("/transaksi/all", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-            },
-        });
-        console.log(response.data.data);
-        return response.data.data;
-    } catch (error) {
-        throw error.response.data;
-    }
-};
 
-export const GetAllTransaction = async () => {
-    try {
-        const response = await useAxios.get("/transaksi/all", {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-            },
-        });
-        console.log(response.data.data);
-        return response.data.data;
-    } catch (error) {
-        throw error.response.data;
-    }
-};
+
 
 
 export const CheckStock = async (data) => {
@@ -103,10 +76,10 @@ export const KonfirmasiAdmin = async (data) => {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
             },
         });
-        console.log(response.data.data);
-        return response.data.data;
+        console.log(response.data);
+        return response.data;
     } catch (error) {
-        throw error.response.data;
+        throw error.response;
     }
 };
 

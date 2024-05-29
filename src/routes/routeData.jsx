@@ -8,6 +8,7 @@ import {
     BanknotesIcon,
     CurrencyDollarIcon,
     Bars2Icon,
+    DocumentCheckIcon,
   } from "@heroicons/react/24/solid";
   import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
   import { 
@@ -17,7 +18,7 @@ import {
     faMoneyBillWave,
     faCircleUser,
     faClockRotateLeft,
-    faGear
+    faGear,
   } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
@@ -155,6 +156,11 @@ import {
           path: "/mo/pengeluaran-lain-lain",
         },
         {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Konfirmasi Pesanan",
+          path: "/mo/konfirmasi-pesanan",
+        },
+        {
           icon: <FontAwesomeIcon icon={faGear} {...icon} />,
           name: "MO Settings",
           path: "/mo/settings",
@@ -162,6 +168,7 @@ import {
       ],
     },
   ];
+  
 
   export const routesOwner = [
     {

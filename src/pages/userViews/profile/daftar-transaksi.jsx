@@ -10,6 +10,7 @@ import NotaModal from "@/components/layouts/nota-modal";
 import BayarModal from "@/components/layouts/bayar-modal";
 import { parse, set } from "date-fns";
 import { pembayaranCustomer } from "@/validations/validation";
+import { toast } from "react-toastify";
 
 export default function Page() {
     const navigateTo = useNavigate();
@@ -55,8 +56,8 @@ export default function Page() {
             let newErrors = {};
             for (const issue of error.issues) {
                 newErrors = {
-                ...newErrors,
-                [issue.path[0]]: issue.message,
+                    ...newErrors,
+                    [issue.path[0]]: issue.message,
                 };
             }
             console.log(newErrors);
@@ -66,13 +67,17 @@ export default function Page() {
             parsedPembayaran.data.id_transaksi = currentTransactionId;
             BayarPesanan(parsedPembayaran.data)
                 .then((response) => {
-                console.log(response);
-                setSuccess({ bool: true, message: 'Bukti Pembayaran berhasil ditambahkan' });
-                console.log(success);
-                navigateTo('/user/profile');
+                    console.log(response);
+                    // setSuccess({ bool: true, message: 'Bukti Pembayaran berhasil ditambahkan' });
+                    toast.success('Bukti Pembayaran berhasil ditambahkan');
+                    setIsBayarModalOpen(false);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                    
                 })
                 .catch((err) => {
-                console.error(err);
+                    console.error(err);
                 });
         }
         setFormErrors({});
@@ -86,7 +91,7 @@ export default function Page() {
     const handleCloseModal = () => {
         setIsBayarModalOpen(false);
     };
-    
+
     return (
         <div className="">
             <h1 className="text-gray-800 mt-5 mb-3 font-bold text-[30px]">Daftar Transaksi</h1>
@@ -101,70 +106,70 @@ export default function Page() {
             </div>
 
             <div className="bg-white mt-6 h-full rounded-md p-6 overflow-y-auto">
-            {data.filter((el) => {
-                const lowerCaseSearch = search.toLowerCase();
-                return (
-                    lowerCaseSearch === "" ||
-                    (el.detail_transaksi && el.detail_transaksi.length > 0 && el.detail_transaksi[0].produk.nama_produk.toLowerCase().includes(lowerCaseSearch))
-                );
-            }).map((user, index) => (
-                <div key={user.id} className="mb-3 rounded-md border border-gray-400 p-4">
-                    <div className="flex justify-between w-full">
-                        <div className="w-[75%]">
-                            <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">No Pesanan :  {user.id_transaksi}</h1>
-                            <h1 className="text-gray-800 mb-3 font-semibold text-[13px]">
-                                Tanggal Pesan {new Date(user.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} -
-                                Ambil {new Date(user.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-                            </h1>
-                        </div>
-                        <div>
-                            <h1 className="border-l pl-3 mr-3  border-gray-400 text-gray-800 mb-3 font-semibold text-[17px]">{user.status_transaksi}</h1>
-                        </div>
-                    </div>
-                    <div className="flex justify-start gap-5 w-full mt-3">
-                        {user.detail_transaksi && user.detail_transaksi.length > 0 && user.detail_transaksi[0].produk && (
-                            <>
-                                <img src={getImage(user.detail_transaksi[0].produk.image_produk)} className="w-[120px] h-[120px] rounded" alt="" />
-                                <div className="w-[45%]">
-                                    <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].produk.nama_produk}</h1>
-                                    <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].jumlah_produk}x</h1>
-                                    <h1 className="text-gray-800 mb-3 font-semibold text-[17px] mt-7">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.detail_transaksi[0].produk.harga * user.detail_transaksi[0].jumlah_produk)}</h1>
-                                </div>
-                            </>
-                        )}
-                        {/* Tambahkan penanganan jika detail transaksi tidak tersedia */}
-                        {!user.detail_transaksi || user.detail_transaksi.length === 0 || !user.detail_transaksi[0].produk && (
-                            <div className="w-[165px] flex justify-center items-center">
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">Produk Tidak Tersedia</h1>
+                {data.filter((el) => {
+                    const lowerCaseSearch = search.toLowerCase();
+                    return (
+                        lowerCaseSearch === "" ||
+                        (el.detail_transaksi && el.detail_transaksi.length > 0 && el.detail_transaksi[0].produk.nama_produk.toLowerCase().includes(lowerCaseSearch))
+                    );
+                }).map((user, index) => (
+                    <div key={user.id} className="mb-3 rounded-md border border-gray-400 p-4">
+                        <div className="flex justify-between w-full">
+                            <div className="w-[75%]">
+                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">No Pesanan :  {user.id_transaksi}</h1>
+                                <h1 className="text-gray-800 mb-3 font-semibold text-[13px]">
+                                    Tanggal Pesan {new Date(user.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} -
+                                    Ambil {new Date(user.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                                </h1>
                             </div>
-                        )}
-                        <div className="ml-auto flex flex-col justify-end items-end">
+                            <div>
+                                <h1 className="border-l pl-3 mr-3  border-gray-400 text-gray-800 mb-3 font-semibold text-[17px]">{user.status_transaksi}</h1>
+                            </div>
+                        </div>
+                        <div className="flex justify-start gap-5 w-full mt-3">
+                            {user.detail_transaksi && user.detail_transaksi.length > 0 && user.detail_transaksi[0].produk && (
+                                <>
+                                    <img src={getImage(user.detail_transaksi[0].produk.image_produk)} className="w-[120px] h-[120px] rounded" alt="" />
+                                    <div className="w-[45%]">
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].produk.nama_produk}</h1>
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">{user.detail_transaksi[0].jumlah_produk}x</h1>
+                                        <h1 className="text-gray-800 mb-3 font-semibold text-[17px] mt-7">{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
+                                    </div>
+                                </>
+                            )}
                             {/* Tambahkan penanganan jika detail transaksi tidak tersedia */}
                             {!user.detail_transaksi || user.detail_transaksi.length === 0 || !user.detail_transaksi[0].produk && (
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
+                                <div className="w-[165px] flex justify-center items-center">
+                                    <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">Produk Tidak Tersedia</h1>
+                                </div>
                             )}
-                            <div className="flex justify-end">
-                                {user.status_transaksi === "Sudah Dibayar" || user.status_transaksi === "selesai" && (
-                                    <div className="mx-2">
-                                        <button onClick={() => toggleNotaModal(user.id_transaksi)} className="text-white font-semibold text-[14px] bg-blue-400 p-2 hover:text-gray-200">
-                                            Nota
-                                        </button>
-                                    </div>
+                            <div className="ml-auto flex flex-col justify-end items-end">
+                                {/* Tambahkan penanganan jika detail transaksi tidak tersedia */}
+                                {!user.detail_transaksi || user.detail_transaksi.length === 0 || !user.detail_transaksi[0].produk && (
+                                    <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
                                 )}
-                                <button className="bg-gray-800 p-2" onClick={() => handleOpenModal(user.id_transaksi)}>
-                                    <h1 className="text-white font-semibold text-[14px]">
-                                        {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : "Detail Pesanan"}
-                                    </h1>
-                                </button>
+                                <div className="flex justify-end">
+                                    {(user.status_transaksi === "menunggu pembayaran" || user.status_transaksi ==="diproses" || user.status_transaksi ==="diterima" || user.status_transaksi ==="dikirim kurir" || user.status_transaksi ==="siap di-pickup" || user.status_transaksi ==="sudah di-pickup" || user.status_transaksi === "selesai") && (
+                                        <div className="mx-2">
+                                            <button onClick={() => toggleNotaModal(user.id_transaksi)} className="text-white font-semibold text-[14px] bg-blue-400 p-2 hover:text-gray-200">
+                                                Nota
+                                            </button>
+                                        </div>
+                                    )}
+                                    <button className="bg-gray-800 p-2" onClick={() => handleOpenModal(user.id_transaksi)}>
+                                        <h1 className="text-white font-semibold text-[14px]">
+                                            {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : "Detail Pesanan"}
+                                        </h1>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
 
             </div>
             {isNotaModalOpen && <NotaModal isOpen={isNotaModalOpen} toggleModal={toggleNotaModal} notaId={currentTransactionId} />}
-            {isBayarModalOpen && <BayarModal isOpen={isBayarModalOpen} toggleModal={toggleBayarModal} onSubmit={handleSubmit} formErrors={formErrors}/>}
+            {isBayarModalOpen && <BayarModal isOpen={isBayarModalOpen} toggleModal={toggleBayarModal} onSubmit={handleSubmit} formErrors={formErrors} />}
         </div>
     );
 }

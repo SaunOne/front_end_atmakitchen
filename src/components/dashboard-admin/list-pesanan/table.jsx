@@ -27,6 +27,7 @@ import { PesananModal } from "@/components/layouts/pesanan-modal";
 import ModalInputJarak from "@/components/layouts/jarak-modal";
 import { ValidasiRadius, ValidasiPembayaran } from "@/validations/validation";
 import { KonfirmasiAdmin } from "@/api/transaksiApi";
+import { toast } from "react-toastify";
 
 export function TableListPesanan() {
   const navigateTo = useNavigate();
@@ -40,7 +41,7 @@ export function TableListPesanan() {
   const [selectedItemId, setSelectedItemId] = useState(null);
   const [isJarakModalOpen, setIsJarakModalOpen] = useState(false);
   const [formErrors, setFormErrors] = useState({});
-  const {setSuccess, success} = useContext(GlobalContext);
+  const { setSuccess, success } = useContext(GlobalContext);
   const [actionType, setActionType] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
 
@@ -48,20 +49,20 @@ export function TableListPesanan() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formDataObject = Object.fromEntries(formData.entries());
-    
+
     let status;
 
     if (actionType === "inputJarak") {
-        status = "input biaya pengiriman";
+      status = "input biaya pengiriman";
     } else {
-        status = selectedStatus;
-        console.log(selectedStatus);
+      status = selectedStatus;
+      console.log(selectedStatus);
     }
 
     const dataToSend = {
-        ...formDataObject,
-        id_transaksi: selectedItemId,
-        status: status,
+      ...formDataObject,
+      id_transaksi: selectedItemId,
+      status: status,
     };
 
     console.log(formDataObject);
@@ -73,35 +74,42 @@ export function TableListPesanan() {
     }
     const parsedData = validationSchema.safeParse(dataToSend);
     if (!parsedData.success) {
-        const error = parsedData.error;
-        let newErrors = {};
-        for (const issue of error.issues) {
-            newErrors = {
-                ...newErrors,
-                [issue.path[0]]: issue.message,
-            };
-        }
-        console.log(newErrors);
-        console.log(parsedData);
-        return setFormErrors(newErrors);
+      const error = parsedData.error;
+      let newErrors = {};
+      for (const issue of error.issues) {
+        newErrors = {
+          ...newErrors,
+          [issue.path[0]]: issue.message,
+        };
+      }
+      console.log(newErrors);
+      console.log(parsedData);
+      return setFormErrors(newErrors);
     } else {
-        console.log(parsedData.data);
-        KonfirmasiAdmin(dataToSend)
-            .then((response) => {
-                console.log(response); 
-                setSuccess({ bool: true, message: actionType === "inputJarak" ? 'Radius berhasil ditambahkan' : 'Validasi berhasil' });
-                console.log(success);
-                setIsJarakModalOpen(false);
-                setModalOpen(false);
-                navigateTo("/admin/listPesanan");
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+      console.log(parsedData.data);
+      console.log(dataToSend);
+      KonfirmasiAdmin(dataToSend)
+        .then((response) => {
+          console.log(response);
+          if (response.message === "Pembayaran Masih Kurang" || response.message === "Transaksi Di Update Pembayaran Tidak Valid" ) {
+            toast.error(response.message)
+          } else{
+            toast.success(response.message);
+          }
+
+          console.log(success);
+
+          setIsJarakModalOpen(false);
+          setModalOpen(false);
+          navigateTo("/admin/listPesanan");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
     setFormErrors({});
     console.log(formErrors);
-};
+  };
 
   useEffect(() => {
     GetAllTransaction()
@@ -176,7 +184,7 @@ export function TableListPesanan() {
       <table className="w-full min-w-[640px] table-auto">
         <thead>
           <tr>
-            {["No","No Transaksi", "Nama Pemesan", "Pesanan", "Jumlah", "Total Harga", "Status", "Aksi"].map((el) => (
+            {["No", "No Transaksi", "Nama Pemesan", "Pesanan", "Jumlah", "Total Harga", "Status", "Aksi"].map((el) => (
               <th
                 key={el}
                 className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -255,12 +263,12 @@ export function TableListPesanan() {
                     )}
                     {item.status_transaksi === "menunggu biaya pengiriman" && (
                       <button
-                      className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button" 
-                      onClick={() => handleOpenJarakModal(item, "inputJarak")}
-                    >
-                      Input Jarak
-                    </button>
+                        className="select-none rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                        onClick={() => handleOpenJarakModal(item, "inputJarak")}
+                      >
+                        Input Jarak
+                      </button>
                     )}
                   </div>
                 </td>
@@ -289,7 +297,7 @@ export function TableListPesanan() {
         formErrors={formErrors}
         onSelectStatus={handleStatusChange}
       />
-      <ModalInputJarak 
+      <ModalInputJarak
         isOpen={isJarakModalOpen}
         onClose={handleCloseModal}
         onSubmit={handleSubmit}
