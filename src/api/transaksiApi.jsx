@@ -46,6 +46,21 @@ export const GetAllTransaction = async () => {
     }
 };
 
+export const GetAllTransaction = async () => {
+    try {
+        const response = await useAxios.get("/transaksi/all", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
 
 export const CheckStock = async (data) => {
     try {
@@ -126,6 +141,10 @@ export const KonfirmasiMO = async (data) => {
         throw error.response.data;
     }
 };
+
+
+
+
 
 
 export const GetKebutuhanBahanBakuByID = async (id) => {
