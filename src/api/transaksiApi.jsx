@@ -95,3 +95,18 @@ export const BayarPesanan = async (data) => {
     }
 };
 
+export const GetPembelianBahan = async () => {
+    try {
+        const response = await useAxios.get("/tampil-belanja-bahan", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data.bahan);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+

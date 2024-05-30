@@ -6,6 +6,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { GlobalContext } from "@/context/global_context";
 import { GetAllPengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
 import { GetAllBahanBaku } from "@/api/bahanBakuApi";
+import { GetPembelianBahan } from "@/api/transaksiApi";
 
 export default function PembelianBahanTable() {
     const [data, setData] = useState([]);
@@ -14,7 +15,7 @@ export default function PembelianBahanTable() {
     const rowsPerPage = 5;
 
     useEffect(() => {
-        GetAllBahanBaku()
+        GetPembelianBahan()
             .then((response) => {
                 console.log(response)
                 setData(response);
