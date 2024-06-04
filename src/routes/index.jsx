@@ -76,6 +76,7 @@ import DetailProduk from "@/pages/userViews/product/detail_produk";
 import {KonfirmasiPesanan} from "@/pages/dashboard-mo/konfirmasi-pesanan/konfirmasi-pesanan";
 
 import PembelianBahanBaku from "@/pages/dashboard-mo/pembelian-bahan-baku/pembelianBahanBaku";
+import { WithdrawSaldo } from "@/pages/dashboard-admin/withdraw/withdraw";
 
 
 // Konfigurasi router
@@ -216,6 +217,10 @@ const routes = [
       {
         path: "/admin/listPesanan",
         element: <ListPesanan />,
+      },
+      {
+        path: "/admin/withdraw",
+        element: <WithdrawSaldo />,
       },
       // {
       //   path : "/admin/jarakPengiriman",

@@ -14,6 +14,7 @@ const GlobalContextProvider = ({ children }) => {
     const [isReady, setIsReady] = useState(true);
     const [selectedTabMO, setSelectedTabMO ] = useState("pembayaran valid");
     const [selectedTabStatus, setSelectedTabStatus] = useState("menunggu biaya pengiriman");
+    const [selectedTabHistory, setSelectedTabHistory] = useState("withdraw form");
 
     return (
         <GlobalContext.Provider
@@ -28,7 +29,8 @@ const GlobalContextProvider = ({ children }) => {
                 data, setData,
                 isReady, setIsReady,
                 selectedTabStatus, setSelectedTabStatus,
-                selectedTabMO, setSelectedTabMO 
+                selectedTabMO, setSelectedTabMO,
+                selectedTabHistory, setSelectedTabHistory
             }}>
             {children}
         </GlobalContext.Provider>

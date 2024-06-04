@@ -16,6 +16,10 @@ export default function TabPesanan() {
     const tabsProduct = [
         { label: "Input Jarak", value: "menunggu biaya pengiriman", name: "Input Jarak" },
         { label: "Validasi Pembayaran", value: "sudah dibayar", name: "Validasi Pembayaran" },
+        { label: "Diproses", value: "diproses", name: "Diproses" },
+        { label: "Siap di pick-up", value: "siap dipick-up", name: "Siap di pick-up" },
+        { label: "Dikirim Kurir", value: "dikirim kurir", name: "Dikirim Kurir" },
+        { label: "Selesai", value: "selesai", name: "Selesai" },
     ];
 
     const handleTabChange = (value) => {
@@ -23,7 +27,7 @@ export default function TabPesanan() {
     };
 
     return (
-        <div className="grid grid-cols-2 text-lg">
+        <div className="grid grid-cols-1 text-lg">
             <Tabs value={selectedTabStatus} onChange={handleTabChange} >
                 <TabsHeader>
                     {tabsProduct.map(tab => (

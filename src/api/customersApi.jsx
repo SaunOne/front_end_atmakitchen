@@ -90,3 +90,48 @@ export const CetakNota = async (id) => {
     }
 };
 
+export const GetAllWithdrawUser = async () => {
+    try {
+        const response = await useAxios.get("/withdraw", {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const GetWithdrawUserById = async (id) => {
+    try {
+        const response = await useAxios.get(`/withdraw/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const KonfirmasiWithdraw = async (data) => {
+    try {
+        const response = await useAxios.post(`/konfirmasi-withdraw/${data.id}`, data, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
