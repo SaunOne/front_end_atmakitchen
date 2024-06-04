@@ -16,18 +16,16 @@ import {
   Alert,
   Input,
 } from "@material-tailwind/react";
-import { NavLink } from "react-router-dom";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { listPesananData } from "@/data";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/global_context";
-import { ConfirmPesanan, DeletePesanan } from "@/components/dashboard-admin/button";
-import { GetAllUserTransaction, GetAllTransaction } from "@/api/transaksiApi";
+import { GetAllTransaction } from "@/api/transaksiApi";
 import { PesananModal } from "@/components/layouts/pesanan-modal";
 import ModalInputJarak from "@/components/layouts/jarak-modal";
 import { ValidasiRadius, ValidasiPembayaran } from "@/validations/validation";
 import { KonfirmasiAdmin } from "@/api/transaksiApi";
 import { toast } from "react-toastify";
+import StatusModal from "@/components/layouts/status-modal";
 
 export function TableListPesanan() {
   const navigateTo = useNavigate();
@@ -44,6 +42,8 @@ export function TableListPesanan() {
   const { setSuccess, success } = useContext(GlobalContext);
   const [actionType, setActionType] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [statusModalOpen, setStatusModalOpen] = useState(false);
+  const [statusTransaksi, setStatusTransaksi] = useState("");
 
   console.log(selectedTabStatus);
 
@@ -108,9 +108,44 @@ export function TableListPesanan() {
         .catch((err) => {
           console.error(err);
         });
+        window.location.reload();
     }
     setFormErrors({});
     console.log(formErrors);
+  };
+
+  const handleUpdateStatus = () => {
+    console.log(statusTransaksi);
+    console.log(selectedItemId);
+    if(statusTransaksi == "siap dipick-up"){
+      const updatedData = { id_transaksi: selectedItemId, status: "sudah di-pickup" };
+      console.log(updatedData);
+      KonfirmasiAdmin(updatedData)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            handleCloseModal();
+            window.location.reload();
+        });
+    }else{
+      const updatedData = { id_transaksi: selectedItemId, status: "diambil" };
+      console.log(updatedData);
+      KonfirmasiAdmin(updatedData)
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+        .finally(() => {
+            handleCloseModal();
+            window.location.reload();
+        });
+    }
   };
 
   useEffect(() => {
@@ -141,9 +176,16 @@ export function TableListPesanan() {
     console.log(item.id_transaksi);
   };
 
+  const handleOpenStatusModal = (item) => {
+    setStatusModalOpen(true);
+    setSelectedItemId(item.id_transaksi);
+    setStatusTransaksi(item.status_transaksi);
+  };
+
   const handleOpenJarakModal = (item, type) => {
     setSelectedItemId(item.id_transaksi);
     setIsJarakModalOpen(true);
+    setStatusModalOpen(false);
     setModalData(item);
     setActionType(type);
     console.log(type);
@@ -153,6 +195,7 @@ export function TableListPesanan() {
   const handleCloseModal = () => {
     setModalOpen(false);
     setIsJarakModalOpen(false);
+    setStatusModalOpen(false);
     setModalData({});
   };
 
@@ -184,7 +227,7 @@ export function TableListPesanan() {
       <table className="w-full min-w-[640px] table-auto">
         <thead>
           <tr>
-            {["No", "No Transaksi", "Nama Pemesan", "Pesanan", "Jumlah", "Total Harga", "Status", "Aksi"].map((el) => (
+            {["No", "No Transaksi", "Nama Pemesan", "Pesanan", "Jumlah", "Total Harga", "Jenis Pengiriman", "Status", "Aksi"].map((el) => (
               <th
                 key={el}
                 className="border-b border-blue-gray-50 py-3 px-5 text-left"
@@ -251,8 +294,28 @@ export function TableListPesanan() {
                 </td>
                 <td className={className}>
                   <Typography className="text-xs font-semibold text-blue-gray-600">
-                    <p>{item.status_transaksi}</p>
+                    {item.jenis_pengiriman}
                   </Typography>
+                </td>
+                <td className={className}>
+                  {item.status_transaksi === "sudah dibayar" && (
+                    <Chip className=" text-xs" variant="gradient" value={item.status_transaksi} color="green" size="sm" />
+                  )}
+                  {item.status_transaksi === "menunggu biaya pengiriman" && (
+                    <Chip className=" text-xs" variant="gradient" value={item.status_transaksi} color="indigo" size="sm" />
+                  )}
+                  {item.status_transaksi === "diproses" && (
+                    <Chip className=" text-xs" variant="gradient" value={item.status_transaksi} color="orange" size="sm" />
+                  )}
+                  {item.status_transaksi === "siap dipick-up" && (
+                    <Chip className=" text-xs" variant="gradient" value={item.status_transaksi} color="orange" size="sm" />
+                  )}
+                  {item.status_transaksi === "dikirim kurir" && (
+                    <Chip className=" text-xs" variant="gradient" value={item.status_transaksi} color="orange" size="sm" />
+                  )}
+                  {item.status_transaksi === "selesai" && (
+                    <Chip className=" text-xs" variant="gradient" value={item.status_transaksi} color="green" size="sm" />
+                  )}
                 </td>
                 <td className={className}>
                   <div className="flex gap-2 justify-center">
@@ -269,6 +332,16 @@ export function TableListPesanan() {
                     >
                       Input Jarak
                     </button>
+                    )}
+                    {item.status_transaksi === "diproses" && (
+                      <button onClick={() => handleOpenStatusModal(item)} type="button" className="rounded-md font-bold uppercase border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-blue-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        <span className="w-5">Update</span>
+                      </button>
+                    )}
+                    {item.status_transaksi === "siap dipick-up" && (
+                      <button onClick={() => handleOpenStatusModal(item)} type="button" className="rounded-md font-bold uppercase border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-blue-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        <span className="w-5">Selesai</span>
+                      </button>
                     )}
                   </div>
                 </td>
@@ -303,6 +376,11 @@ export function TableListPesanan() {
         onSubmit={handleSubmit}
         item={modalData}
         formErrors={formErrors}
+      />
+      <StatusModal
+        isOpen={statusModalOpen}
+        onClose={handleCloseModal}
+        updateStatus={handleUpdateStatus}
       />
     </div>
   );

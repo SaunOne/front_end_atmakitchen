@@ -13,7 +13,7 @@ export function PesananModal({ modalData, isOpen, onClose, onSubmit, formErrors,
   };
 
   return (
-    <div className="fixed   inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white max-h-[500px] max-w-[500px] overflow-auto   rounded-lg p-6 w-1/3 ">
         <div className="flex justify-between items-center border-b pb-2 mb-4">
           <h3 className="text-lg font-semibold">Bayar Pesanan</h3>

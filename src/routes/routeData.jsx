@@ -19,6 +19,7 @@ import {
     faCircleUser,
     faClockRotateLeft,
     faGear,
+    faMoneyBillTransfer
   } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
@@ -89,6 +90,11 @@ import {
           icon: <FontAwesomeIcon icon={faList} {...icon} />,
           name: "List Pesanan",
           path: "/admin/listPesanan",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faMoneyBillTransfer} {...icon} />,
+          name: "Withdraw Saldo",
+          path: "/admin/withdraw",
         },
         {
           icon: <FontAwesomeIcon icon={faClockRotateLeft} {...icon} />,
