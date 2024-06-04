@@ -9,9 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/global_context";
 import { KonfirmasiMO, GetAllTransaction } from "@/api/transaksiApi";
 import { PesananModalMO } from "@/components/layouts/pesanan-modal";
+import { toast } from "react-toastify";
+
 
 export function TableListPesanan() {
-    
+
     const { selectedTabMO, setSelectedTabMO } = useContext(GlobalContext);
     const [data, setData] = useState([]);
     const { search } = useContext(GlobalContext);
@@ -21,12 +23,29 @@ export function TableListPesanan() {
     const [modalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [selectedTransactions] = useState([]);
+
+
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
+
+    const year = tomorrow.getFullYear();
+    const month = (tomorrow.getMonth() + 1).toString().padStart(2, '0');
+    const day = tomorrow.getDate().toString().padStart(2, '0');
+    const hours = tomorrow.getHours().toString().padStart(2, '0');
+    const minutes = tomorrow.getMinutes().toString().padStart(2, '0');
+    const seconds = tomorrow.getSeconds().toString().padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    console.log(formattedDateTime);
 
     useEffect(() => {
         setIsLoading(true);
         GetAllTransaction()
             .then((response) => {
                 setData(response);
+                console.log(data);
             })
             .catch((err) => {
                 setError(err.message);
@@ -58,11 +77,30 @@ export function TableListPesanan() {
         handleCloseModal();
     };
 
+
+    const handleProses = (modalData) => {
+        const updatedData = { ...modalData, status: "diproses" };
+        KonfirmasiMO(updatedData)
+            .then((response) => {
+                console.log(response);
+                toast.success("Suskses Memproses Pesanan");
+                // Optionally update the local data state here if necessary
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                handleCloseModal();
+                window.location.reload();
+            });
+    };
+
     const handleTolak = (modalData) => {
         const updatedData = { ...modalData, status: "ditolak" };
         KonfirmasiMO(updatedData)
             .then((response) => {
                 console.log(response);
+                toast.error("Pesanan Ditolak!")
                 // Optionally update the local data state here if necessary
             })
             .catch((err) => {
@@ -79,6 +117,7 @@ export function TableListPesanan() {
         KonfirmasiMO(updatedData)
             .then((response) => {
                 console.log(response);
+                toast.success("Suskses Menerima Pesanan");
                 // Optionally update the local data state here if necessary
             })
             .catch((err) => {
@@ -89,9 +128,34 @@ export function TableListPesanan() {
                 window.location.reload();
             });
     };
+    
+    const handleBulkTerima = () => {
+        const updatedData = { ...modalData, status: "diterima semua" };
+        KonfirmasiMO(updatedData)
+            .then((response) => {
+                console.log(response);
+                toast.success("Suskses Menerima Pesanan");
+                // Optionally update the local data state here if necessary
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+            .finally(() => {
+                handleCloseModal();
+                // Remove the following line to prevent window reload
+                window.location.reload();
+            });
+    }
+
 
     const filteredByStatus = data.filter((item) => {
         const lowerCaseSelected = selectedTabMO.toLowerCase();
+        return item.status_transaksi.toLowerCase().includes(lowerCaseSelected);
+    }).filter((item) => {
+        const lowerCaseSelected = selectedTabMO.toLowerCase();
+        if (item.status_transaksi === "diterima") {
+            return item.tanggal_pengambilan.toLowerCase().includes(formattedDateTime);
+        }
         return item.status_transaksi.toLowerCase().includes(lowerCaseSelected);
     });
 
@@ -115,6 +179,7 @@ export function TableListPesanan() {
 
     return (
         <div className="mb-2 flex flex-col gap-12">
+
             <table className="w-full min-w-[640px] table-auto">
                 <thead>
                     <tr>
@@ -130,7 +195,7 @@ export function TableListPesanan() {
                 <tbody>
                     {isLoading ? (
                         <tr>
-                            <td colSpan={7} className="text-center py-3">
+                            <td colSpan={8} className="text-center py-3">
                                 <Typography>Data sedang dimuat...</Typography>
                             </td>
                         </tr>
@@ -189,17 +254,38 @@ export function TableListPesanan() {
                                     </td>
                                     <td className={className}>
                                         <div className="flex gap-2 justify-center">
-                                            <Button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] px-2 py-1 flex-col item-center hover:bg-blue-200 bg-green-600 text-white font-semibold">
-                                                <span className="text-[12px]">Terima</span>
-                                            </Button>
+
+                                            {item.status_transaksi === "pembayaran valid" && (
+                                                <Button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] px-2 py-1 flex-col item-center hover:bg-blue-200 bg-green-600 text-white font-semibold">
+                                                    <span className="text-[12px]">Terima</span>
+                                                </Button>
+                                            )}
+                                            {item.status_transaksi === "diterima" && (
+                                                <Button onClick={() => handleOpenModal(item)} type="submit" className="rounded-md border-[#e8e8e8] px-2 py-1 flex-col item-center hover:bg-blue-200 bg-green-600 text-white font-semibold">
+                                                    <span className="text-[12px]">Proses</span>
+                                                </Button>
+                                            )}
+
                                         </div>
                                     </td>
                                 </tr>
                             );
+
+
                         })
+
                     )}
                 </tbody>
             </table>
+            {
+                selectedTabMO === "diterima" && (
+                    <div className="flex justify-end gap-2 mb-4">
+                        <Button onClick={() => handleBulkTerima} className="bg-green-600 text-white">Terima Semua</Button>
+                    </div>
+                )
+            }
+
+
             <div className="flex justify-center">
                 {Array.from({ length: totalPages }, (_, index) => (
                     <button
@@ -217,6 +303,7 @@ export function TableListPesanan() {
                 onClose={handleCloseModal}
                 onInputChange={handleInputChange}
                 onSave={handleSave}
+                handleProses={handleProses}
                 handleTolak={handleTolak}
                 handleTerima={handleTerima}
             />

@@ -64,7 +64,7 @@ const NotaModal = ({ isOpen, toggleModal, notaId }) => {
                     <h2 className="font-bold text-xl mb-2 text-black">PEMESANAN CAKE</h2>
                     <div className="grid grid-cols-2 gap-4 text-black">
                       <div>
-                        <p>No Nota: {notaId}</p>
+                        <p>No Nota: {notaData.no_nota}</p>
                         <p>Tanggal Pesan: {new Date(notaData.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <p>Lunas Pada: {new Date(notaData.tanggal_pelunasan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
                         <p>Tanggal Ambil: {new Date(notaData.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
@@ -121,7 +121,7 @@ const NotaModal = ({ isOpen, toggleModal, notaId }) => {
                           </tr>
                           <tr>
                             <td className="border border-gray-300 p-2">POTONGAN POINT</td>
-                            <td className="border border-gray-300 p-2">{notaData.potongan_poin}</td>
+                            <td className="border border-gray-300 p-2">{notaData.point_terpakai}</td>
                           </tr>
                           <tr>
                             <td className="border border-gray-300 p-2">TOTAL</td>

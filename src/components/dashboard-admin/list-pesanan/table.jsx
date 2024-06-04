@@ -28,7 +28,6 @@ import ModalInputJarak from "@/components/layouts/jarak-modal";
 import { ValidasiRadius, ValidasiPembayaran } from "@/validations/validation";
 import { KonfirmasiAdmin } from "@/api/transaksiApi";
 import { toast } from "react-toastify";
-import { toast } from "react-toastify";
 
 export function TableListPesanan() {
   const navigateTo = useNavigate();

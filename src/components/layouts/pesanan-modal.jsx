@@ -65,7 +65,7 @@ export function PesananModal({ modalData, isOpen, onClose, onSubmit, formErrors,
   );
 }
 
-export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSave, onValidChange, handleTolak, handleTerima }) {
+export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSave, onValidChange, handleProses, handleTolak, handleTerima }) {
   if (!isOpen) return null;
   if (!modalData) return null;
   const [data, setData] = useState([]);
@@ -146,7 +146,7 @@ export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSa
               <button onClick={onClose} className="mr-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
                 Keluar
               </button>
-              <button onClick={onSave} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+              <button onClick={() => handleProses(modalData)} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
                 Proses
               </button>
             </div>

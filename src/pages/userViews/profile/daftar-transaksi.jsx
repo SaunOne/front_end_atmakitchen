@@ -1,10 +1,11 @@
+import { Chip } from "@material-tailwind/react";
 import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from '@/context/global_context';
 import Search from "@/components/userView/search";
 import StatusFilter from "@/components/userView/profile/statusFilter";
 import DropdownProduct from "@/components/userView/profile/dropdownProduct";
-import { BayarPesanan, GetAllUserTransaction } from "@/api/transaksiApi";
+import { BayarPesanan, GetAllUserTransaction, BatalTransaksi } from "@/api/transaksiApi";
 import { getImage } from "@/api/index";
 import NotaModal from "@/components/layouts/nota-modal";
 import BayarModal from "@/components/layouts/bayar-modal";
@@ -14,7 +15,7 @@ import { toast } from "react-toastify";
 
 export default function Page() {
     const navigateTo = useNavigate();
-    const { user, search } = useContext(GlobalContext);
+    const { search } = useContext(GlobalContext);
     const [data, setData] = useState([]);
     const [formErrors, setFormErrors] = useState({});
 
@@ -26,7 +27,7 @@ export default function Page() {
     const [isNotaModalOpen, setIsNotaModalOpen] = useState(false);
     const [currentTransactionId, setCurrentTransactionId] = useState(null);
 
-    const toggleNotaModal = (id_transaksi) => {
+    const toggleNotaModal = (id_transaksi, no_transaksi) => {
         setCurrentTransactionId(id_transaksi);
         setIsNotaModalOpen(!isNotaModalOpen);
         console.log("id_transaksi :", id_transaksi);
@@ -42,6 +43,7 @@ export default function Page() {
                 console.log(err);
                 setError(err.message);
             });
+
     }, []);
 
     const handleSubmit = (e) => {
@@ -74,7 +76,7 @@ export default function Page() {
                     setTimeout(() => {
                         window.location.reload();
                     }, 3000);
-                    
+
                 })
                 .catch((err) => {
                     console.error(err);
@@ -123,7 +125,49 @@ export default function Page() {
                                 </h1>
                             </div>
                             <div>
-                                <h1 className="border-l pl-3 mr-3  border-gray-400 text-gray-800 mb-3 font-semibold text-[17px]">{user.status_transaksi}</h1>
+                                {
+                                    (
+                                        user.status_transaksi === "diproses" ||
+                                        user.status_transaksi === "menunggu biaya pengiriman" ||
+                                        user.status_transaksi === "sudah dibayar"
+                                    ) && (
+                                        <Chip variant="ghost" size="sm" value={user.status_transaksi} />
+                                    )
+                                }
+                                {
+                                    user.status_transaksi === "menunggu pembayaran" && (
+                                        <Chip variant="ghost" color="blue" size="sm" value={user.status_transaksi} />
+                                    )
+                                }
+                                {
+                                    (user.status_transaksi === "selesai"
+                                    ) && (
+                                        <Chip color="green" size="sm" value={user.status_transaksi} />
+                                    )
+                                }
+                                {
+                                    (user.status_transaksi === "ditolak" ||
+                                        user.status_transaksi === "pembayaran tidak valid" ||
+                                        user.status_transaksi === "dibatalkan"
+                                    ) && (
+                                        <Chip color="red" size="sm" value={user.status_transaksi} />
+                                    )
+                                }
+                                {
+                                    (user.status_transaksi === "dikirim kurir"
+                                    ) && (
+                                        <Chip color="indigo" size="sm" value={user.status_transaksi} />
+                                    )
+                                }
+                                {
+                                    (user.status_transaksi === "diterima" ||
+                                        user.status_transaksi === "pembayaran valid"
+                                    ) && (
+                                        <Chip color="teal" size="sm" value={user.status_transaksi} />
+                                    )
+                                }
+
+
                             </div>
                         </div>
                         <div className="flex justify-start gap-5 w-full mt-3">
@@ -149,16 +193,31 @@ export default function Page() {
                                     <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
                                 )}
                                 <div className="flex justify-end">
-                                    {(user.status_transaksi === "menunggu pembayaran" || user.status_transaksi ==="diproses" || user.status_transaksi ==="diterima" || user.status_transaksi ==="dikirim kurir" || user.status_transaksi ==="siap di-pickup" || user.status_transaksi ==="sudah di-pickup" || user.status_transaksi === "selesai") && (
+                                    {(user.status_transaksi === "menunggu pembayaran" ) && (
                                         <div className="mx-2">
-                                            <button onClick={() => toggleNotaModal(user.id_transaksi)} className="text-white font-semibold text-[14px] bg-blue-400 p-2 hover:text-gray-200">
+                                            <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-gray-800 p-2 hover:text-gray-200">
+                                                Detail 
+                                            </button>
+                                        </div>
+                                    )}
+                                    {( user.status_transaksi === "diproses" || user.status_transaksi === "pembayaran valid" || user.status_transaksi === "diterima" || user.status_transaksi === "dikirim kurir" || user.status_transaksi === "siap di-pickup" || user.status_transaksi === "sudah di-pickup" || user.status_transaksi === "selesai") && (
+                                        <div className="mx-2">
+                                            <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-blue-800 p-2 hover:text-gray-200">
                                                 Nota
                                             </button>
                                         </div>
                                     )}
-                                    <button className="bg-gray-800 p-2" onClick={() => handleOpenModal(user.id_transaksi)}>
+                                    {(user.status_transaksi === "menunggu pembayaran") && (
+                                        <button className="bg-gray-800 p- mr-3" onClick={() => handleOpenModal(user.id_transaksi)}>
+                                            <h1 className="text-white font-semibold text-[14px]">
+                                                {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : null}
+                                            </h1>
+                                        </button>
+                                    )}
+
+                                    <button className="bg-gray-800 p-2" >
                                         <h1 className="text-white font-semibold text-[14px]">
-                                            {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : "Detail Pesanan"}
+                                            Detail
                                         </h1>
                                     </button>
                                 </div>

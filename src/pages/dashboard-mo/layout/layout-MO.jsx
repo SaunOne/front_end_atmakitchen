@@ -22,6 +22,7 @@ const LayoutMO = ({ children }) => {
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav
         routes={routesMO}
+        
         brandImg={
           sidenavType === "dark" ? "/img/logo-ct.png" : "/img/logo-ct-dark.png"
         }

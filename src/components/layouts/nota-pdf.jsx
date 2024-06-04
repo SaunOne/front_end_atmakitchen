@@ -88,7 +88,7 @@ const NotaPDF = ({ notaData }) => (
         <Text style={styles.subTitle}>PEMESANAN CAKE</Text>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View>
-            <Text style={styles.text}>No Nota : {notaData.id_transaksi}</Text>
+            <Text style={styles.text}>No Nota : {notaData.no_nota}</Text>
             <Text style={styles.text}>Tanggal Pesan : {new Date(notaData.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
             <Text style={styles.text}>Lunas Pada : {new Date(notaData.tanggal_pelunasan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
             <Text style={styles.text}>Tanggal Ambil : {new Date(notaData.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</Text>
@@ -146,7 +146,7 @@ const NotaPDF = ({ notaData }) => (
             </View>
             <View style={styles.tableRow}>
               <Text style={styles.tableColHeader}>TOTAL</Text>
-              <Text style={styles.tableCol}>{notaData.total_harga_transaksi}</Text>
+              <Text style={styles.tableCol}>{notaData.total}</Text>
             </View>
           </View>
         </View>

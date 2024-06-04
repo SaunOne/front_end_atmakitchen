@@ -110,6 +110,26 @@ import {
           name: "Admin Settings",
           path: "/admin/settings",
         },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penjualan Bulanan",
+          path: "/admin/laporan-penjualan-bulanan",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penjualan Per Produk",
+          path: "/admin/laporan-penjualan-perproduk",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Stok Bahan Baku",
+          path: "/admin/laporan-stok-bahan",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penggunaan Bahan Baku",
+          path: "/admin/laporan-penggunaan-bahan",
+        }
       ],
     },
   ];
@@ -156,6 +176,12 @@ import {
           path: "/mo/pengeluaran-lain-lain",
         },
         {
+          icon: <BanknotesIcon {...icon} />,
+          name: "Pemakaian Bahan Baku",
+          path: "/mo/pemakaian-bahan-baku",
+        },
+
+        {
           icon: <DocumentCheckIcon {...icon} />,
           name: "Konfirmasi Pesanan",
           path: "/mo/konfirmasi-pesanan",
@@ -165,6 +191,26 @@ import {
           name: "MO Settings",
           path: "/mo/settings",
         },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penjualan Bulanan",
+          path: "/mo/laporan-penjualan-bulanan",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penjualan Per Produk",
+          path: "/mo/laporan-penjualan-perproduk",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Stok Bahan Baku",
+          path: "/mo/laporan-stok-bahan",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penggunaan Bahan Baku",
+          path: "/mo/laporan-penggunaan-bahan",
+        }
       ],
     },
   ];

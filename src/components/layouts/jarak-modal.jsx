@@ -1,8 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const ModalInputJarak = ({ isOpen, onClose, onSubmit, item, formErrors }) => {
+  const [jarak, setJarak] = useState(0);
+  const [totalHargaOngkir, setTotalHargaOngkir] = useState(0);
+
+  const handleChangeJarak = (e) => {
+    const newJarak = parseInt(e.target.value);
+    setJarak(newJarak);
+
+    // Hitung total harga ongkir berdasarkan jarak
+    let hargaPerKm;
+    if (newJarak <= 5) {
+      hargaPerKm = 10000;
+    } else if (newJarak <= 10) {
+      hargaPerKm = 15000;
+    } else if (newJarak <= 15) {
+      hargaPerKm = 20000;
+    } else if (newJarak > 15) {
+      hargaPerKm = 25000;
+    } else {
+      hargaPerKm = 0;
+    }
+    const total = hargaPerKm;
+    setTotalHargaOngkir(total);
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -10,8 +34,8 @@ const ModalInputJarak = ({ isOpen, onClose, onSubmit, item, formErrors }) => {
       <div className="bg-white rounded-lg p-6 w-1/3">
         <div className="flex justify-between items-center border-b pb-2 mb-4">
           <h3 className="text-lg font-semibold">Jarak Pengiriman</h3>
-          <button 
-            onClick={onClose} 
+          <button
+            onClick={onClose}
             className="text-gray-600 hover:text-gray-900 border-none"
           >
             <FontAwesomeIcon icon={faXmark} />
@@ -37,6 +61,8 @@ const ModalInputJarak = ({ isOpen, onClose, onSubmit, item, formErrors }) => {
               type="number"
               id="radius"
               name="radius"
+              value={jarak}
+              onChange={handleChangeJarak}
               className="w-full h-10 px-3 py-2 font-sans text-sm border border-black rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
             />
             {formErrors.radius && (
@@ -60,6 +86,9 @@ const ModalInputJarak = ({ isOpen, onClose, onSubmit, item, formErrors }) => {
             </button>
           </div>
         </form>
+        <div className="mt-4">
+          <p className="text-lg font-semibold">Total Harga Ongkir: {totalHargaOngkir}</p>
+        </div>
       </div>
     </div>
   );

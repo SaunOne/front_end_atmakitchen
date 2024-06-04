@@ -73,9 +73,16 @@ import { EditOwner } from "@/pages/dashboard-owner/owner/owner-settings";
 import { Cart } from "@/pages/userViews/transaction/cart";
 import { DetailTransaksi } from "@/pages/userViews/transaction/detail_transaksi";
 import DetailProduk from "@/pages/userViews/product/detail_produk";
-import {KonfirmasiPesanan} from "@/pages/dashboard-mo/konfirmasi-pesanan/konfirmasi-pesanan";
+import { KonfirmasiPesanan } from "@/pages/dashboard-mo/konfirmasi-pesanan/konfirmasi-pesanan";
 
 import PembelianBahanBaku from "@/pages/dashboard-mo/pembelian-bahan-baku/pembelianBahanBaku";
+import {PemakaianBahanMO} from "@/pages/dashboard-mo/pemakaian-bahan-baku/pemakaian-bahan-baku";
+
+//Laporan
+import { LaporanPenjualanBulanan } from "@/pages/laporan/penjualan-bulanan";
+import { LaporanPenjualanPerproduk } from "@/pages/laporan/penjualan-perproduk";
+import { LaporanStokBahan } from "@/pages/laporan/stok-bahan";
+import { LaporanPenggunaanBahan } from "@/pages/laporan/penggunaan-bahan";
 
 
 // Konfigurasi router
@@ -261,6 +268,23 @@ const routes = [
         path: "/admin/bahanBaku/editBahanBaku/:id",
         element: <EditBahanBaku />,
       },
+      {
+        path: "/admin/laporan-penjualan-bulanan",
+        element: <LaporanPenjualanBulanan/>
+      },
+      {
+        path: "/admin/laporan-penjualan-perproduk",
+        element: <LaporanPenjualanPerproduk/>
+      },
+      {
+        path: "/admin/laporan-penggunaan-bahan",
+        element: <LaporanPenggunaanBahan/>
+      },
+      {
+        path: "/admin/laporan-stok-bahan",
+        element: <LaporanStokBahan/>
+      },
+
     ],
   },
 
@@ -297,6 +321,10 @@ const routes = [
         element: <PengeluaranBahanBakuMO />,
       },
       {
+        path: "/mo/pemakaian-bahan-baku",
+        element: <PemakaianBahanMO />,
+      },
+      {
         path: "/mo/pengeluaran-bahan-baku/add",
         element: <AddPengeluaranBahanBakuMO />,
       },
@@ -328,6 +356,22 @@ const routes = [
         path: "/mo/pembelian-bahan-baku",
         element: <PembelianBahanBaku />,
       },
+      {
+        path: "/mo/laporan-penjualan-bulanan",
+        element: <LaporanPenjualanBulanan/>
+      },
+      {
+        path: "/mo/laporan-penjualan-perproduk",
+        element: <LaporanPenjualanPerproduk/>
+      },
+      {
+        path: "/mo/laporan-penggunaan-bahan",
+        element: <LaporanPenggunaanBahan/>
+      },
+      {
+        path: "/mo/laporan-stok-bahan",
+        element: <LaporanStokBahan/>
+      },
     ],
   },
 
@@ -357,6 +401,10 @@ const routes = [
         path: "/owner/settings",
         element: <EditOwner />,
       },
+      // {
+      //   path: "/laporan",
+      //   element: <EditOwner />,
+      // },
     ],
   },
 
