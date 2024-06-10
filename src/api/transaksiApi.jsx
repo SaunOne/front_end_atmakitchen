@@ -33,6 +33,23 @@ export const GetAllUserTransaction = async () => {
 
 
 
+export const BulkProses = async (data) => {
+    try {
+        console.log("masuk sini");
+        const response = await useAxios.post("/bulk-proses", data, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data);
+        return response.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+
 
 export const CheckStock = async (data) => {
     try {
@@ -126,7 +143,7 @@ export const KonfirmasiMO = async (data) => {
             },
         });
         console.log(response);
-        return response.data.data;
+        return response.data;
     } catch (error) {
         throw error.response.data;
     }
