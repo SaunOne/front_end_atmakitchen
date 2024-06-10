@@ -65,13 +65,13 @@ export function PesananModal({ modalData, isOpen, onClose, onSubmit, formErrors,
   );
 }
 
-export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSave, onValidChange, handleProses, handleTolak, handleTerima }) {
+export function PesananModalMO({ modalData, isOpen, onClose, handleBulkTerima, onInputChange, onSave, onValidChange, handleProses, handleTolak, handleTerima }) {
   if (!isOpen) return null;
   if (!modalData) return null;
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  console.log(modalData)
+  console.log(modalData);
 
   useEffect(() => {
     GetKebutuhanBahanBakuByID(modalData.id_transaksi)
@@ -100,12 +100,12 @@ export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSa
             </button>
             <h1 className="text-black mt-2 font-bold text-[20px]">Konfirmasi Pesanan</h1>
             <div className="pt-6  min-h-[100px]">
-              
+
               {isLoading ? (
                 "Data sedang dimuat..."
               ) : (
                 <>
-                <h1 className="text-black font-semibold text-[14px] mb-4">Daftar Kekurangan Bahan Baku:</h1>
+                  <h1 className="text-black font-semibold text-[14px] mb-4">Daftar Kekurangan Bahan Baku:</h1>
                   {data && data.length > 0 ? (
                     <div>
                       {data.map((item, index) => (
@@ -120,7 +120,7 @@ export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSa
                     </h1>
                   )}
 
-                  
+
                 </>
               )}
 
@@ -141,18 +141,57 @@ export function PesananModalMO({ modalData, isOpen, onClose, onInputChange, onSa
 
       {modalData.status_transaksi === 'diterima' && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg p-6 w-1/3 ">
-            <div className="flex justify-end">
+          <div className="bg-white rounded-lg p-6 w-1/3 relative ">
+            <button onClick={onClose} className="absolute  top-2 right-2 text-gray-500 text-[35px]  hover:text-gray-700">
+              &times;
+            </button>
+            <h1 className="text-black mt-2 font-bold text-[20px]">Proses Pesanan</h1>
+            <h1 className="text-black mt-5 font-semibold text-[16px]">{data.length != 0 ? data : "Tidak ada kekurangan bahan baku"}</h1>
+            <div className="mt-[50px] flex justify-end">
               <button onClick={onClose} className="mr-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
                 Keluar
               </button>
-              <button onClick={() => handleProses(modalData)} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
-                Proses
-              </button>
+              {
+                data.length == 0 && (
+                  <button button onClick={() => handleProses(modalData)} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                    Proses
+                  </button>
+                )
+              }
+
             </div>
           </div>
-        </div>
-      )}
+        </div >
+      )
+      }
+
+      {modalData == null && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg p-6 w-1/3 relative ">
+            <button onClick={onClose} className="absolute  top-2 right-2 text-gray-500 text-[35px]  hover:text-gray-700">
+              &times;
+            </button>
+            <h1 className="text-black mt-2 font-bold text-[20px]">Proses Semua Pesanan</h1>
+            
+            <div className="mt-[50px] flex justify-end">
+              <button onClick={onClose} className="mr-2 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700">
+                Keluar
+              </button>
+              {
+                data.length == 0 && (
+                  <button  onClick={() => handleBulkTerima()} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-700">
+                    Proses
+                  </button>
+                )
+              }
+
+            </div>
+          </div>
+        </div >
+      )
+      }
+
+
     </>
   );
 }

@@ -92,23 +92,26 @@ export function TableListPesanan() {
       console.log(dataToSend);
       KonfirmasiAdmin(dataToSend)
         .then((response) => {
-          console.log(response);
-          if (response.message === "Pembayaran Masih Kurang" || response.message === "Transaksi Di Update Pembayaran Tidak Valid" ) {
+          console.log(response.message);
+          if (response.message === "Pembayaran Masih Kurang" || response.message === "Transaksi Di Update Pembayaran Tidak Valid") {
             toast.error(response.message)
-          } else{
+          } else {
             toast.success(response.message);
           }
-
           console.log(success);
-
           setIsJarakModalOpen(false);
           setModalOpen(false);
           navigateTo("/admin/listPesanan");
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+
         })
         .catch((err) => {
           console.error(err);
-        });
-        window.location.reload();
+        })
+        ;
+
     }
     setFormErrors({});
     console.log(formErrors);
@@ -117,33 +120,33 @@ export function TableListPesanan() {
   const handleUpdateStatus = () => {
     console.log(statusTransaksi);
     console.log(selectedItemId);
-    if(statusTransaksi == "siap dipick-up"){
+    if (statusTransaksi == "siap dipick-up") {
       const updatedData = { id_transaksi: selectedItemId, status: "sudah di-pickup" };
       console.log(updatedData);
       KonfirmasiAdmin(updatedData)
         .then((response) => {
-            console.log(response);
+          console.log(response);
         })
         .catch((err) => {
-            console.log(err);
+          console.log(err);
         })
         .finally(() => {
-            handleCloseModal();
-            window.location.reload();
+          handleCloseModal();
+          window.location.reload();
         });
-    }else{
+    } else {
       const updatedData = { id_transaksi: selectedItemId, status: "diambil" };
       console.log(updatedData);
       KonfirmasiAdmin(updatedData)
         .then((response) => {
-            console.log(response);
+          console.log(response);
         })
         .catch((err) => {
-            console.log(err);
+          console.log(err);
         })
         .finally(() => {
-            handleCloseModal();
-            window.location.reload();
+          handleCloseModal();
+          window.location.reload();
         });
     }
   };
@@ -326,12 +329,12 @@ export function TableListPesanan() {
                     )}
                     {item.status_transaksi === "menunggu biaya pengiriman" && (
                       <button
-                      className="rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                      type="button" 
-                      onClick={() => handleOpenJarakModal(item, "inputJarak")}
-                    >
-                      Input Jarak
-                    </button>
+                        className="rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        type="button"
+                        onClick={() => handleOpenJarakModal(item, "inputJarak")}
+                      >
+                        Input Jarak
+                      </button>
                     )}
                     {item.status_transaksi === "diproses" && (
                       <button onClick={() => handleOpenStatusModal(item)} type="button" className="rounded-md font-bold uppercase border-[#e8e8e8] p-2 hover:bg-blue-200 bg-blue-100 text-blue-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">

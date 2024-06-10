@@ -406,6 +406,22 @@ const routes = [
         path: "/owner/settings",
         element: <EditOwner />,
       },
+      {
+        path: "/owner/laporan-penjualan-bulanan",
+        element: <LaporanPenjualanBulanan/>
+      },
+      {
+        path: "/owner/laporan-penjualan-perproduk",
+        element: <LaporanPenjualanPerproduk/>
+      },
+      {
+        path: "/owner/laporan-penggunaan-bahan",
+        element: <LaporanPenggunaanBahan/>
+      },
+      {
+        path: "/owner/laporan-stok-bahan",
+        element: <LaporanStokBahan/>
+      },
       // {
       //   path: "/laporan",
       //   element: <EditOwner />,

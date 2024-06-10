@@ -241,6 +241,26 @@ import {
           name: "Owner Settings",
           path: "/owner/settings",
         },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penjualan Bulanan",
+          path: "/owner/laporan-penjualan-bulanan",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penjualan Per Produk",
+          path: "/owner/laporan-penjualan-perproduk",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Stok Bahan Baku",
+          path: "/owner/laporan-stok-bahan",
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Laporan Penggunaan Bahan Baku",
+          path: "/owner/laporan-penggunaan-bahan",
+        }
       ],
     },
   ];
