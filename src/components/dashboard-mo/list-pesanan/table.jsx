@@ -4,6 +4,7 @@ import {
     Chip,
     Button,
     Input,
+    Input,
 } from "@material-tailwind/react";
 import { listPesananData } from "@/data";
 import { useNavigate } from "react-router-dom";
@@ -52,6 +53,11 @@ export function TableListPesanan() {
 
     const formattedDateTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     console.log(formattedDateTime);
+    const [date, setDate] = useState(formattedDate);
+    console.log(date)
+    console.log(data2);
+    console.log(merge);
+    console.log(rekap);
     const [date, setDate] = useState(formattedDate);
     console.log(date)
     console.log(data2);
@@ -613,6 +619,7 @@ export function TableListPesanan() {
                                                             <span className="text-[12px]">Proses</span>
                                                         </Button>
                                                     )}
+
                                                 </div>
                                             </td>
                                         </tr>
