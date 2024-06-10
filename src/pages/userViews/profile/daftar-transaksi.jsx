@@ -5,13 +5,14 @@ import { GlobalContext } from '@/context/global_context';
 import Search from "@/components/userView/search";
 import StatusFilter from "@/components/userView/profile/statusFilter";
 import DropdownProduct from "@/components/userView/profile/dropdownProduct";
-import { BayarPesanan, GetAllUserTransaction, BatalTransaksi } from "@/api/transaksiApi";
+import { BayarPesanan, GetAllUserTransaction, BatalTransaksi, KonfirmasiCustomer } from "@/api/transaksiApi";
 import { getImage } from "@/api/index";
 import NotaModal from "@/components/layouts/nota-modal";
 import BayarModal from "@/components/layouts/bayar-modal";
 import { parse, set } from "date-fns";
 import { pembayaranCustomer } from "@/validations/validation";
 import { toast } from "react-toastify";
+import SelesaiModal from "@/components/layouts/selesai-modal";
 
 export default function Page() {
     const navigateTo = useNavigate();
@@ -32,6 +33,29 @@ export default function Page() {
         setIsNotaModalOpen(!isNotaModalOpen);
         console.log("id_transaksi :", id_transaksi);
     };
+
+    const [isSelesaiModalOpen, setIsSelesaiModalOpen] = useState(false);
+    const toggleSelesaiModal = (id_transaksi) => {
+        setIsSelesaiModalOpen(true);
+        setCurrentTransactionId(id_transaksi);
+    };
+
+    const handleUpdateStatus = (data) => {
+        data.id_transaksi = currentTransactionId;
+        console.log(data.id_transaksi);
+        KonfirmasiCustomer(data.id_transaksi)
+            .then((response) => {
+                console.log(response);
+                setIsSelesaiModalOpen(false);
+                setTimeout(() => {
+                    window.location.reload();
+                }, 3000);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
 
     useEffect(() => {
         GetAllUserTransaction()
@@ -92,6 +116,7 @@ export default function Page() {
 
     const handleCloseModal = () => {
         setIsBayarModalOpen(false);
+        setIsSelesaiModalOpen(false);
     };
 
     return (
@@ -100,7 +125,6 @@ export default function Page() {
 
             <div className="ml-8 relative mt-6 flex justify-start gap-3 flex-1 flex-shrink-0">
                 <Search placeholder="Cari transaksi" />
-                {/* <DropdownProduct /> */}
             </div>
 
             <div className="ml-8 relative mt-3 flex justify-start gap-6 ">
@@ -154,7 +178,9 @@ export default function Page() {
                                     )
                                 }
                                 {
-                                    (user.status_transaksi === "dikirim kurir"
+                                    (user.status_transaksi === "dikirim kurir" ||
+                                        user.status_transaksi === "siap dipick-up" ||
+                                        user.status_transaksi === "sudah dipick-up"
                                     ) && (
                                         <Chip color="indigo" size="sm" value={user.status_transaksi} />
                                     )
@@ -193,6 +219,11 @@ export default function Page() {
                                     <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
                                 )}
                                 <div className="flex justify-end">
+                                    <button className="bg-gray-800 p-2" >
+                                        <h1 className="text-white font-semibold text-[14px]">
+                                            Detail
+                                        </h1>
+                                    </button>
                                     {(user.status_transaksi === "menunggu pembayaran" ) && (
                                         <div className="mx-2">
                                             <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-gray-800 p-2 hover:text-gray-200">
@@ -200,7 +231,7 @@ export default function Page() {
                                             </button>
                                         </div>
                                     )}
-                                    {( user.status_transaksi === "diproses" || user.status_transaksi === "pembayaran valid" || user.status_transaksi === "diterima" || user.status_transaksi === "dikirim kurir" || user.status_transaksi === "siap di-pickup" || user.status_transaksi === "sudah di-pickup" || user.status_transaksi === "selesai") && (
+                                    {( user.status_transaksi === "diproses" || user.status_transaksi === "pembayaran valid" || user.status_transaksi === "diterima" || user.status_transaksi === "dikirim kurir" || user.status_transaksi === "siap dipick-up" || user.status_transaksi === "sudah dipick-up" || user.status_transaksi === "selesai") && (
                                         <div className="mx-2">
                                             <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-blue-800 p-2 hover:text-gray-200">
                                                 Nota
@@ -214,21 +245,26 @@ export default function Page() {
                                             </h1>
                                         </button>
                                     )}
-
-                                    <button className="bg-gray-800 p-2" >
-                                        <h1 className="text-white font-semibold text-[14px]">
-                                            Detail
-                                        </h1>
-                                    </button>
+                                    {(user.status_transaksi === "dikirim kurir" || user.status_transaksi === "sudah dipick-up") && (
+                                        <div className="">
+                                            <button onClick={() => toggleSelesaiModal(user)} className="text-white font-semibold text-[14px] bg-green-500 p-2 hover:text-gray-200">
+                                                Selesai
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
                 ))}
-
             </div>
             {isNotaModalOpen && <NotaModal isOpen={isNotaModalOpen} toggleModal={toggleNotaModal} notaId={currentTransactionId} />}
             {isBayarModalOpen && <BayarModal isOpen={isBayarModalOpen} toggleModal={toggleBayarModal} onSubmit={handleSubmit} formErrors={formErrors} />}
+            <SelesaiModal
+                isOpen={isSelesaiModalOpen}
+                onClose={handleCloseModal}
+                updateStatus={handleUpdateStatus}
+            />
         </div>
     );
 }

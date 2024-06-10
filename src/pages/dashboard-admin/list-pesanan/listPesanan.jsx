@@ -20,7 +20,7 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { listPesananData } from "@/data";
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { TableListPesanan } from "@/components/dashboard-admin/list-pesanan/table";
+import { TableListPesanan, TableTelatBayar } from "@/components/dashboard-admin/list-pesanan/table";
 import { GlobalContext } from "@/context/global_context";
 import Search from "@/components/dashboard-admin/search";
 import TabPesanan from "@/components/dashboard-admin/list-pesanan/tab-pesanan";
@@ -57,6 +57,17 @@ export function ListPesanan() {
         </CardHeader>
         <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
           <TableListPesanan/>
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardHeader variant="gradient" color="gray" className="mb-8 p-6">
+          <Typography variant="h6" color="white">
+            Tabel Telat Bayar
+          </Typography>
+        </CardHeader>
+        <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
+          <TableTelatBayar/>
         </CardBody>
       </Card>
     </div>

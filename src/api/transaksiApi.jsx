@@ -163,21 +163,66 @@ export const GetAllTransactionProccess = async () => {
     }
 };
 
-
-
-
-export const BatalTransaksi = async () => {
+export const GetAllTransaksiTelatBayar = async () => {
     try {
-        const response = await useAxios.post(`/batalkan-transaksi`, {
+        const response = await useAxios.get("/transaksi-telat-bayar", {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response.data.data);
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const BatalTransaksi = async (data) => {
+    try {
+        const response = await useAxios.post(`/batalkan-transaksi`, data, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`
             },
         });
         console.log(response);
         return response.data.data;
     } catch (error) {
         throw error.response.data;
+    }
+};
+
+export const KonfirmasiCustomer = async (data) => {
+    try {
+        const response = await useAxios.post(`/konfirmasi-customer/${data.id_transaksi}`, data, {   
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        throw error.response;
+    }
+};
+
+export const SendNotifProcess = async (id_user, id_transaksi) => {
+    try {
+        console.log(id_user);
+        const response = await useAxios.get(`/sendNotification/${id_user}/${id_transaksi}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+
+        });
+        console.log(id_user);
+        console.log(response);
+        return response;
+    } catch (error) {
+        throw error.response;
     }
 };
 

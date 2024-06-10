@@ -9,15 +9,12 @@ export default function TabPesanan() {
     const { selectedTabStatus, setSelectedTabStatus } = useContext(GlobalContext);
     const navigateTo = useNavigate();
 
-    // useEffect(() => {
-    //     setSelectedTabValue("Utama");
-    // }, []);
-
     const tabsProduct = [
         { label: "Input Jarak", value: "menunggu biaya pengiriman", name: "Input Jarak" },
         { label: "Validasi Pembayaran", value: "sudah dibayar", name: "Validasi Pembayaran" },
         { label: "Diproses", value: "diproses", name: "Diproses" },
         { label: "Siap di pick-up", value: "siap dipick-up", name: "Siap di pick-up" },
+        { label: "Sudah di pick-up", value: "sudah dipick-up", name: "Sudah di pick-up" },
         { label: "Dikirim Kurir", value: "dikirim kurir", name: "Dikirim Kurir" },
         { label: "Selesai", value: "selesai", name: "Selesai" },
     ];

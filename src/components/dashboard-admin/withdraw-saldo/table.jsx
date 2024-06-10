@@ -29,10 +29,12 @@ export function WithdrawTable() {
   const [data, setData] = useState([]);
   const { search } = useContext(GlobalContext);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
   const rowsPerPage = 5;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [idWithdraw, setIdWithdraw] = useState(null);
+  console.log(data);
 
   const handleOpenModal = (id_withdraw) => {
     setModalOpen(true);
@@ -75,6 +77,7 @@ const handleTerima = () => {
 };
 
   useEffect(() => {
+    setIsLoading(true);
     GetAllWithdrawUser()
       .then((response) => {
         console.log(response.data)
@@ -82,7 +85,10 @@ const handleTerima = () => {
       })
       .catch((err) => {
         console.log(err);
-        setError(err.message);
+        console.log(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -118,45 +124,42 @@ const handleTerima = () => {
   };
 
   return (
-    <div className="mb-8 flex flex-col gap-12">
-      <table className="w-full min-w-[640px] table-auto">
-        <thead>
-          <tr>
-            {["No", "ID User", "Jumlah Withdraw", "Status", "Tanggal", "Nama Bank", "No Rekening", "Aksi"].map((el) => (
-              <th
-                key={el}
-                className="border-b border-blue-gray-50 py-3 px-5 text-left border-r"
-              >
-                <Typography
-                  variant="small"
-                  className=" text-center text-[11px] font-bold uppercase text-blue-gray-400"
-                >
-                  {el}
-                </Typography>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {currentRows.map((item, index) => {
-            const rowNumber = (currentPage - 1) * rowsPerPage + index + 1;
-            const className = `py-3 px-5 text-center ${index === data.length - 1 ? "" : "border-b border-blue-gray-50"
-              }`;
-            
-              return(
-                <tr key={index}>
+    <>
+      {!isLoading ? (
+        <div className="mb-8 flex flex-col gap-12">
+          <table className="w-full min-w-[640px] table-auto">
+            <thead>
+              <tr>
+                {["No", "ID User", "Jumlah Withdraw", "Status", "Tanggal", "Nama Bank", "No Rekening", "Aksi"].map((el) => (
+                  <th
+                    key={el}
+                    className="border-b border-blue-gray-50 py-3 px-5 text-left border-r"
+                  >
+                    <Typography
+                      variant="small"
+                      className="text-center text-[11px] font-bold uppercase text-blue-gray-400"
+                    >
+                      {el}
+                    </Typography>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {currentRows.map((item, index) => {
+                const rowNumber = (currentPage - 1) * rowsPerPage + index + 1;
+                const className = `py-3 px-5 text-center ${index === data.length - 1 ? "" : "border-b border-blue-gray-50"}`;
+      
+                return (
+                  <tr key={index}>
                     <td className={className}>
-                      <div className="text-xs font-semibold text-blue-gray-600">
-                        <div>
-                          <Typography
-                            variant="small"
-                            color="blue-gray"
-                            className="font-semibold"
-                          >
-                            {rowNumber}
-                          </Typography>
-                        </div>
-                      </div>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-semibold"
+                      >
+                        {rowNumber}
+                      </Typography>
                     </td>
                     <td className={className}>
                       <Typography className="text-xs font-semibold text-blue-gray-600">
@@ -189,37 +192,46 @@ const handleTerima = () => {
                       </Typography>
                     </td>
                     <td className={className}>
-                      <div className="flex justify-center ">
-                        <button type="button" onClick={() => handleOpenModal(item.id_withdraw)} className="rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                      <div className="flex justify-center">
+                        <button
+                          type="button"
+                          onClick={() => handleOpenModal(item.id_withdraw)}
+                          className="rounded-md bg-green-100 p-2 text-center align-middle font-sans text-xs font-bold uppercase text-green-600 shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        >
                           Konfirmasi
                         </button>
                       </div>
                     </td>
                   </tr>
-              );
-            })}
-        </tbody>
-      </table>
-      <div className="flex justify-center">
-        {Array.from({ length: totalPages }, (_, index) => (
-          <button
-            key={index}
-            className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"
-              }`}
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
-      <WithdrawModal
-        isOpen={modalOpen}
-        onClose={handleCloseModal}
-        onSubmit={handleSubmit}
-        id={idWithdraw}
-        handleTolak={handleTolak}
-        handleTerima={handleTerima}
-      />
-    </div>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="flex justify-center">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`mx-1 px-2 py-1 rounded ${currentPage === index + 1 ? "bg-black text-white" : "bg-gray-200"}`}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
+          </div>
+          <WithdrawModal
+            isOpen={modalOpen}
+            onClose={handleCloseModal}
+            onSubmit={handleSubmit}
+            id={idWithdraw}
+            handleTolak={handleTolak}
+            handleTerima={handleTerima}
+          />
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
+    </>
   );
+  
+    
 }

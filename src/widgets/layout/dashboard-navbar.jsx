@@ -118,7 +118,7 @@ export function DashboardNavbar() {
                     color="blue-gray"
                     className="mb-1 font-normal"
                   >
-                    <strong>New message</strong> from Laur
+                    <strong>New message</strong>
                   </Typography>
                   <Typography
                     variant="small"

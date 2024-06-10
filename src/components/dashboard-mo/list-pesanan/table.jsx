@@ -7,7 +7,7 @@ import {
 import { listPesananData } from "@/data";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/global_context";
-import { KonfirmasiMO, GetAllTransaction } from "@/api/transaksiApi";
+import { KonfirmasiMO, GetAllTransaction, SendNotifProcess } from "@/api/transaksiApi";
 import { PesananModalMO } from "@/components/layouts/pesanan-modal";
 import { toast } from "react-toastify";
 
@@ -24,6 +24,8 @@ export function TableListPesanan() {
     const [modalData, setModalData] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [selectedTransactions] = useState([]);
+    const [currentTransactionId, setCurrentTransactionId] = useState(null);
+    const [currentUserId, setCurrentUserId] = useState(null);
 
 
     const tomorrow = new Date();
@@ -45,7 +47,7 @@ export function TableListPesanan() {
         GetAllTransaction()
             .then((response) => {
                 setData(response);
-                console.log(data);
+                console.log(response);
             })
             .catch((err) => {
                 setError(err.message);
@@ -61,6 +63,7 @@ export function TableListPesanan() {
 
     const handleOpenModal = (item) => {
         setModalData(item);
+        console.log(item);
         setModalOpen(true);
     };
 
@@ -80,11 +83,16 @@ export function TableListPesanan() {
 
     const handleProses = (modalData) => {
         const updatedData = { ...modalData, status: "diproses" };
+        console.log(updatedData);
+        
         KonfirmasiMO(updatedData)
             .then((response) => {
                 console.log(response);
                 toast.success("Suskses Memproses Pesanan");
-                // Optionally update the local data state here if necessary
+                console.log("Send Notif");
+                console.log(updatedData.id_user);
+                console.log(updatedData.id_transaksi);
+                SendNotifProcess(updatedData.id_user, updatedData.id_transaksi);
             })
             .catch((err) => {
                 console.log(err);
@@ -265,7 +273,6 @@ export function TableListPesanan() {
                                                     <span className="text-[12px]">Proses</span>
                                                 </Button>
                                             )}
-
                                         </div>
                                     </td>
                                 </tr>

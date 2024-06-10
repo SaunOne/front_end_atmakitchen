@@ -80,6 +80,9 @@ export const DetailTransaksi = () => {
                 parsedTransaksi.id_alamat = alamat.id_alamat
                 parsedTransaksi.status = "menunggu biaya pengiriman"
                 parsedTransaksi.jenis_pengiriman = "Atma Kitchen Delivery"
+            } else if(pengiriman === "Gosend") {
+                parsedTransaksi.status = "menunggu pembayaran"
+                parsedTransaksi.jenis_pengiriman = "Gosend"
             } else {
                 parsedTransaksi.status = "menunggu pembayaran"
                 parsedTransaksi.jenis_pengiriman = "Pick Up"

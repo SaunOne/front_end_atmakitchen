@@ -84,6 +84,9 @@ import { LaporanPenjualanBulanan } from "@/pages/laporan/penjualan-bulanan";
 import { LaporanPenjualanPerproduk } from "@/pages/laporan/penjualan-perproduk";
 import { LaporanStokBahan } from "@/pages/laporan/stok-bahan";
 import { LaporanPenggunaanBahan } from "@/pages/laporan/penggunaan-bahan";
+import { LaporanPresensiGajiKaryawan } from "@/pages/laporan/presensi-karyawan";
+import { LaporanPengeluaranPemasukan } from "@/pages/laporan/pemasukan-pengeluaran";
+import { LaporanTransaksiPenitip } from "@/pages/laporan/transaksi-penitip";
 
 
 // Konfigurasi router
@@ -289,7 +292,18 @@ const routes = [
         path: "/admin/laporan-stok-bahan",
         element: <LaporanStokBahan/>
       },
-
+      {
+        path: "/admin/laporan-presensi-gaji-pegawai",
+        element: <LaporanPresensiGajiKaryawan/>
+      },
+      {
+        path: "/admin/laporan-pemasukan-pengeluaran-bulanan",
+        element: <LaporanPengeluaranPemasukan/>
+      },
+      {
+        path: "/admin/laporan-rekap-transaksi-penitip",
+        element: <LaporanTransaksiPenitip/>
+      },
     ],
   },
 
@@ -376,6 +390,18 @@ const routes = [
       {
         path: "/mo/laporan-stok-bahan",
         element: <LaporanStokBahan/>
+      },
+      {
+        path: "/mo/laporan-presensi-gaji-pegawai",
+        element: <LaporanPresensiGajiKaryawan/>
+      },
+      {
+        path: "/mo/laporan-pemasukan-pengeluaran-bulanan",
+        element: <LaporanPengeluaranPemasukan/>
+      },
+      {
+        path: "/mo/laporan-rekap-transaksi-penitip",
+        element: <LaporanTransaksiPenitip/>
       },
     ],
   },

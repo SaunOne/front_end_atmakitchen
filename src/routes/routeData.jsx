@@ -19,7 +19,8 @@ import {
     faCircleUser,
     faClockRotateLeft,
     faGear,
-    faMoneyBillTransfer
+    faMoneyBillTransfer,
+    faFileCircleCheck
   } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
@@ -117,25 +118,40 @@ import {
           path: "/admin/settings",
         },
         {
-          icon: <DocumentCheckIcon {...icon} />,
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
           name: "Laporan Penjualan Bulanan",
           path: "/admin/laporan-penjualan-bulanan",
         },
         {
-          icon: <DocumentCheckIcon {...icon} />,
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
           name: "Laporan Penjualan Per Produk",
           path: "/admin/laporan-penjualan-perproduk",
         },
         {
-          icon: <DocumentCheckIcon {...icon} />,
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
           name: "Laporan Stok Bahan Baku",
           path: "/admin/laporan-stok-bahan",
         },
         {
-          icon: <DocumentCheckIcon {...icon} />,
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
           name: "Laporan Penggunaan Bahan Baku",
           path: "/admin/laporan-penggunaan-bahan",
-        }
+        },
+        {
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
+          name: "Laporan Presensi dan Gaji Pegawai Bulanan",
+          path: "/admin/laporan-presensi-gaji-pegawai",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
+          name: "Laporan Pemasukan dan Pengeluaran Bulanan",
+          path: "/admin/laporan-pemasukan-pengeluaran-bulanan",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
+          name: "Laporan Rekap Transaksi Penitip",
+          path: "/admin/laporan-rekap-transaksi-penitip",
+        },
       ],
     },
   ];
@@ -216,7 +232,22 @@ import {
           icon: <DocumentCheckIcon {...icon} />,
           name: "Laporan Penggunaan Bahan Baku",
           path: "/mo/laporan-penggunaan-bahan",
-        }
+        },
+        {
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
+          name: "Laporan Presensi dan Gaji Pegawai Bulanan",
+          path: "/mo/laporan-presensi-gaji-pegawai",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
+          name: "Laporan Pemasukan dan Pengeluaran Bulanan",
+          path: "/mo/laporan-pemasukan-pengeluaran-bulanan",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faFileCircleCheck} {...icon} />,
+          name: "Laporan Rekap Transaksi Penitip",
+          path: "/mo/laporan-rekap-transaksi-penitip",
+        },
       ],
     },
   ];
