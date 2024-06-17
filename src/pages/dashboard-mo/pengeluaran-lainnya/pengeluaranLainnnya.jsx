@@ -17,16 +17,16 @@ export default function PengeluaranLainnyaMO() {
     const navigate = useNavigate();
     const { success, setSuccess } = useContext(GlobalContext);
 
-    useEffect(() => {
-        console.log(success);
-        if (success.bool) {
-            toast.success(success.message);
+    // useEffect(() => {
+    //     console.log(success);
+    //     if (success.bool) {
+    //         toast.success(success.message);
 
-            setTimeout(() => {
-                setSuccess({ bool: false, message: '' });
-            }, 1000);
-        }
-    }, [success]);
+    //         setTimeout(() => {
+    //             setSuccess({ bool: false, message: '' });
+    //         }, 1000);
+    //     }
+    // }, [success]);
 
 
     return (

@@ -20,16 +20,16 @@ export default function PengeluaranBahanBakuMO() {
     const navigate = useNavigate();
     const { success, setSuccess } = useContext(GlobalContext);
 
-    useEffect(() => {
-        console.log(success);
-        if (success.bool) {
-            toast.success(success.message);
+    // useEffect(() => {
+    //     console.log(success);
+    //     if (success.bool) {
+    //         toast.success(success.message);
 
-            setTimeout(() => {
-                setSuccess({ bool: false, message: '' });
-            }, 1000);
-        }
-    }, [success]);
+    //         setTimeout(() => {
+    //             setSuccess({ bool: false, message: '' });
+    //         }, 1000);
+    //     }
+    // }, [success]);
 
     return (
         <div className="mt-6 mb-8 flex flex-col gap-10">

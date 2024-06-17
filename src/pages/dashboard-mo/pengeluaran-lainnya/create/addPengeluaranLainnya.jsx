@@ -10,6 +10,7 @@ import { pengeluaranLainnya } from "../../../../validations/validation";
 import { useNavigate } from "react-router-dom";
 import { GlobalContext } from "@/context/global_context";
 import { CreatePengeluaranLain } from "@/api/pengeluaranLainApi";
+import { toast } from 'react-toastify';
 
 export function AddPengeluaranLainnya() {
     const [formErrors, setFormErrors] = useState({});
@@ -39,7 +40,8 @@ export function AddPengeluaranLainnya() {
             CreatePengeluaranLain(parsedPengeluaran.data)
                 .then((response) => {
                     console.log(response);
-                    setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil ditambahkan' });
+                    toast.success('Pengeluaran Lain-lain berhasil ditambahkan');
+                    // setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil ditambahkan' });
                     console.log(success);
                     navigateTo('/mo/pengeluaran-lain-lain');
                 })

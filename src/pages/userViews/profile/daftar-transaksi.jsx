@@ -224,7 +224,7 @@ export default function Page() {
                                             Detail
                                         </h1>
                                     </button> */}
-                                    {(user.status_transaksi === "menunggu pembayaran" ) && (
+                                    {(user.status_transaksi === "menunggu pembayaran" || user.status_transaksi=== 'pembayaran tidak valid' ) && (
                                         <div className="mr-3">
                                             <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-gray-800 p-2 hover:text-gray-200">
                                                 Detail 
@@ -238,10 +238,10 @@ export default function Page() {
                                             </button>
                                         </div>
                                     )}
-                                    {(user.status_transaksi === "menunggu pembayaran") && (
+                                    {(user.status_transaksi === "menunggu pembayaran" || user.status_transaksi=== 'pembayaran tidak valid') && (
                                         <button className="bg-amber-800 px-3 mr-3" onClick={() => handleOpenModal(user.id_transaksi)}>
                                             <h1 className="text-white font-semibold text-[14px]">
-                                                {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : null}
+                                                {user.status_transaksi === "menunggu pembayaran"   ? "Bayar" : "Upload Ulang"}
                                             </h1>
                                         </button>
                                     )}

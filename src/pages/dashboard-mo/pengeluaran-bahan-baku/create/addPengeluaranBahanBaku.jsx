@@ -69,7 +69,8 @@ export function AddPengeluaranBahanBaku() {
             CreatePengeluaranBahanBaku(parsedPengeluaran.data)
                 .then((response) => {
                     console.log(response);
-                    setSuccess({ bool: true, message: 'Pengadaan Bahan Baku berhasil ditambahkan' });
+                    toast.success('Pengadaan Bahan Baku berhasil ditambahkan');
+                    // setSuccess({ bool: true, message: 'Pengadaan Bahan Baku berhasil ditambahkan' });
                     console.log(success);
                     navigateTo('/mo/pengeluaran-bahan-baku');
                 })
