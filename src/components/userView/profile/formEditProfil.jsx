@@ -136,7 +136,7 @@ export const FormEditProfil = () => {
                                         id="pending"
                                         name="gender"
                                         type="radio"
-                                        value="Male"
+                                        value="Laki-laki"
 
                                         defaultChecked={data.gender === "Laki-laki"}
                                         className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
@@ -153,7 +153,7 @@ export const FormEditProfil = () => {
                                         id="paid"
                                         name="gender"
                                         type="radio"
-                                        value="Female"
+                                        value="Perempuan"
                                         defaultChecked={data.gender === "Perempuan"}
                                         className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                                     />

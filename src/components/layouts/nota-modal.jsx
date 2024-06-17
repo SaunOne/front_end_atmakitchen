@@ -4,6 +4,7 @@ import NotaPDF from './nota-pdf';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { CetakNota } from "@/api/customersApi";
+import logo from '@/assets/img/logo-hero.png';
 
 const NotaModal = ({ isOpen, toggleModal, notaId }) => {
   const [notaData, setNotaData] = useState(null);
@@ -17,7 +18,7 @@ const NotaModal = ({ isOpen, toggleModal, notaId }) => {
       try {
         const data = await CetakNota(notaId);
         console.log(notaId);
-        console.log(data.data);
+        console.log(data)
         setNotaData(data.data);
       } catch (err) {
         setError('Error fetching nota data');
@@ -45,7 +46,7 @@ const NotaModal = ({ isOpen, toggleModal, notaId }) => {
           <div className="border border-gray-300 rounded-lg p-4">
             <div className="flex justify-between items-center mb-4">
               <div>
-                <img src="path/to/logo.jpg" alt="Logo" className="h-12" />
+                <img src={logo} alt="Logo" className="h-12" />
               </div>
               <div className="text-black">
                 <h1 className="font-bold text-lg">ATMA KITCHEN</h1>

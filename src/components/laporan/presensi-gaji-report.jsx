@@ -126,17 +126,17 @@ export function PresensiGajiReport({ data }) {
                                 </td>
                                 <td className="border border-gray-400 py-2 px-4 text-center">
                                     <Typography className="text-xs font-[400] text-blue-gray-600">
-                                        {item.honor_harian.toLocaleString('id-ID')}
+                                        { item.honor_harian ? item.honor_harian.toLocaleString('id-ID') : 0}
                                     </Typography>
                                 </td>
                                 <td className="border border-gray-400 py-2 px-4 text-center">
                                     <Typography className="text-xs font-[400] text-blue-gray-600">
-                                        {item.bonus_gaji.toLocaleString('id-ID')}
+                                        {item.bonus_gaji ? item.bonus_gaji.toLocaleString('id-ID') : 0}
                                     </Typography>
                                 </td>
                                 <td className="border border-gray-400 py-2 px-4 text-center">
                                     <Typography className="text-xs font-[400] text-blue-gray-600">
-                                        {item.total.toLocaleString('id-ID')}
+                                        {item.total ? item.total.toLocaleString('id-ID') : 0}
                                     </Typography>
                                 </td>
                             </tr>
@@ -149,7 +149,7 @@ export function PresensiGajiReport({ data }) {
                             </td>
                             <td className="border border-gray-400 py-2 px-4 text-center">
                                 <Typography className="text-xs font-[400] text-blue-gray-600">
-                                    {data.total.toLocaleString('id-ID')}
+                                    {data.total ? data.total.toLocaleString('id-ID') : 0}
                                 </Typography>
                             </td>
                         </tr>

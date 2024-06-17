@@ -23,25 +23,21 @@ export const ListProduct = () => {
         try {
             setIsLoading(true);
 
-            // Wait for isLoadingProduct to be false
-            while (isLoadingProduct) {
-                await new Promise(resolve => setTimeout(resolve, 300)); // Wait for 100 milliseconds
-            }
-
-            // Simulate a fetch call or any async operation
-
             if (jenis) {
                 console.log(jenis);
+                console.log(products);
 
+                if (jenis.toLowerCase() === "hampers" || jenis.toLowerCase() === "titipan") {
 
-                if (jenis === "hampers" || jenis === "titipan") {
+                    console.log("masuk sini");
                     const filtered = products.filter((item) => {
-                        return item.hasOwnProperty('jenis_produk') && item.jenis_produk === jenis;
+                        return item.hasOwnProperty('jenis_produk') && item.jenis_produk.toLowerCase() === jenis;
                     });
                     setFilteredProducts(filtered);
                 } else {
+                    console.log("masuk sini");
                     const filtered = products.filter((item) => {
-                        return item.hasOwnProperty('kategori_produk') && item.kategori_produk === jenis;
+                        return item.hasOwnProperty('kategori_produk') && item.kategori_produk.toLowerCase() === jenis;
                     });
                     console.log(filtered)
                     setFilteredProducts(filtered);

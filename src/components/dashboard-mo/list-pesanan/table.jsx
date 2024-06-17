@@ -4,7 +4,7 @@ import {
     Chip,
     Button,
     Input,
-    Input,
+
 } from "@material-tailwind/react";
 import { listPesananData } from "@/data";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,7 @@ import { GlobalContext } from "@/context/global_context";
 import { KonfirmasiMO, GetAllTransaction, SendNotifProcess, BulkProses } from "@/api/transaksiApi";
 import { PesananModalMO } from "@/components/layouts/pesanan-modal";
 import { toast } from "react-toastify";
-import { GetAllPemakaianBahan, GetAllPemakaianBahanMerge, GetAllPemakaianBahanRekap, SendNotifProcess } from "@/api/bahanBakuApi";
+import { GetAllPemakaianBahan, GetAllPemakaianBahanMerge, GetAllPemakaianBahanRekap } from "@/api/bahanBakuApi";
 
 
 export function TableListPesanan() {
@@ -44,9 +44,6 @@ export function TableListPesanan() {
     tomorrow.setDate(tomorrow.getDate() + 1);
     tomorrow.setHours(0, 0, 0, 0);
 
-    const year = tomorrow.getFullYear();
-    const month = (tomorrow.getMonth() + 1).toString().padStart(2, '0');
-    const day = tomorrow.getDate().toString().padStart(2, '0');
     const hours = tomorrow.getHours().toString().padStart(2, '0');
     const minutes = tomorrow.getMinutes().toString().padStart(2, '0');
     const seconds = tomorrow.getSeconds().toString().padStart(2, '0');
@@ -58,12 +55,6 @@ export function TableListPesanan() {
     console.log(data2);
     console.log(merge);
     console.log(rekap);
-    const [date, setDate] = useState(formattedDate);
-    console.log(date)
-    console.log(data2);
-    console.log(merge);
-    console.log(rekap);
-
     useEffect(() => {
         setIsLoading(true);
         GetAllTransaction(date)
@@ -271,6 +262,9 @@ export function TableListPesanan() {
             const dateExists = item.tanggal_pengambilan && item.tanggal_pengambilan.toLowerCase().includes(date);
             console.log(date);
             return (dateExists);
+        }else{
+            console.log("masuk sini")
+            return item;
         }
     });
 
@@ -315,7 +309,7 @@ export function TableListPesanan() {
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
-    const currentRows = selectedTabMO === "diterima" ? filteredData.slice(indexOfFirstRow, indexOfLastRow) : filteredRows.slice(indexOfFirstRow, indexOfLastRow);
+    const currentRows = selectedTabMO === "diterima" ? filteredData.slice(indexOfFirstRow, indexOfLastRow) : filteredRows.slice(indexOfFirstRow, indexOfLastRow) ;
     console.log(currentRows);
 
     return (

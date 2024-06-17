@@ -20,6 +20,7 @@ const Sidebar = () => {
         GetUserProfile()
             .then((response) => {
                 setUser(response.data);
+                console.log(response.data);
                 console.log(response.data.jumlah_point);
             })
             .catch((err) => {
@@ -46,9 +47,9 @@ const Sidebar = () => {
                         ) : ( */}
                             <div>
                                 <div className="lg:flex lg:p-7 p-4 justify-start gap-6">
-                                    <img className="rounded-[50px] w-[95px] h-[95px]" src={getImage(user.img)} alt="User Profile" />
+                                    <img className="rounded-[50px] w-[95px] h-[95px]" src={getImage(user.foto_profile)} alt="User Profile" />
                                     <div>
-                                        <h1 className="text-black mt-5 font-bold text-[18px]">{user.nama_lengkap}</h1>
+                                        <h1 className="text-black mt-4 font-bold text-[18px]">{user.nama_lengkap}</h1>
                                         <h1 className="text-black mt-2 font-semibold text-[12px]">{user.email}</h1>
                                     </div>
                                 </div>

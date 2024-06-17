@@ -142,7 +142,7 @@ export default function Page() {
                     <div key={user.id} className="mb-3 rounded-md border border-gray-400 p-4">
                         <div className="flex justify-between w-full">
                             <div className="w-[75%]">
-                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">No Pesanan :  {user.id_transaksi}</h1>
+                                <h1 className="text-gray-800 mb-3 font-semibold text-[17px]">No Pesanan :  {user.no_transaksi}</h1>
                                 <h1 className="text-gray-800 mb-3 font-semibold text-[13px]">
                                     Tanggal Pesan {new Date(user.tanggal_pesan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} -
                                     Ambil {new Date(user.tanggal_pengambilan).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
@@ -219,27 +219,27 @@ export default function Page() {
                                     <h1 className="text-gray-800 mb-3 font-semibold text-[16px] mt-[50px]">Total Pesanan {new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(user.total_harga_transaksi)}</h1>
                                 )}
                                 <div className="flex justify-end">
-                                    <button className="bg-gray-800 p-2" >
+                                    {/* <button className="bg-gray-800 p-2" >
                                         <h1 className="text-white font-semibold text-[14px]">
                                             Detail
                                         </h1>
-                                    </button>
+                                    </button> */}
                                     {(user.status_transaksi === "menunggu pembayaran" ) && (
-                                        <div className="mx-2">
+                                        <div className="mr-3">
                                             <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-gray-800 p-2 hover:text-gray-200">
                                                 Detail 
                                             </button>
                                         </div>
                                     )}
                                     {( user.status_transaksi === "diproses" || user.status_transaksi === "pembayaran valid" || user.status_transaksi === "diterima" || user.status_transaksi === "dikirim kurir" || user.status_transaksi === "siap dipick-up" || user.status_transaksi === "sudah dipick-up" || user.status_transaksi === "selesai") && (
-                                        <div className="mx-2">
-                                            <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-blue-800 p-2 hover:text-gray-200">
+                                        <div className="mr-3">
+                                            <button onClick={() => toggleNotaModal(user.id_transaksi, user.no_transaksi)} className="text-white font-semibold text-[14px] bg-teal-800 p-2 hover:text-gray-200">
                                                 Nota
                                             </button>
                                         </div>
                                     )}
                                     {(user.status_transaksi === "menunggu pembayaran") && (
-                                        <button className="bg-gray-800 p- mr-3" onClick={() => handleOpenModal(user.id_transaksi)}>
+                                        <button className="bg-amber-800 px-3 mr-3" onClick={() => handleOpenModal(user.id_transaksi)}>
                                             <h1 className="text-white font-semibold text-[14px]">
                                                 {user.status_transaksi === "menunggu pembayaran" ? "Bayar" : null}
                                             </h1>
@@ -247,7 +247,7 @@ export default function Page() {
                                     )}
                                     {(user.status_transaksi === "dikirim kurir" || user.status_transaksi === "sudah dipick-up") && (
                                         <div className="">
-                                            <button onClick={() => toggleSelesaiModal(user)} className="text-white font-semibold text-[14px] bg-green-500 p-2 hover:text-gray-200">
+                                            <button onClick={() => toggleSelesaiModal(user)} className="text-white font-semibold mr-3 text-[14px] bg-green-500 p-2 hover:text-gray-200">
                                                 Selesai
                                             </button>
                                         </div>

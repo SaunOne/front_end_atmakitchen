@@ -35,7 +35,7 @@ export const UpdateProfile = async (data) => {
         const response = await useAxios.post("/user/update-profile", data, {
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
-                "Content-Type": "application/json"
+                "Content-Type": "multipart/form-data"
             }
         });
         return response.data;
@@ -77,6 +77,7 @@ export const GetAllTransaksiAdmin = async () => {
 
 export const CetakNota = async (id) => {
     try {
+        console.log(id);
         const response = await useAxios.get(`/cetak-nota/${id}`, {
             headers: {
                 "Content-Type": "application/json",
