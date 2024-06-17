@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { GetLaporanPengeluaranPemasukan } from "@/api/laporanApi";
-import {  } from "./penjualan-perproduk-report";
 import { PresensiGajiReport } from "./presensi-gaji-report";
 import { PengeluaranPemasukanReport } from "./pengeluaran-pemasukan-report";
 
@@ -65,7 +64,13 @@ export function PengeluaranPemasukanTable() {
             <div className="mb-4 p-4 flex justify-start gap-4">
                 {/* Dropdown for selecting the year */}
                 <label htmlFor="year" className="block mb-2 text-sm font-medium text-gray-700">Select Year:</label>
-                <select id="year" name="year" className="px-4 w-[200px] py-2 border rounded-md" onChange={handleYearChange}>
+                <select
+                    id="year"
+                    name="year"
+                    className="px-4 w-[200px] py-2 border rounded-md"
+                    onChange={handleYearChange}
+                    value={year} // Set default value for year
+                >
                     {years.map((yearOption) => (
                         <option key={yearOption} value={yearOption}>{yearOption}</option>
                     ))}
@@ -73,7 +78,13 @@ export function PengeluaranPemasukanTable() {
 
                 {/* Dropdown for selecting the month */}
                 <label htmlFor="month" className="block mb-2 text-sm font-medium text-gray-700">Select Month:</label>
-                <select id="month" name="month" className="px-4 w-[200px] py-2 border rounded-md" onChange={handleMonthChange}>
+                <select
+                    id="month"
+                    name="month"
+                    className="px-4 w-[200px] py-2 border rounded-md"
+                    onChange={handleMonthChange}
+                    value={month} // Set default value for month
+                >
                     {months.map((monthOption) => (
                         <option key={monthOption.value} value={monthOption.value}>{monthOption.label}</option>
                     ))}

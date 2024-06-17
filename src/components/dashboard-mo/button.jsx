@@ -148,18 +148,20 @@ export function DeletePengeluaranLain({ id }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(id);
-        DeletePengeluaranLainById(id)
-            .then((response) => {
-                console.log(response);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 3000);
-                setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil dihapus' });
-
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        if (window.confirm('Apakah anda yakin ingin menghapus item ini?')) {
+            DeletePengeluaranLainById(id)
+                .then((response) => {
+                    console.log(response);
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                    setSuccess({ bool: true, message: 'Pengeluaran Lain-lain berhasil dihapus' });
+    
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        }
 
     }
     return (
