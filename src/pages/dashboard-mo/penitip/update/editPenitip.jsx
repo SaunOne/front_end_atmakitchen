@@ -6,13 +6,14 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import { penitip } from "../../../../validations/validation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { UpdatePenitip, GetPenitipById } from "@/api/penitipApi";
+import { GlobalContext } from "@/context/global_context";
 
 
 export function EditPenitip() {
-    const {setSuccess} = useContext(GlobalContext);
+    const { setSuccess } = useContext(GlobalContext);
     const { id } = useParams();
     const [formErrors, setFormErrors] = useState({});
     const [values, setValues] = useState({});
@@ -60,9 +61,9 @@ export function EditPenitip() {
             parsedPenitip.data.id_penitip = id;
             UpdatePenitip(parsedPenitip.data)
                 .then((response) => {
-                    setSuccess({bool: true, message: 'Penitip berhasil diubah'});
+                    setSuccess({ bool: true, message: 'Penitip berhasil diubah' });
                     console.log(response);
-                    
+
                 })
                 .catch((err) => {
                     console.log(err);
@@ -75,8 +76,8 @@ export function EditPenitip() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className="p-4 mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
                 <div className="mb-1 flex flex-col gap-3">
                     <Typography variant="h6" color="blue-gray" className="-mb-3">
                         Nama Penitip

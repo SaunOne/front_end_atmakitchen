@@ -94,21 +94,21 @@ export const addNewPassword = z
             .string({
                 required_error: "Password wajib diisi",
                 invalid_type_error:
-                    "Password wajib terdiri dari minimal 6 karakter & maksimal 20 karakter!",
+                    "Password wajib terdiri dari minimal 8 karakter & maksimal 20 karakter!",
             })
-            .min(6, { message: "Password minimal 6 karakter" })
+            .min(8, { message: "Password minimal 8 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
 
         password_confirmation: z.string()
-            .min(6, { message: "Password minimal 6 karakter" })
+            .min(8, { message: "Password minimal 8 karakter" })
             .max(20, { message: "Password maksimal 20 karakter" }),
     })
     .superRefine(({ password, password_confirmation }, ctx) => {
         if (password !== password_confirmation) {
             ctx.addIssue({
                 code: "custom",
-                path: ["confirmPassword"],
-                message: "Tidak sesuai dengan Password yang diinputkan! ",
+                path: ["password_confirmation"],
+                message: "Password Tidak Sesuai",
             });
         }
     });
@@ -182,7 +182,7 @@ export const staff = z
         tanggal_lahir: z
             .string()
             .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
-        nama_role: z
+        jabatan: z
             .string({
                 invalid_type_error:
                     "Jabatan Wajib Diisi",
@@ -284,16 +284,138 @@ export const editProfile = z
         gender: z
             .string()
             .min(1, { message: "Jenis Kelamin harus dipilih" }),
-        day: z
+        tanggal_lahir: z
             .string()
-            .min(1, { message: "Tanggal Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Tanggal Tidak Valid!" }),
-        month: z
-            .string()
-            .min(1, { message: "Bulan Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Bulan Tidak Valid!" }),
-        year: z
-            .string()
-            .min(1, { message: "Tahun Wajib Diisi!" })
-            .refine((value) => parseFloat(value) > 0, { message: "Tahun Tidak Valid!" }),
+            .regex(/^\d{4}-\d{2}-\d{2}$/, { message: "Format Tanggal Lahir tidak valid (YYYY-MM-DD)" }),
     })
+
+export const bahanBakuAdmin = z
+    .object({
+        nama_bahan: z
+            .string({
+                required_error: "Nama Bahan wajib diisi",
+                invalid_type_error:
+                    "Nama Bahan wajib diisi!",
+            })
+            .min(1, { message: "Nama Bahan wajib diisi!" }),
+        satuan: z
+            .string({
+                required_error: "Satuan wajib diisi!",
+                invalid_type_error:
+                    "Satuan wajib diisi!",
+            })
+            .min(1, { message: "Satuan wajib diisi!" }),
+    });
+
+export const resepAdmin = z
+    .object({
+  
+        nama_bahan: z
+            .string({
+                required_error: "Nama Resep wajib diisi",
+                invalid_type_error:
+                    "Nama Resep wajib diisi!",
+            })
+            .min(1, { message: "Nama Resep wajib diisi!" }),
+        jumlah_bahan: z
+            .string({
+                invalid_type_error:
+                    "Jumlah Kebutuhan Wajib Diisi!",
+            })
+            .min(1, { message: "Jumlah Kebutuhan Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Jumlah Kebutuhan harus lebih dari 0" }),
+
+    });
+
+export const gajiKaryawan = z
+    .object({
+        gaji: z
+            .string({
+                invalid_type_error:
+                    "Gaji Wajib Diisi!",
+            })
+            .min(1, { message: "Gaji Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Gaji harus lebih dari 0" }),
+        bonus_gaji: z
+            .string({
+                invalid_type_error:
+                    "Bonus Gaji Wajib Diisi!",
+            })
+            .min(1, { message: "Bonus Gaji Wajib Diisi!" })
+            .refine((value) => parseFloat(value) > 0, { message: "Bonus Gaji harus lebih dari 0" }),
+    });
+
+export const editAlamat = z
+    .object({
+        provinsi: z
+        .string({
+            required_error: "Provinsi wajib diisi",
+            invalid_type_error:
+                "Provinsi wajib diisi!",
+        })
+        .min(1, { message: "Provinsi wajib diisi!" }),
+        kabupaten: z
+        .string({
+            required_error: "Kabupaten wajib diisi",
+            invalid_type_error:
+                "Kabupaten wajib diisi!",
+        })
+        .min(1, { message: "Kabupaten wajib diisi!" }),
+        kecamatan: z
+        .string({
+            required_error: "Kecamatan wajib diisi",
+            invalid_type_error:
+                "Kecamatan wajib diisi!",
+        })
+        .min(1, { message: "Kecamatan wajib diisi!" }),
+        kelurahan: z
+        .string({
+            required_error: "Kelurahan wajib diisi",
+            invalid_type_error:
+                "Kelurahan wajib diisi!",
+        })
+        .min(1, { message: "Kelurahan wajib diisi!" }),
+        detail_alamat: z
+        .string({
+            required_error: "Detail Alamat wajib diisi",
+            invalid_type_error:
+                "Detail Alamat wajib diisi!",
+        })
+        .min(1, { message: "Detail Alamat wajib diisi!" }),
+        kode_pos: z
+        .string({
+            required_error: "Kode Pos wajib diisi",
+            invalid_type_error:
+                "Kode Pos wajib diisi!",
+        })
+        .min(5, { message: "Kode Pos minimal 5 digit!" }),
+    });
+
+export const ValidasiRadius = z.object({
+    radius: z
+        .string({
+            invalid_type_error: "Jarak Wajib Diisi!",
+        })
+        .min(1, { message: "Jarak Wajib Diisi!" })
+        .refine((value) => parseFloat(value) > 0, { message: "Jarak harus lebih dari 0" }),
+});
+
+export const ValidasiPembayaran = z.object({
+    jumlah_pembayaran: z
+        .string({
+            invalid_type_error: "Jumlah Pembayaran Wajib Diisi!",
+        })
+        .min(1, { message: "Jumlah Pembayaran Wajib Diisi!" })
+        .refine((value) => parseFloat(value) > 0, { message: "Jumlah Pembayaran harus lebih dari 0" }),
+});
+
+export const pembayaranCustomer = z.object({
+    bukti_pembayaran: z
+        .instanceof(File)
+            .refine((file) => file.type.startsWith("image/"), {
+                message: "File harus berupa gambar",
+            })
+            .refine((file) => file.size <= 1048576, {
+                message: "Ukuran gambar tidak boleh melebihi 1MB",
+            }),
+});

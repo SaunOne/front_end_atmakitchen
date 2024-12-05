@@ -65,8 +65,38 @@ export const UpdateBahanBaku = async (data) => {
     }
 };
 
+export const UpdateBahanBakuAdmin = async (data) => {
+    try {
+        console.log(data);
+        const response = await useAxios.put(`/bahan/${data.id_bahan}`, data, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
 
 export const DeletePenitipById = async (id) => {
+    console.log(id);
+    try {
+        
+        const response = await useAxios.delete(`/bahan/${id}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+            },
+        });
+        return response.data.data;
+    } catch (error) {
+        throw error.response.data;
+    }
+};
+
+export const DeleteBahanBakuById = async (id) => {
     console.log(id);
     try {
         

@@ -32,11 +32,11 @@ export const RegisterApi = async (data) => { //data diisi dengan maping atau obj
     console.log(data);  
     const response = await useAxios.post("/register", data);
 
-    console.log("Response:", response);
+    console.log("Response:", response.data);
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
-    throw error.response.data;
+    throw error.response;
   }
 };
 
@@ -78,4 +78,20 @@ export const ResetPassword = async (data) => { //data diisi dengan maping atau o
     console.log("Error: ", error.status);
     throw error.response;
   }
+};
+
+export const UpdatePassword = async (data) => {
+    const token = localStorage.getItem('token'); // Ambil token dari localStorage
+    try {
+        const response = await useAxios.post("/update-password", data, {
+            headers: {
+              "Authorization": `Bearer ${sessionStorage.getItem("token")}`,
+              "Content-Type": "application/json"
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error updating password:', error.response.data);
+        throw error.response.data;
+    }
 };

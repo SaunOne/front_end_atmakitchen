@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GlobalContext } from '@/context/context';
+import { GlobalContext } from '@/context/global_context';
 import { FormEditProfil } from "@/components/userView/profile/formEditProfil";
 
 

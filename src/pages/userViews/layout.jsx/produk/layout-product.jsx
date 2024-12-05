@@ -5,6 +5,8 @@ import Sidebar from "../../../../components/layouts/sidebar-product";
 const LayoutUser = ({ children }) => {
     return (
         <div className="w-full p-10">
+
+            
             <div className="md:flex justify-start">
                 <Sidebar />
                 <div >

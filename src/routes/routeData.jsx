@@ -6,9 +6,21 @@ import {
     // ServerStackIcon,
     RectangleStackIcon,
     BanknotesIcon,
-    CurrencyDollarIcon
-
+    CurrencyDollarIcon,
+    Bars2Icon,
+    DocumentCheckIcon,
   } from "@heroicons/react/24/solid";
+  import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+  import { 
+    faBoxesStacked ,
+    faScroll,
+    faList,
+    faMoneyBillWave,
+    faCircleUser,
+    faClockRotateLeft,
+    faGear,
+    faMoneyBillTransfer
+  } from "@fortawesome/free-solid-svg-icons";
   
   const icon = {
     className: "w-5 h-5 text-inherit",
@@ -30,20 +42,79 @@ import {
           pages: [ 
             {
               icon: <RectangleStackIcon {...icon} />,
-              name: "addProduk",
+              name: "Tambah Produk",
               path: "/admin/product/add",
             },
             {
               icon: <RectangleStackIcon {...icon} />,
-              name: "editProduk",
-              path: "/admin/product/edit",
+              name: "Edit Produk",
+              path: "/admin/product/editProduk",
             },
           ],
         },
         {
-          icon: <RectangleStackIcon {...icon} />,
+          icon: <FontAwesomeIcon icon={faScroll} {...icon} />,
           name: "Resep",
-          path: "/resep",
+          path: "/admin/resep",
+          pages: [ 
+            {
+              icon: <FontAwesomeIcon icon={faScroll} {...icon} />,
+              name: "Tambah Resep",
+              path: "/admin/resep/addResep",
+            },
+            {
+              icon: <FontAwesomeIcon icon={faScroll} {...icon} />,
+              name: "Edit Resep",
+              path: "/admin/resep/editResep",
+            },
+          ],
+        },
+        {
+          icon: <FontAwesomeIcon icon={faBoxesStacked} {...icon} />,
+          name: "Bahan Baku",
+          path: "/admin/bahanBaku",
+          pages: [ 
+            {
+              icon: <FontAwesomeIcon icon={faBoxesStacked} {...icon} />,
+              name: "Tambah Bahan Baku",
+              path: "/admin/bahanBaku/addBahanBaku",
+            },
+            {
+              icon: <RectangleStackIcon {...icon} />,
+              name: "Edit Bahan Baku",
+              path: "/admin/bahanBaku/editBahanBaku",
+            },
+          ],
+        },
+        {
+          icon: <FontAwesomeIcon icon={faList} {...icon} />,
+          name: "List Pesanan",
+          path: "/admin/listPesanan",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faMoneyBillTransfer} {...icon} />,
+          name: "Withdraw Saldo",
+          path: "/admin/withdraw",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faClockRotateLeft} {...icon} />,
+          name: "History Pesanan",
+          path: "/admin/history",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faCircleUser} {...icon} />,
+          name: "Customer",
+          path: "/admin/customer",
+        },
+        // {
+        //   icon: <FontAwesomeIcon icon={faList} {...icon} />,
+        //   name: "Jarak Pengiriman",
+        //   path: "/admin/jarakPengiriman",
+        // },
+        {
+          icon: <FontAwesomeIcon icon={faGear} {...icon} />,
+          name: "Admin Settings",
+          path: "/admin/settings",
         },
       ],
     },
@@ -89,7 +160,41 @@ import {
           icon: <CurrencyDollarIcon {...icon} />,
           name: "Pengeluaran Lain-lain",
           path: "/mo/pengeluaran-lain-lain",
-        }
+        },
+        {
+          icon: <DocumentCheckIcon {...icon} />,
+          name: "Konfirmasi Pesanan",
+          path: "/mo/konfirmasi-pesanan",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faGear} {...icon} />,
+          name: "MO Settings",
+          path: "/mo/settings",
+        },
+      ],
+    },
+  ];
+  
+
+  export const routesOwner = [
+    {
+      layout: "dashboard",
+      pages: [
+        {
+          icon: <HomeIcon {...icon} />,
+          name: "Dashboard",
+          path: "/owner/home",
+        },
+        {
+          icon: <FontAwesomeIcon icon = {faMoneyBillWave} {...icon}/>,
+          name: "Gaji",
+          path: "/owner/gaji",
+        },
+        {
+          icon: <FontAwesomeIcon icon={faGear} {...icon} />,
+          name: "Owner Settings",
+          path: "/owner/settings",
+        },
       ],
     },
   ];

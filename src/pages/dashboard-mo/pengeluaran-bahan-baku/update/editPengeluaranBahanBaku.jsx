@@ -7,10 +7,11 @@ import {
 } from "@material-tailwind/react";
 import React, { useState, useEffect, useContext } from "react";
 import { bahanBaku } from "../../../../validations/validation";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GetAllBahanBaku, GetBahanBakuById } from "@/api/bahanBakuApi";
 import { GetPengeluaranBahanBakuById, UpdatePengeluaranBahanBaku } from "@/api/pengeluaranBahanBakuApi";
-import { GlobalContext } from "@/context/context";
+import { GlobalContext } from "@/context/global_context";
+import { useParams } from "react-router-dom";
 
 
 export function EditPengeluaranBahanBaku() {
@@ -110,8 +111,8 @@ export function EditPengeluaranBahanBaku() {
     }
 
     return (
-        <Card color="transparent" shadow={false}>
-            <form onSubmit={handleSubmit} className="mt-8 mb-2 w-[50%] max-w-screen-lg ">
+        <Card color="white" shadow={false}>
+            <form onSubmit={handleSubmit} className=" p-4 mt-8 mb-2 w-[50%] max-w-screen-lg ">
                 <div className="mb-1 flex flex-col gap-3">
                     <div>
                         <Typography variant="h6" color="blue-gray" className="mb-3">

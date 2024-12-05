@@ -2,7 +2,8 @@ import { useState, useReducer } from "react";
 import { FaEnvelope } from "react-icons/fa";
 import { forgotPassword } from "../../validations/validation";
 import { ForgotPasswordUser } from "../../api/authApi";
-
+import { toast } from "react-toastify"; 
+import { useNavigate } from "react-router-dom";
 const formReducer = (state, event) => {
     return {
         ...state,
@@ -13,7 +14,7 @@ const formReducer = (state, event) => {
 const ForgotPassword = () => {
     const [formData, setFormData] = useReducer(formReducer, {});
     const [formErrors, setFormErrors] = useState({});
-
+    const navigate = useNavigate();
     
 
     const handleSubmit = (e) => {
@@ -37,6 +38,11 @@ const ForgotPassword = () => {
         
         ForgotPasswordUser(formData).then((res) => {
             console.log("form ",res);
+            setTimeout(() => {
+                toast.success("Berhasil Mengirim Link Reset Password");
+                },2000)
+            
+           
         }).catch((err) => {
             console.log("error ", err);
         });
